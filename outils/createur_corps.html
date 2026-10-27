@@ -435,7 +435,13 @@ $("#verifier").addEventListener("submit", async (ev) => {
   const z = $("#resultat-verif");
   const t = $("#cle-a-verifier").value.trim();
   if (!t) return;
-  const r = await L.lireCle(t, publique);
+  let r = await L.lireCle(t, publique);
+  // clés créées avant le 27/10/2026 avec l'ancienne clé de créateur : toujours valables
+  if (!r.valide && r.raison && /signature/i.test(r.raison)) {
+    const ancienne = Uint8Array.from("7da1fe69d1e02e6052da91e5651fc43470aec79e707192549aac1043296757bb".match(/../g), (x) => parseInt(x, 16));
+    const r2 = await L.lireCle(t, ancienne);
+    if (r2.valide) r = r2;
+  }
   if (!r.valide) { z.innerHTML = `<p class="erreur">${echapper(r.raison)}</p>`; return; }
   const desactivee = publiees.has(r.numero) || lireHisto().some((k) => k.numero === r.numero && k.desactivee);
   const expiree = r.expire && r.expire < aujourdhui();
