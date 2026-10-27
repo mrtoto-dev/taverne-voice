@@ -1,5 +1,5 @@
 <style>
-  .createur { padding: 48px 0 80px; max-width: 880px; }
+  .createur { padding: 48px 0 80px; max-width: 1040px; }
   .createur h1 { font-size: clamp(48px, 7vw, 72px); margin-bottom: 10px; }
   .createur .chapo { color: var(--parchemin); font-size: 18px; max-width: 60ch; }
   .bloc { border: 1px solid var(--poutre); border-radius: var(--rayon); padding: 24px; margin-top: 22px; }
@@ -36,7 +36,7 @@
 
 <div class="enveloppe createur">
   <h1>Accès créateur</h1>
-  <p class="chapo">Ici, tu crées les clés qui débloquent la version complète. Ta clé de créateur reste chiffrée : sans le mot de passe, cette page ne sert à rien.</p>
+  <p class="chapo">Tes clients, leurs abonnements et les clés de la version complète. Ta clé de créateur reste chiffrée : sans le mot de passe, cette page ne sert à rien.</p>
 
   <!-- Connexion -->
   <form class="bloc" id="connexion" autocomplete="off">
@@ -51,10 +51,67 @@
   </form>
 
   <div id="espace" hidden>
+    <!-- Panel des clients -->
+    <section class="bloc" id="panel">
+      <div class="ligne-actions" style="justify-content:space-between">
+        <h2>Clients et abonnements</h2>
+        <button class="bouton second petit" type="button" id="p-actualiser">Actualiser</button>
+      </div>
+      <p class="msg erreur" id="p-erreur" hidden></p>
+      <div id="p-alertes"></div>
+      <div class="tuiles" id="p-tuiles"></div>
+      <div id="p-attente-zone" hidden>
+        <h3 style="font-size:26px;margin:22px 0 4px">Paiements sans compte</h3>
+        <p style="color:var(--parchemin);font-size:15px">Payés sur Ko-fi avec une adresse qui n'a pas (encore) de compte. Ils s'ajoutent tout seuls si le client crée son compte avec cette adresse.</p>
+        <ul class="liste-simple" id="p-attente"></ul>
+      </div>
+      <label class="champ" style="margin:22px 0 10px">Chercher un client
+        <input id="p-recherche" placeholder="Adresse e-mail ou pseudo">
+      </label>
+      <div class="tableau">
+        <table class="tableau-clients">
+          <thead><tr><th>Client</th><th>Inscrit le</th><th>Accès</th><th>PC</th><th></th><th></th></tr></thead>
+          <tbody id="p-clients"></tbody>
+        </table>
+      </div>
+    </section>
+
+    <dialog class="fiche" id="fiche" aria-labelledby="f-titre">
+      <div class="ligne-actions" style="justify-content:space-between">
+        <h2 id="f-titre"></h2>
+        <button class="bouton second petit" type="button" id="f-fermer">Fermer</button>
+      </div>
+      <div id="f-infos"></div>
+      <p class="msg" id="f-msg" hidden></p>
+      <div class="ligne-actions" style="margin:14px 0">
+        <label class="champ" style="flex-direction:row;align-items:center;gap:8px">Offrir
+          <select id="f-jours"><option value="7">7 jours</option><option value="30" selected>30 jours</option><option value="92">3 mois</option><option value="366">1 an</option><option value="3650">10 ans</option></select>
+        </label>
+        <button class="bouton petit" type="button" id="f-offrir">Offrir</button>
+        <button class="bouton second petit" type="button" id="f-pcs-raz">Déconnecter ses PC</button>
+        <button class="bouton second petit" type="button" id="f-verifier">Valider son adresse</button>
+      </div>
+      <div class="colonnes">
+        <div><h3 style="font-size:24px;margin:10px 0 0">PC</h3><ul class="liste-simple" id="f-pcs"></ul></div>
+        <div><h3 style="font-size:24px;margin:10px 0 0">Paiements</h3><ul class="liste-simple" id="f-paiements"></ul></div>
+      </div>
+      <label class="champ" style="margin-top:18px">Note (visible seulement par toi)
+        <textarea id="f-note" rows="2" style="font-family:inherit;font-size:15px"></textarea>
+      </label>
+      <button class="lien-bouton" type="button" id="f-note-enregistrer" style="margin-top:6px">Enregistrer la note</button>
+      <h3 style="font-size:24px;margin:20px 0 0">Historique</h3>
+      <ul class="liste-simple" id="f-journal"></ul>
+      <div class="ligne-actions" style="margin-top:20px">
+        <button class="bouton second petit" type="button" id="f-arreter">Arrêter son accès</button>
+        <button class="bouton second petit" type="button" id="f-bloquer">Bloquer le compte</button>
+        <button class="lien-bouton" type="button" id="f-supprimer" style="color:var(--braise)">Supprimer le compte</button>
+      </div>
+    </dialog>
+
     <!-- Créer -->
     <form class="bloc" id="creer">
-      <h2>Créer des clés</h2>
-      <p>Chaque clé débloque la version complète sur le PC où elle est activée. Le nom s'affiche dans le logiciel de la personne.</p>
+      <h2>Créer des clés à la main</h2>
+      <p>Pour offrir l'accès sans passer par un compte (un ami, un partenaire, un concours). La clé marche sans internet. Pour un client qui a un compte, utilise plutôt « Offrir » dans sa fiche.</p>
       <div class="champs">
         <label class="champ">Pour qui (facultatif)
           <input id="nom" maxlength="40" placeholder="Pseudo ou prénom">
@@ -163,6 +220,8 @@
   </div>
 </div>
 
+<script src="config.js"></script>
+<script type="module" src="js/panel.js"></script>
 <script type="module">
 import * as L from "./createur/licence.js";
 
@@ -209,6 +268,7 @@ $("#connexion").addEventListener("submit", async (ev) => {
     $("#mdp").value = "";
     $("#connexion").hidden = true;
     $("#espace").hidden = false;
+    window.dispatchEvent(new CustomEvent("createur", { detail: { graine } }));
     await chargerRevocations();
     afficherHisto();
   } catch (e) {
@@ -220,6 +280,7 @@ $("#connexion").addEventListener("submit", async (ev) => {
 
 $("#deconnexion").addEventListener("click", () => {
   graine = null; publique = null; dernieres = [];
+  window.dispatchEvent(new CustomEvent("createur", { detail: null }));
   $("#cles-creees").innerHTML = "";
   $("#espace").hidden = true;
   $("#connexion").hidden = false;
