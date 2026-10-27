@@ -5,6 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>OBS et Discord – Taverne Voice</title>
 <meta name="description" content="Brancher la voix de Taverne Voice dans OBS et dans Discord.">
+<meta property="og:title" content="OBS et Discord – Taverne Voice">
+<meta property="og:description" content="Brancher la voix de Taverne Voice dans OBS et dans Discord.">
+<meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
+<link rel="canonical" href="https://tavernevoice.fr/obs-discord.html">
 
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -94,12 +98,12 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html">Accueil</a><a href="installation.html" aria-current="page">Guide</a><a href="stream-deck.html">Stream Deck</a><a href="licence.html">Version complète</a><a href="faq.html">Questions</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html" aria-current="page">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
 <main>
-<div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>Le guide</p><a href="installation.html">Installer</a><a href="obs-discord.html" aria-current="page">OBS et Discord</a><a href="voix.html">Les voix</a><a href="soundboard.html">Soundboard</a><a href="stream-deck.html">Stream Deck</a><a href="licence.html">Version complète</a><a href="faq.html">Questions</a></nav><article>
+<div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>Le guide</p><a href="installation.html">Installer</a><a href="obs-discord.html" aria-current="page">OBS et Discord</a><a href="voix.html">Les voix</a><a href="soundboard.html">Soundboard</a><a href="twitch-obs.html">Twitch et overlay</a><a href="stream-deck.html">Stream Deck</a><a href="licence.html">Abonnement et clés</a><a href="faq.html">Questions</a></nav><article>
 <h1>OBS et Discord</h1>
 <p class="chapo">Taverne Voice envoie ta voix transformée dans <code>CABLE Input</code>. De l'autre côté du câble, <code>CABLE Output</code> se comporte comme un micro : c'est lui qu'OBS et Discord doivent écouter.</p>
 
@@ -133,9 +137,10 @@
 <footer class="pied">
   <div class="enveloppe">
     <span>Taverne Voice, changeur de voix pour Windows. <span id="version-site"></span></span>
-    <span class="liens-pied"><a href="https://github.com/mrtoto-dev/taverne-voice/releases">Toutes les versions</a> <a href="faq.html">Aide</a></span>
+    <span class="pied-liens"><a href="faq.html">Aide</a><a href="https://github.com/mrtoto-dev/taverne-voice/releases">Versions</a><a href="cgv.html">CGV</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a></span>
   </div>
 </footer>
+
 <script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)

@@ -3,8 +3,12 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Taverne Voice</title>
-<meta name="description" content="Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard Myinstants et un plugin pour ton Stream Deck.">
+<title>Taverne Voice, le changeur de voix des streamers</title>
+<meta name="description" content="Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard, les points de chaîne Twitch, un overlay OBS et des plugins pour tous les Stream Deck.">
+<meta property="og:title" content="Taverne Voice, le changeur de voix des streamers">
+<meta property="og:description" content="Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard, les points de chaîne Twitch, un overlay OBS et des plugins pour tous les Stream Deck.">
+<meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
+<link rel="canonical" href="https://tavernevoice.fr/">
 
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -94,77 +98,152 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html" aria-current="page">Accueil</a><a href="installation.html">Guide</a><a href="stream-deck.html">Stream Deck</a><a href="licence.html">Version complète</a><a href="faq.html">Questions</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
 <main>
 
-<div class="enveloppe heros">
+<div class="enveloppe heros2">
   <div>
     <h1>Taverne Voice</h1>
-    <p class="chapo">Change ta voix en direct sur Twitch et Discord. 33 voix, un soundboard et des plugins pour ton Stream Deck.</p>
+    <p class="chapo">Le changeur de voix des streamers. 33 voix, un soundboard, les points de chaîne Twitch et ton Stream Deck, dans un seul logiciel.</p>
     <div class="actions">
-      <a class="bouton" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Télécharger pour Windows</a>
-      <a class="bouton second" href="installation.html">Lire le guide</a>
+      <a class="bouton" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Télécharger gratuitement</a>
+      <a class="bouton second" href="boutique.html">Voir les formules</a>
     </div>
-    <p class="petit-texte">Gratuit en démo. Windows 10 et 11.</p>
+    <p class="petit-texte">Démo gratuite, sans limite de temps. Windows 10 et 11.</p>
   </div>
-  <div>
-    <div class="mur" aria-label="Les 33 voix"><span class="bock libre" style="--c:#c9b18f;--r:-3.2deg" tabindex="0" aria-label="Normal (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-normal"/></svg><span class="infobulle">Normal</span></span><span class="bock libre" style="--c:#f08a3c;--r:-6.3deg" tabindex="0" aria-label="Chipmunk (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chipmunk"/></svg><span class="infobulle">Chipmunk</span></span><span class="bock" style="--c:#6dbb63;--r:2.7deg" tabindex="0" aria-label="Lutin"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-lutin"/></svg><span class="infobulle">Lutin</span></span><span class="bock" style="--c:#a8784a;--r:-7.7deg" tabindex="0" aria-label="Géant"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-geant"/></svg><span class="infobulle">Géant</span></span><span class="bock" style="--c:#f4a6b8;--r:0.6deg" tabindex="0" aria-label="Bébé"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-bebe"/></svg><span class="infobulle">Bébé</span></span><span class="bock" style="--c:#e94fa0;--r:-2.4deg" tabindex="0" aria-label="Autotune"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-autotune"/></svg><span class="infobulle">Autotune</span></span><span class="bock" style="--c:#f07fb8;--r:-8.0deg" tabindex="0" aria-label="Autotune doux"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-note"/></svg><span class="infobulle">Autotune doux</span></span><span class="bock" style="--c:#d4af37;--r:0.1deg" tabindex="0" aria-label="French Touch"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-casque"/></svg><span class="infobulle">French Touch</span></span><span class="bock" style="--c:#c98a3a;--r:-8.3deg" tabindex="0" aria-label="Talkbox"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-talkbox"/></svg><span class="infobulle">Talkbox</span></span><span class="bock" style="--c:#9c7bd6;--r:-1.2deg" tabindex="0" aria-label="Chorale"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chorale"/></svg><span class="infobulle">Chorale</span></span><span class="bock" style="--c:#ff7a59;--r:-7.7deg" tabindex="0" aria-label="Pop star"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-popstar"/></svg><span class="infobulle">Pop star</span></span><span class="bock" style="--c:#5ec8e6;--r:-7.4deg" tabindex="0" aria-label="Soirée"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-soiree"/></svg><span class="infobulle">Soirée</span></span><span class="bock libre" style="--c:#6f9fc8;--r:-1.4deg" tabindex="0" aria-label="Robot (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-robot"/></svg><span class="infobulle">Robot</span></span><span class="bock" style="--c:#3fb8a4;--r:5.9deg" tabindex="0" aria-label="Alien"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-alien"/></svg><span class="infobulle">Alien</span></span><span class="bock" style="--c:#7d8fa8;--r:-6.8deg" tabindex="0" aria-label="Cyborg"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-cyborg"/></svg><span class="infobulle">Cyborg</span></span><span class="bock" style="--c:#62c26b;--r:-5.0deg" tabindex="0" aria-label="Rétro 8-bit"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-manette"/></svg><span class="infobulle">Rétro 8-bit</span></span><span class="bock" style="--c:#4f9bd9;--r:2.3deg" tabindex="0" aria-label="Ordinateur"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-ordinateur"/></svg><span class="infobulle">Ordinateur</span></span><span class="bock" style="--c:#8f5fc4;--r:8.1deg" tabindex="0" aria-label="Monstre"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-monstre"/></svg><span class="infobulle">Monstre</span></span><span class="bock libre" style="--c:#d4473a;--r:1.4deg" tabindex="0" aria-label="Démon (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-demon"/></svg><span class="infobulle">Démon</span></span><span class="bock" style="--c:#b7a6e0;--r:-1.9deg" tabindex="0" aria-label="Fantôme"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-fantome"/></svg><span class="infobulle">Fantôme</span></span><span class="bock" style="--c:#c2452d;--r:8.6deg" tabindex="0" aria-label="Dragon"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-dragon"/></svg><span class="infobulle">Dragon</span></span><span class="bock" style="--c:#6b8e3a;--r:-8.2deg" tabindex="0" aria-label="Orc"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-orc"/></svg><span class="infobulle">Orc</span></span><span class="bock" style="--c:#9bbf3b;--r:6.5deg" tabindex="0" aria-label="Gobelin"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-gobelin"/></svg><span class="infobulle">Gobelin</span></span><span class="bock" style="--c:#7a9a7e;--r:-3.8deg" tabindex="0" aria-label="Zombie"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-zombie"/></svg><span class="infobulle">Zombie</span></span><span class="bock" style="--c:#8d8a83;--r:-6.4deg" tabindex="0" aria-label="Grotte"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-grotte"/></svg><span class="infobulle">Grotte</span></span><span class="bock" style="--c:#a99bd1;--r:-6.9deg" tabindex="0" aria-label="Cathédrale"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-cathedrale"/></svg><span class="infobulle">Cathédrale</span></span><span class="bock" style="--c:#b5a447;--r:-3.4deg" tabindex="0" aria-label="Radio"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-radio"/></svg><span class="infobulle">Radio</span></span><span class="bock libre" style="--c:#d9708f;--r:5.7deg" tabindex="0" aria-label="Téléphone (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-telephone"/></svg><span class="infobulle">Téléphone</span></span><span class="bock" style="--c:#e98b2e;--r:-5.7deg" tabindex="0" aria-label="Mégaphone"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-megaphone"/></svg><span class="infobulle">Mégaphone</span></span><span class="bock" style="--c:#e7b53c;--r:1.5deg" tabindex="0" aria-label="Stade"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-stade"/></svg><span class="infobulle">Stade</span></span><span class="bock" style="--c:#3d8fc4;--r:2.5deg" tabindex="0" aria-label="Sous l&#x27;eau"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-bulles"/></svg><span class="infobulle">Sous l&#x27;eau</span></span><span class="bock" style="--c:#9aa3b5;--r:-2.3deg" tabindex="0" aria-label="Chuchoteur"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chut"/></svg><span class="infobulle">Chuchoteur</span></span><span class="bock" style="--c:#d98f2b;--r:0.9deg" tabindex="0" aria-label="Ivrogne"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-ivrogne"/></svg><span class="infobulle">Ivrogne</span></span></div>
-    <p class="legende-mur"><span class="l-libre">5 voix dans la démo</span><span class="l-complete">28 de plus avec une clé</span></p>
+  <div class="vitrine">
+    <div class="fenetre-app"><img src="img/capture-voix-petit.webp" srcset="img/capture-voix-petit.webp 1360w, img/capture-voix.webp 2720w" sizes="(max-width: 900px) 100vw, 640px" width="1360" height="820" alt="La fenêtre de Taverne Voice : les voix en sous-bocks colorés et les réglages de la voix French Touch"></div>
+    <img class="bulle-overlay" src="img/capture-overlay.webp" width="460" height="140" alt="L'overlay OBS : « Wapi_twitch t'a mis la voix Chipmunk », 17 secondes restantes">
   </div>
 </div>
+
+<section class="section" id="fonctions">
+  <div class="enveloppe">
+    <div class="fonction">
+      <div>
+        <h2>33 voix, réglées pour le live</h2>
+        <p>Un clic sur un sous-bock et tout ton chat t'entend avec. <kbd>F8</kbd> coupe l'effet, même en plein jeu.</p>
+        <ul>
+          <li>Autotune, vocodeur French Touch, robots, démons, ambiances de grotte ou de stade</li>
+          <li>Des curseurs pour régler chaque voix et enregistrer les tiennes</li>
+          <li>OBS et Discord la reçoivent par un câble audio virtuel, installé avec le logiciel</li>
+        </ul>
+      </div>
+      <div class="capture"><img src="img/capture-voix-petit.webp" loading="lazy" width="1360" height="820" alt="Les voix de Taverne Voice"></div>
+    </div>
+    <div class="fonction inverse">
+      <div>
+        <h2>Un soundboard rangé</h2>
+        <p>Les sons tendance de Myinstants en un clic, ou tes propres MP3. Range-les par dossiers et donne-leur un raccourci.</p>
+        <ul>
+          <li>Dossiers : Mèmes, Bruitages, Musiques…</li>
+          <li>Ta voix baisse toute seule pendant qu'un son joue</li>
+          <li>Un raccourci clavier par son, même en jeu</li>
+        </ul>
+      </div>
+      <div class="capture"><img src="img/capture-soundboard-petit.webp" loading="lazy" width="1360" height="820" alt="Le soundboard de Taverne Voice avec ses dossiers"></div>
+    </div>
+    <div class="fonction">
+      <div>
+        <h2>Tes viewers prennent le micro</h2>
+        <p>Relie ta chaîne Twitch : tes viewers dépensent leurs points de chaîne pour te mettre une voix pendant 30 secondes ou lancer un son. L'overlay OBS l'affiche dans ton live, avec le compte à rebours.</p>
+        <ul>
+          <li>Les récompenses se créent depuis le logiciel</li>
+          <li>Remboursées toutes seules si le logiciel ne peut pas les jouer</li>
+          <li>Overlay en source navigateur, dans le coin de ton choix</li>
+        </ul>
+        <p><a href="twitch-obs.html">Voir comment ça marche</a></p>
+      </div>
+      <div class="capture"><img src="img/capture-twitch-petit.webp" loading="lazy" width="1360" height="820" alt="L'onglet Twitch et OBS de Taverne Voice"></div>
+    </div>
+    <div class="fonction inverse">
+      <div>
+        <h2>Ton Stream Deck, quelle que soit la marque</h2>
+        <p>Une touche par son, une touche par voix. Elles s'allument quand le son joue ou quand la voix est active.</p>
+        <p><a class="bouton second petit" href="stream-deck.html">Installer le plugin</a></p>
+      </div>
+      <div class="marques" style="margin-top:0">
+        <div class="carte-marque"><h3>Elgato</h3><p>Stream Deck, MK.2, XL, Mini, +, Neo.</p></div>
+        <div class="carte-marque"><h3>StreamDock</h3><p>Mars Gaming, Mirabox, Ajazz, Soomfon.</p></div>
+        <div class="carte-marque"><h3>Ulanzi</h3><p>Stream Controller D200, D200H, D200X.</p></div>
+        <div class="carte-marque"><h3>Les autres</h3><p>Razer, Loupedeck, Touch Portal, avec des raccourcis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Toutes les voix de la taverne</h2>
+    <p class="intro">Les 5 voix allumées marchent dans la démo. Les 28 autres se débloquent avec un abonnement.</p>
+    <div class="mur" aria-label="Les 33 voix" style="margin-top:22px"><span class="bock libre" style="--c:#c9b18f;--r:-3.2deg" tabindex="0" aria-label="Normal (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-normal"/></svg><span class="infobulle">Normal</span></span><span class="bock libre" style="--c:#f08a3c;--r:-6.3deg" tabindex="0" aria-label="Chipmunk (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chipmunk"/></svg><span class="infobulle">Chipmunk</span></span><span class="bock" style="--c:#6dbb63;--r:2.7deg" tabindex="0" aria-label="Lutin"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-lutin"/></svg><span class="infobulle">Lutin</span></span><span class="bock" style="--c:#a8784a;--r:-7.7deg" tabindex="0" aria-label="Géant"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-geant"/></svg><span class="infobulle">Géant</span></span><span class="bock" style="--c:#f4a6b8;--r:0.6deg" tabindex="0" aria-label="Bébé"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-bebe"/></svg><span class="infobulle">Bébé</span></span><span class="bock" style="--c:#e94fa0;--r:-2.4deg" tabindex="0" aria-label="Autotune"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-autotune"/></svg><span class="infobulle">Autotune</span></span><span class="bock" style="--c:#f07fb8;--r:-8.0deg" tabindex="0" aria-label="Autotune doux"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-note"/></svg><span class="infobulle">Autotune doux</span></span><span class="bock" style="--c:#d4af37;--r:0.1deg" tabindex="0" aria-label="French Touch"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-casque"/></svg><span class="infobulle">French Touch</span></span><span class="bock" style="--c:#c98a3a;--r:-8.3deg" tabindex="0" aria-label="Talkbox"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-talkbox"/></svg><span class="infobulle">Talkbox</span></span><span class="bock" style="--c:#9c7bd6;--r:-1.2deg" tabindex="0" aria-label="Chorale"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chorale"/></svg><span class="infobulle">Chorale</span></span><span class="bock" style="--c:#ff7a59;--r:-7.7deg" tabindex="0" aria-label="Pop star"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-popstar"/></svg><span class="infobulle">Pop star</span></span><span class="bock" style="--c:#5ec8e6;--r:-7.4deg" tabindex="0" aria-label="Soirée"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-soiree"/></svg><span class="infobulle">Soirée</span></span><span class="bock libre" style="--c:#6f9fc8;--r:-1.4deg" tabindex="0" aria-label="Robot (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-robot"/></svg><span class="infobulle">Robot</span></span><span class="bock" style="--c:#3fb8a4;--r:5.9deg" tabindex="0" aria-label="Alien"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-alien"/></svg><span class="infobulle">Alien</span></span><span class="bock" style="--c:#7d8fa8;--r:-6.8deg" tabindex="0" aria-label="Cyborg"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-cyborg"/></svg><span class="infobulle">Cyborg</span></span><span class="bock" style="--c:#62c26b;--r:-5.0deg" tabindex="0" aria-label="Rétro 8-bit"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-manette"/></svg><span class="infobulle">Rétro 8-bit</span></span><span class="bock" style="--c:#4f9bd9;--r:2.3deg" tabindex="0" aria-label="Ordinateur"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-ordinateur"/></svg><span class="infobulle">Ordinateur</span></span><span class="bock" style="--c:#8f5fc4;--r:8.1deg" tabindex="0" aria-label="Monstre"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-monstre"/></svg><span class="infobulle">Monstre</span></span><span class="bock libre" style="--c:#d4473a;--r:1.4deg" tabindex="0" aria-label="Démon (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-demon"/></svg><span class="infobulle">Démon</span></span><span class="bock" style="--c:#b7a6e0;--r:-1.9deg" tabindex="0" aria-label="Fantôme"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-fantome"/></svg><span class="infobulle">Fantôme</span></span><span class="bock" style="--c:#c2452d;--r:8.6deg" tabindex="0" aria-label="Dragon"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-dragon"/></svg><span class="infobulle">Dragon</span></span><span class="bock" style="--c:#6b8e3a;--r:-8.2deg" tabindex="0" aria-label="Orc"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-orc"/></svg><span class="infobulle">Orc</span></span><span class="bock" style="--c:#9bbf3b;--r:6.5deg" tabindex="0" aria-label="Gobelin"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-gobelin"/></svg><span class="infobulle">Gobelin</span></span><span class="bock" style="--c:#7a9a7e;--r:-3.8deg" tabindex="0" aria-label="Zombie"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-zombie"/></svg><span class="infobulle">Zombie</span></span><span class="bock" style="--c:#8d8a83;--r:-6.4deg" tabindex="0" aria-label="Grotte"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-grotte"/></svg><span class="infobulle">Grotte</span></span><span class="bock" style="--c:#a99bd1;--r:-6.9deg" tabindex="0" aria-label="Cathédrale"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-cathedrale"/></svg><span class="infobulle">Cathédrale</span></span><span class="bock" style="--c:#b5a447;--r:-3.4deg" tabindex="0" aria-label="Radio"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-radio"/></svg><span class="infobulle">Radio</span></span><span class="bock libre" style="--c:#d9708f;--r:5.7deg" tabindex="0" aria-label="Téléphone (démo)"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-telephone"/></svg><span class="infobulle">Téléphone</span></span><span class="bock" style="--c:#e98b2e;--r:-5.7deg" tabindex="0" aria-label="Mégaphone"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-megaphone"/></svg><span class="infobulle">Mégaphone</span></span><span class="bock" style="--c:#e7b53c;--r:1.5deg" tabindex="0" aria-label="Stade"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-stade"/></svg><span class="infobulle">Stade</span></span><span class="bock" style="--c:#3d8fc4;--r:2.5deg" tabindex="0" aria-label="Sous l&#x27;eau"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-bulles"/></svg><span class="infobulle">Sous l&#x27;eau</span></span><span class="bock" style="--c:#9aa3b5;--r:-2.3deg" tabindex="0" aria-label="Chuchoteur"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-chut"/></svg><span class="infobulle">Chuchoteur</span></span><span class="bock" style="--c:#d98f2b;--r:0.9deg" tabindex="0" aria-label="Ivrogne"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-ivrogne"/></svg><span class="infobulle">Ivrogne</span></span></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Ils streament avec Taverne Voice</h2>
+    <p class="intro">Les streamers partenaires de la taverne. Passe leur dire bonjour.</p>
+    <div class="partenaires"><article class="partenaire">
+  <div class="ecran"><button type="button" data-chaine="mrtoto_of"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true" style="width:20px;height:20px"><path d="M10 6h30v20l-8 8h-7l-6 6v-6h-9V12Z"/><path d="M22 14v9M31 14v9"/></svg>Regarder le live</button></div>
+  <div class="infos">
+    <span class="pastille-p">M</span>
+    <div><h3>MRTOTO_OF</h3><p>Le créateur de Taverne Voice, en live avec toutes les voix de la taverne.</p></div>
+    <a class="bouton second petit" href="https://www.twitch.tv/mrtoto_of" target="_blank" rel="noopener">Suivre</a>
+  </div>
+</article><article class="partenaire">
+  <div class="ecran"><button type="button" data-chaine="wapi_twitch"><svg class="ic" viewBox="0 0 48 48" aria-hidden="true" style="width:20px;height:20px"><path d="M10 6h30v20l-8 8h-7l-6 6v-6h-9V12Z"/><path d="M22 14v9M31 14v9"/></svg>Regarder le live</button></div>
+  <div class="infos">
+    <span class="pastille-p">W</span>
+    <div><h3>Wapi_twitch</h3><p>Streameur partenaire : retrouve Taverne Voice dans ses lives.</p></div>
+    <a class="bouton second petit" href="https://www.twitch.tv/wapi_twitch" target="_blank" rel="noopener">Suivre</a>
+  </div>
+</article></div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Les formules</h2>
+    <p class="intro">La démo est gratuite et sans limite de temps. Un abonnement débloque tout, sur 2 PC.</p>
+    <div class="formules">
+    <div class="formule mise-en-avant">
+      <span class="etiquette-f">Le plus souple</span>
+      <h3>Mensuel</h3>
+      <div class="prix">4,99 € <small>par mois</small></div>
+      <p>Renouvelé tout seul. Tu l'arrêtes quand tu veux depuis Ko-fi.</p>
+      <a class="bouton" href="boutique.html?formule=mensuel">Choisir</a>
+    </div>
+    <div class="formule">
+      
+      <h3>3 mois</h3>
+      <div class="prix">14,97 € <small>une fois</small></div>
+      <p>Trois mois d'accès, sans renouvellement automatique.</p>
+      <a class="bouton second" href="boutique.html?formule=trimestre">Choisir</a>
+    </div>
+    <div class="formule">
+      
+      <h3>1 an</h3>
+      <div class="prix">59,88 € <small>une fois</small></div>
+      <p>Une année entière, payée une seule fois, sans renouvellement.</p>
+      <a class="bouton second" href="boutique.html?formule=annuel">Choisir</a>
+    </div>
+  </div>
+  <p class="note-formules">Chaque formule débloque les 33 voix, les réglages, le soundboard sans limite, les points de chaîne Twitch, l'overlay OBS et les plugins Stream Deck. Paiement sécurisé par Ko-fi (carte ou PayPal).</p>
+  </div>
+</section>
 
 <section class="section">
   <div class="enveloppe">
     <h2>Prêt en trois minutes</h2>
-    <p class="intro">Taverne Voice transforme ta voix et l'envoie dans un câble audio virtuel. OBS et Discord écoutent ce câble au lieu de ton micro.</p>
     <ol class="etapes">
       <li><h3>Installe</h3><p>L'installateur ajoute le logiciel, le câble audio gratuit de VB-Audio et le plugin de ton Stream Deck.</p></li>
       <li><h3>Branche</h3><p>Dans OBS et Discord, choisis <strong>CABLE Output</strong> comme micro. <a href="obs-discord.html">Voir comment</a>.</p></li>
-      <li><h3>Choisis ta voix</h3><p>Un clic sur un sous-bock et tout le monde t'entend avec. <kbd>F8</kbd> coupe l'effet, même en jeu.</p></li>
+      <li><h3>Choisis ta voix</h3><p>Un clic sur un sous-bock et tout le monde t'entend avec.</p></li>
     </ol>
-  </div>
-</section>
-
-<section class="section">
-  <div class="enveloppe">
-    <h2>Démo ou version complète</h2>
-    <p class="intro">La démo n'a pas de limite de temps. Une clé débloque tout le reste, sur ce PC, sans compte à créer.</p>
-    <div class="offres">
-      <div class="offre">
-        <h3>Démo</h3>
-        <ul>
-          <li><strong>5 voix</strong> : Normal, Chipmunk, Robot, Démon, Téléphone</li>
-          <li><strong>3 sons</strong> dans le soundboard</li>
-          <li>La touche <kbd>F8</kbd> et les mises à jour automatiques</li>
-        </ul>
-      </div>
-      <div class="offre">
-        <h3>Version complète</h3>
-        <ul>
-          <li><strong>Les 33 voix</strong>, dont l'autotune, la French Touch et les créatures</li>
-          <li><strong>Les curseurs</strong> pour régler chaque voix et enregistrer les tiennes</li>
-          <li><strong>Un soundboard sans limite</strong>, avec Myinstants et tes MP3</li>
-          <li><strong>Les plugins Stream Deck</strong> pour toutes les marques</li>
-        </ul>
-        <p style="margin:18px 0 0"><a class="bouton petit" href="licence.html">Obtenir une clé</a></p>
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="section">
-  <div class="enveloppe">
-    <h2>Ton Stream Deck, quelle que soit la marque</h2>
-    <p class="intro">Une touche pour chaque son, une touche pour chaque voix. Les touches s'allument quand le son joue ou quand la voix est active.</p>
-    <div class="marques">
-      <div class="carte-marque"><h3>Elgato</h3><p>Stream Deck, MK.2, XL, Mini, +, Neo.</p><a class="bouton second petit" href="stream-deck.html#elgato">Installer</a></div>
-      <div class="carte-marque"><h3>StreamDock</h3><p>Mars Gaming, Mirabox, Ajazz, Soomfon.</p><a class="bouton second petit" href="stream-deck.html#streamdock">Installer</a></div>
-      <div class="carte-marque"><h3>Ulanzi</h3><p>Stream Controller D200, D200H, D200X.</p><a class="bouton second petit" href="stream-deck.html#ulanzi">Installer</a></div>
-      <div class="carte-marque"><h3>Les autres</h3><p>Razer, Loupedeck, Touch Portal : avec des raccourcis.</p><a class="bouton second petit" href="stream-deck.html#autres">Voir comment</a></div>
-    </div>
   </div>
 </section>
 
@@ -172,9 +251,23 @@
 <footer class="pied">
   <div class="enveloppe">
     <span>Taverne Voice, changeur de voix pour Windows. <span id="version-site"></span></span>
-    <span class="liens-pied"><a href="https://github.com/mrtoto-dev/taverne-voice/releases">Toutes les versions</a> <a href="faq.html">Aide</a></span>
+    <span class="pied-liens"><a href="faq.html">Aide</a><a href="https://github.com/mrtoto-dev/taverne-voice/releases">Versions</a><a href="cgv.html">CGV</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a></span>
   </div>
 </footer>
+<script>
+// le lecteur Twitch ne se charge qu'au clic (la page reste légère)
+document.addEventListener("click", (ev) => {
+  const b = ev.target.closest("[data-chaine]");
+  if (!b) return;
+  const parents = ["tavernevoice.fr", "www.tavernevoice.fr", location.hostname].filter((v, i, a) => a.indexOf(v) === i).map((p) => "&parent=" + p).join("");
+  const f = document.createElement("iframe");
+  f.src = "https://player.twitch.tv/?channel=" + encodeURIComponent(b.dataset.chaine) + parents + "&muted=false&autoplay=true";
+  f.allow = "autoplay; fullscreen";
+  f.allowFullscreen = true;
+  f.title = "Live Twitch de " + b.dataset.chaine;
+  b.parentElement.replaceChildren(f);
+});
+</script>
 <script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)
