@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Accès créateur – Taverne Voice</title>
+<meta name="description" content="Réservé au créateur de Taverne Voice.">
+<meta name="robots" content="noindex, nofollow">
+<link rel="icon" href="img/icone.png">
+<link rel="stylesheet" href="site.css">
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true">
+  <defs>
+    <symbol id="i-cadenas" viewBox="0 0 24 24"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></symbol>
+    <symbol id="i-normal" viewBox="0 0 48 48"><rect x="18" y="7" width="12" height="21" rx="6"/><path d="M12 23a12 12 0 0 0 24 0M24 35v6M17 41h14"/></symbol>
+    <symbol id="i-chipmunk" viewBox="0 0 48 48"><circle cx="13" cy="13" r="5"/><circle cx="35" cy="13" r="5"/><circle cx="24" cy="27" r="13"/><path d="M24 14.5v5"/><circle cx="19" cy="24" r="1.6" class="plein"/><circle cx="29" cy="24" r="1.6" class="plein"/><path d="M21 31h6v6h-6zM24 31v6"/></symbol>
+    <symbol id="i-lutin" viewBox="0 0 48 48"><path d="M14 21 27 5l7 16"/><path d="M11 21h26"/><circle cx="24" cy="30" r="9"/><path d="M15.5 27 8 23l7.5 9M32.5 27 40 23l-7.5 9"/><path d="M21 33q3 2 6 0"/></symbol>
+    <symbol id="i-geant" viewBox="0 0 48 48"><path d="M17 23c0-5 3-7 7-7s8 3 8 9c0 5-2 7-2 11 0 4-3 7-7 7s-6-3-6-7c0-5 0-8 0-13Z"/><circle cx="13" cy="10" r="3"/><circle cx="20" cy="7" r="2.5"/><circle cx="27" cy="7" r="2.3"/><circle cx="33" cy="9.5" r="2"/><circle cx="37" cy="14" r="1.8"/></symbol>
+    <symbol id="i-monstre" viewBox="0 0 48 48"><path d="M8 26C8 15 15 8 24 8s16 7 16 18v14H8Z"/><circle cx="24" cy="21" r="6"/><circle cx="24" cy="21" r="2" class="plein"/><path d="m13 33 3.5 4 3.5-4 4 4 4-4 3.5 4 3.5-4"/></symbol>
+    <symbol id="i-demon" viewBox="0 0 48 48"><path d="M13 19C9 13 10 7 14 4c0 6 2 9 6 11M35 19c4-6 3-12-1-15 0 6-2 9-6 11"/><circle cx="24" cy="28" r="13"/><path d="m16 23 6 3M32 23l-6 3"/><path d="M18 34q6 4 12 0M21 35l1 3 1-3"/></symbol>
+    <symbol id="i-robot" viewBox="0 0 48 48"><rect x="10" y="14" width="28" height="24" rx="4"/><path d="M24 14V8"/><circle cx="24" cy="6" r="2"/><rect x="16" y="20" width="5" height="5" rx="1"/><rect x="27" y="20" width="5" height="5" rx="1"/><path d="M17 31h14M20 31v3M24 31v3M28 31v3M6 22v8M42 22v8"/></symbol>
+    <symbol id="i-alien" viewBox="0 0 48 48"><path d="M24 6c11 0 16 8 14 17-2 9-9 18-14 18S12 32 10 23C8 14 13 6 24 6Z"/><path d="M14 22c3-1 7 1 8 5-4 1-7-1-8-5ZM34 22c-3-1-7 1-8 5 4 1 7-1 8-5Z" class="plein"/><path d="M22 35h4"/></symbol>
+    <symbol id="i-fantome" viewBox="0 0 48 48"><path d="M11 41V21a13 13 0 0 1 26 0v20l-4.3-3.5-4.4 3.5-4.3-3.5-4.3 3.5-4.4-3.5Z"/><ellipse cx="19" cy="22" rx="2" ry="3" class="plein"/><ellipse cx="29" cy="22" rx="2" ry="3" class="plein"/><path d="M21 30q3 2.5 6 0"/></symbol>
+    <symbol id="i-grotte" viewBox="0 0 48 48"><path d="M5 41C7 23 14 10 24 10s17 13 19 31"/><path d="M15 41c0-10 4-16 9-16s9 6 9 16"/><path d="M20 25v4M24 25v5M28 25v3M5 41h38"/></symbol>
+    <symbol id="i-radio" viewBox="0 0 48 48"><rect x="14" y="15" width="20" height="28" rx="4"/><path d="M19 15V5"/><rect x="18" y="20" width="12" height="8" rx="1.5"/><path d="M18 33h12M18 37h12"/></symbol>
+    <symbol id="i-telephone" viewBox="0 0 48 48"><path d="M15 7h5l3 8-4 3c2 5 6 9 11 11l3-4 8 3v5c0 2-2 4-4 4C21 37 11 27 11 11c0-2 2-4 4-4Z"/></symbol>
+    <symbol id="i-stade" viewBox="0 0 48 48"><ellipse cx="24" cy="31" rx="18" ry="8"/><ellipse cx="24" cy="31" rx="9" ry="3.5"/><path d="M7 29V12M41 29V12M4 12h6M38 12h6M5 9l4 0M39 9h4"/></symbol>
+    <symbol id="i-perso" viewBox="0 0 48 48"><path d="M11 15h21v23a4 4 0 0 1-4 4H15a4 4 0 0 1-4-4Z"/><path d="M32 20h4a4 4 0 0 1 4 4v6a4 4 0 0 1-4 4h-4"/><path d="M9 15c0-4 4-6 7-4 1-3 6-4 8-1 2-2 7-1 8 3"/><path d="M17 22v14M22 22v14M27 22v14"/></symbol>
+    <symbol id="i-cable" viewBox="0 0 48 48"><path d="M8 18h8v12H8zM16 21h4M16 27h4M32 18h8v12h-8zM28 21h4M28 27h4"/><path d="M12 30v6a6 6 0 0 0 6 6h12a6 6 0 0 0 6-6v-6" stroke-dasharray="3 3"/></symbol>
+    <symbol id="i-bebe" viewBox="0 0 48 48"><circle cx="24" cy="26" r="14"/><path d="M23 12c-3-3 1-7 5-4"/><circle cx="19" cy="24" r="1.6" class="plein"/><circle cx="29" cy="24" r="1.6" class="plein"/><circle cx="24" cy="32" r="3.2"/><path d="M19 32h-2M29 32h2"/></symbol>
+    <symbol id="i-autotune" viewBox="0 0 48 48"><path d="M18 30V10l16-4v20"/><circle cx="14" cy="30" r="4"/><circle cx="30" cy="26" r="4"/><path d="M6 42h9v-3h9v-3h9v-3h9"/></symbol>
+    <symbol id="i-note" viewBox="0 0 48 48"><path d="M24 30V8c4 2 9 4 10 9"/><circle cx="20" cy="30" r="4.5"/><path d="M6 41q4-4 8 0t8 0 8 0 8 0 8 0"/></symbol>
+    <symbol id="i-casque" viewBox="0 0 48 48"><path d="M10 31c0-12 6-21 14-21s14 9 14 21v5a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4Z"/><rect x="13" y="22" width="22" height="9" rx="3"/><circle cx="18" cy="26.5" r="1.3" class="plein"/><circle cx="22.5" cy="26.5" r="1.3" class="plein"/><circle cx="27" cy="26.5" r="1.3" class="plein"/><circle cx="31" cy="26.5" r="1.3" class="plein"/></symbol>
+    <symbol id="i-talkbox" viewBox="0 0 48 48"><path d="M6 30q8-9 16 0-8 7-16 0Z"/><path d="M22 30c6 0 6-8 11-8s5 6 9 6"/><path d="M33 22V12"/><rect x="28" y="6" width="10" height="6" rx="2"/></symbol>
+    <symbol id="i-chorale" viewBox="0 0 48 48"><circle cx="12" cy="24" r="6"/><circle cx="36" cy="24" r="6"/><circle cx="24" cy="18" r="7"/><ellipse cx="12" cy="26" rx="1.6" ry="2" class="plein"/><ellipse cx="36" cy="26" rx="1.6" ry="2" class="plein"/><ellipse cx="24" cy="20.5" rx="2" ry="2.5" class="plein"/><path d="M5 40c1-5 4-7 7-7M43 40c-1-5-4-7-7-7M15 42c1-8 5-12 9-12s8 4 9 12"/></symbol>
+    <symbol id="i-popstar" viewBox="0 0 48 48"><path d="m24 6 5.3 11 12 1.5-8.8 8.3 2.3 12L24 33l-10.8 5.8 2.3-12-8.8-8.3 12-1.5Z"/></symbol>
+    <symbol id="i-soiree" viewBox="0 0 48 48"><path d="M24 5v9"/><circle cx="24" cy="28" r="13"/><path d="M11 28h26M24 15v26M14 21h20M14 35h20M18 16c-2 8-2 16 0 24M30 16c2 8 2 16 0 24"/><path d="M40 8v6M37 11h6M8 12v4M6 14h4"/></symbol>
+    <symbol id="i-cyborg" viewBox="0 0 48 48"><circle cx="24" cy="24" r="15"/><path d="M24 9v30"/><circle cx="17" cy="22" r="2" class="plein"/><rect x="28" y="19" width="6" height="6" rx="1"/><path d="M15 31q4 3 9 2M24 31h8M27 31v3M30 31v3"/></symbol>
+    <symbol id="i-manette" viewBox="0 0 48 48"><path d="M15 17h18a9 9 0 0 1 9 9v4a6 6 0 0 1-11 3l-2-3H19l-2 3a6 6 0 0 1-11-3v-4a9 9 0 0 1 9-9Z"/><path d="M15 23v7M11.5 26.5h7"/><circle cx="31" cy="24" r="1.7" class="plein"/><circle cx="35" cy="28.5" r="1.7" class="plein"/></symbol>
+    <symbol id="i-ordinateur" viewBox="0 0 48 48"><rect x="7" y="9" width="34" height="23" rx="3"/><path d="M18 40h12M24 32v8"/><path d="M12 21h5l2-5 3 10 3-8 2 3h7"/></symbol>
+    <symbol id="i-dragon" viewBox="0 0 48 48"><path d="M24 43c-8 0-13-6-13-13 0-7 6-11 6-19 4 3 7 7 7 11 2-2 3-5 3-8 5 4 9 10 9 16 0 7-4 13-12 13Z"/><path d="M24 43c-3 0-5-3-5-6 0-4 3-6 4-9 3 3 6 6 6 9 0 4-2 6-5 6Z"/></symbol>
+    <symbol id="i-orc" viewBox="0 0 48 48"><path d="M10 23c0-8 6-14 14-14s14 6 14 14v5c0 7-6 13-14 13s-14-6-14-13Z"/><path d="m15 20 6 2M33 20l-6 2"/><circle cx="18" cy="25" r="1.6" class="plein"/><circle cx="30" cy="25" r="1.6" class="plein"/><path d="M16 34h16M18 34l1-5M30 34l-1-5"/></symbol>
+    <symbol id="i-gobelin" viewBox="0 0 48 48"><circle cx="24" cy="27" r="11"/><path d="M14 23 3 15l10 13M34 23l11-8-10 13"/><circle cx="20" cy="25" r="2.2"/><circle cx="28" cy="25" r="2.2"/><path d="M18 32q6 4 12 0M21 33.5v2M27 33.5v2"/></symbol>
+    <symbol id="i-zombie" viewBox="0 0 48 48"><path d="M11 20c0-7 6-12 13-12s13 5 13 12v10c0 6-6 11-13 11s-13-5-13-11Z"/><path d="m15 19 5 5M20 19l-5 5"/><circle cx="30" cy="22" r="2" class="plein"/><path d="M16 33h16M19 31v4M24 31v4M29 31v4M30 9l-3 6 4 1"/></symbol>
+    <symbol id="i-cathedrale" viewBox="0 0 48 48"><path d="M10 42V22L24 7l14 15v20Z"/><path d="M18 42V31a6 6 0 0 1 12 0v11"/><circle cx="24" cy="20" r="3"/><path d="M6 42h36"/></symbol>
+    <symbol id="i-megaphone" viewBox="0 0 48 48"><path d="M8 19h7l16-9v28l-16-9H8Z"/><path d="m15 29 3 9h4l-2-8"/><path d="M36 18a8 8 0 0 1 0 12M40 14a14 14 0 0 1 0 20"/></symbol>
+    <symbol id="i-bulles" viewBox="0 0 48 48"><circle cx="18" cy="30" r="7"/><circle cx="31" cy="19" r="5"/><circle cx="22" cy="11" r="3"/><circle cx="35" cy="32" r="2.5"/><path d="M5 43q4-3 8 0t8 0 8 0 8 0 8 0"/></symbol>
+    <symbol id="i-chut" viewBox="0 0 48 48"><path d="M6 24q7-7 14 0-7 7-14 0Z"/><path d="M25 17q4 7 0 14M31 13q7 11 0 22M37 9q10 15 0 30" stroke-dasharray="2 4"/></symbol>
+    <symbol id="i-ivrogne" viewBox="0 0 48 48"><g transform="rotate(-20 22 28)"><path d="M10 17h19v21a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4Z"/><path d="M29 22h4a4 4 0 0 1 4 4v5a4 4 0 0 1-4 4h-4"/><path d="M8 17c0-4 4-6 7-4 1-3 6-4 8-1 2-2 6-1 7 3"/></g><circle cx="38" cy="11" r="2.2"/><circle cx="42" cy="18" r="1.5"/><circle cx="34" cy="5" r="1.4"/></symbol>
+    <symbol id="i-etoile" viewBox="0 0 48 48"><path d="m24 6 5.3 11 12 1.5-8.8 8.3 2.3 12L24 33l-10.8 5.8 2.3-12-8.8-8.3 12-1.5Z"/></symbol>
+    <symbol id="i-applaudir" viewBox="0 0 48 48"><path d="M17 40 9 27a3 3 0 0 1 5-3l4 6V12a3 3 0 0 1 6 0v12l2-10a3 3 0 0 1 6 1l-2 11 3-7a3 3 0 0 1 5 2l-5 13c-2 5-6 7-11 7Z"/><path d="M8 10 5 6M14 7l-1-4M3 15H0"/></symbol>
+    <symbol id="i-foule" viewBox="0 0 48 48"><circle cx="12" cy="18" r="5"/><circle cx="36" cy="18" r="5"/><circle cx="24" cy="15" r="6"/><path d="M3 40c0-7 4-11 9-11M45 40c0-7-4-11-9-11M13 42c0-9 5-14 11-14s11 5 11 14"/><path d="M24 4v3M17 6l1 3M31 6l-1 3"/></symbol>
+    <symbol id="i-boum" viewBox="0 0 48 48"><path d="m24 4 4 10 10-5-3 11 10 4-10 4 3 11-10-5-4 10-4-10-10 5 3-11-10-4 10-4-3-11 10 5Z"/></symbol>
+    <symbol id="i-batterie" viewBox="0 0 48 48"><ellipse cx="24" cy="26" rx="14" ry="5"/><path d="M10 26v10c0 3 6 5 14 5s14-2 14-5V26"/><path d="m8 6 13 16M40 6 27 22"/></symbol>
+    <symbol id="i-trombone" viewBox="0 0 48 48"><path d="M6 20h28a4 4 0 0 1 0 8H14"/><path d="M34 16v16"/><path d="M14 28h-4"/><path d="M34 24l8-6v12Z"/><path d="M14 20v-4"/></symbol>
+    <symbol id="i-klaxon" viewBox="0 0 48 48"><path d="M6 20h6l18-10v28L12 28H6Z"/><circle cx="9" cy="24" r="0.1"/><path d="M36 16q4 8 0 16M41 12q7 12 0 24"/></symbol>
+    <symbol id="i-grillon" viewBox="0 0 48 48"><ellipse cx="22" cy="27" rx="11" ry="6"/><circle cx="35" cy="24" r="4"/><path d="M38 21c3-6 6-10 9-12M37 21c1-6 2-11 5-14M14 32l-5 8M22 33l-2 8M30 32l4 8M11 26 4 20"/></symbol>
+    <symbol id="i-rate" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><circle cx="18" cy="20" r="1.8" class="plein"/><circle cx="30" cy="20" r="1.8" class="plein"/><path d="M16 33q8-7 16 0"/></symbol>
+    <symbol id="i-suspense" viewBox="0 0 48 48"><path d="M17 15a7 7 0 1 1 10 6c-2 1-3 3-3 5v3"/><circle cx="24" cy="36" r="1.8" class="plein"/></symbol>
+    <symbol id="i-eclair" viewBox="0 0 48 48"><path d="M27 4 11 27h11l-3 17 17-24H25Z"/></symbol>
+    <symbol id="i-prout" viewBox="0 0 48 48"><path d="M10 30c-4-6 1-13 7-11 1-6 10-8 13-2 6-2 11 4 8 10 4 4 0 10-5 9-2 4-9 5-12 1-5 2-11-1-11-7Z"/><path d="M18 30h0M24 27h0M30 31h0" stroke-width="4"/></symbol>
+    <symbol id="i-ressort" viewBox="0 0 48 48"><path d="M12 40h24M14 36l20-4-20-4 20-4-20-4 20-4-20-4 20-4"/></symbol>
+    <symbol id="i-marteau" viewBox="0 0 48 48"><path d="m22 26-12 12a3 3 0 0 0 4 4l12-12"/><rect x="20" y="8" width="20" height="12" rx="2" transform="rotate(45 30 14)"/></symbol>
+    <symbol id="i-bulle" viewBox="0 0 48 48"><circle cx="24" cy="24" r="12"/><path d="M18 20a6 6 0 0 1 5-4"/><path d="M24 4v4M24 40v4M4 24h4M40 24h4M10 10l3 3M35 35l3 3M38 10l-3 3M10 38l3-3"/></symbol>
+    <symbol id="i-vent" viewBox="0 0 48 48"><path d="M5 18h24a5 5 0 1 0-5-5M5 26h32a5 5 0 1 1-5 5M5 34h16"/></symbol>
+    <symbol id="i-coche" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><path d="m15 25 6 6 12-13"/></symbol>
+    <symbol id="i-croix" viewBox="0 0 48 48"><circle cx="24" cy="24" r="17"/><path d="m17 17 14 14M31 17 17 31"/></symbol>
+    <symbol id="i-tambour" viewBox="0 0 48 48"><ellipse cx="24" cy="20" rx="15" ry="6"/><path d="M9 20v12c0 3 7 6 15 6s15-3 15-6V20"/><path d="m14 25 4 11M24 26v12M34 25l-4 11"/></symbol>
+    <symbol id="i-piece" viewBox="0 0 48 48"><circle cx="24" cy="24" r="16"/><circle cx="24" cy="24" r="11"/><path d="M24 17v14"/></symbol>
+    <symbol id="i-fleche" viewBox="0 0 48 48"><path d="M24 40V10M12 22l12-12 12 12"/><path d="M14 44h20"/></symbol>
+    <symbol id="i-trophee" viewBox="0 0 48 48"><path d="M15 7h18v12a9 9 0 0 1-18 0Z"/><path d="M15 11H8c0 6 3 9 7 9M33 11h7c0 6-3 9-7 9M24 28v7M16 42h16M18 42c0-4 2-7 6-7s6 3 6 7"/></symbol>
+    <symbol id="i-crane" viewBox="0 0 48 48"><path d="M10 22a14 14 0 0 1 28 0c0 5-2 8-5 10v6H15v-6c-3-2-5-5-5-10Z"/><circle cx="18" cy="23" r="3.5"/><circle cx="30" cy="23" r="3.5"/><path d="M24 28v3M20 38v-4M28 38v-4"/></symbol>
+    <symbol id="i-laser" viewBox="0 0 48 48"><path d="M6 30h12l4-5h6l-2 5h16M6 30v6h10"/><path d="M30 18l6-6M34 22l8-2M26 16l2-8" stroke-dasharray="3 3"/></symbol>
+    <symbol id="i-explosion" viewBox="0 0 48 48"><path d="m24 6 3 9 8-6-2 10 10 1-8 6 7 7-10-1 1 10-7-7-6 8-1-10-10 3 6-8-8-6 10-2-3-10 8 6Z"/></symbol>
+    <symbol id="i-chrono" viewBox="0 0 48 48"><circle cx="24" cy="27" r="15"/><path d="M24 27v-8M20 6h8M24 6v6M37 14l3-3"/></symbol>
+    <symbol id="i-sirene" viewBox="0 0 48 48"><path d="M13 34V24a11 11 0 0 1 22 0v10"/><path d="M9 34h30v6H9Z"/><path d="M24 4v4M9 10l3 3M39 10l-3 3M19 24a5 5 0 0 1 5-5"/></symbol>
+    <symbol id="i-chopes" viewBox="0 0 48 48"><g transform="rotate(-14 14 28)"><path d="M6 18h14v18a3 3 0 0 1-3 3H9a3 3 0 0 1-3-3Z"/><path d="M20 22h3a3 3 0 0 1 3 3v4a3 3 0 0 1-3 3h-3"/></g><g transform="rotate(14 34 28)"><path d="M28 18h14v18a3 3 0 0 1-3 3h-8a3 3 0 0 1-3-3Z"/><path d="M28 22h-3a3 3 0 0 0-3 3v4a3 3 0 0 0 3 3h3"/></g><path d="M22 8l2-4M18 10l-2-3M28 10l2-3"/></symbol>
+    <symbol id="i-cloche" viewBox="0 0 48 48"><path d="M12 34c3-3 3-6 3-12a9 9 0 0 1 18 0c0 6 0 9 3 12Z"/><path d="M9 34h30M21 39a3 3 0 0 0 6 0M24 13V9"/></symbol>
+    <symbol id="i-bourse" viewBox="0 0 48 48"><path d="M18 14c-8 5-12 12-12 18 0 6 6 10 18 10s18-4 18-10c0-6-4-13-12-18"/><path d="M16 9h16l-4 5h-8Z"/><path d="M24 22v14M20 25c0-2 2-3 4-3s4 1 4 3-8 2-8 5 2 3 4 3 4-1 4-3"/></symbol>
+    <symbol id="i-feu" viewBox="0 0 48 48"><path d="M24 40c-7 0-11-5-11-11 0-7 6-10 6-17 4 3 6 7 6 10 2-2 3-4 3-7 4 4 7 9 7 14 0 6-4 11-11 11Z"/><path d="M8 44h32M12 40l-4 4M36 40l4 4"/></symbol>
+    <symbol id="i-de" viewBox="0 0 48 48"><rect x="9" y="9" width="30" height="30" rx="6"/><circle cx="17" cy="17" r="2" class="plein"/><circle cx="31" cy="17" r="2" class="plein"/><circle cx="24" cy="24" r="2" class="plein"/><circle cx="17" cy="31" r="2" class="plein"/><circle cx="31" cy="31" r="2" class="plein"/></symbol>
+    <symbol id="i-rot" viewBox="0 0 48 48"><circle cx="20" cy="26" r="14"/><path d="M14 30q6 4 12 0"/><path d="M15 21h3M23 21h3"/><path d="M36 14c3 0 5-2 5-5M38 22c4 0 6-3 6-6"/></symbol>
+    <symbol id="i-coeur" viewBox="0 0 48 48"><path d="M24 40S7 30 7 18a9 9 0 0 1 17-4 9 9 0 0 1 17 4c0 12-17 22-17 22Z"/></symbol>
+    <symbol id="i-cor" viewBox="0 0 48 48"><path d="M6 16c10 0 22 4 30 14l4-2-2 12-10-6 4-2C26 24 16 22 6 22Z"/><path d="M6 16v6"/></symbol>
+    <symbol id="i-caisse" viewBox="0 0 48 48"><path d="M8 24h32v16H8Z"/><path d="M12 24V12h18v12M30 16h6v8"/><path d="M15 17h12M14 32h4M22 32h4M30 32h4"/></symbol>
+    <symbol id="i-cloche-notif" viewBox="0 0 48 48"><path d="M13 33c2-2 3-4 3-10a8 8 0 0 1 16 0c0 6 1 8 3 10Z"/><path d="M21 38a3 3 0 0 0 6 0"/><circle cx="34" cy="12" r="4" class="plein"/></symbol>
+    <symbol id="i-bouton" viewBox="0 0 48 48"><ellipse cx="24" cy="31" rx="17" ry="7"/><path d="M7 31v-4c0-4 8-7 17-7s17 3 17 7v4"/><ellipse cx="24" cy="24" rx="12" ry="5" class="plein"/></symbol>
+    <symbol id="i-lecture" viewBox="0 0 48 48"><path d="M17 12v24l20-12Z" class="plein"/></symbol>
+    <symbol id="i-pause" viewBox="0 0 48 48"><rect x="14" y="12" width="7" height="24" rx="2" class="plein"/><rect x="27" y="12" width="7" height="24" rx="2" class="plein"/></symbol>
+    <symbol id="i-plus" viewBox="0 0 48 48"><path d="M24 12v24M12 24h24"/></symbol>
+  </defs>
+</svg>
+<header class="entete">
+  <div class="enveloppe">
+    <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
+    <nav class="nav" aria-label="Menu"><a href="index.html">Accueil</a><a href="installation.html">Guide</a><a href="stream-deck.html">Stream Deck</a><a href="licence.html">Version complète</a><a href="faq.html">Questions</a></nav>
+    <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
+  </div>
+</header>
+<main>
+<style>
+  .createur { padding: 48px 0 80px; max-width: 880px; }
+  .createur h1 { font-size: clamp(48px, 7vw, 72px); margin-bottom: 10px; }
+  .createur .chapo { color: var(--parchemin); font-size: 18px; max-width: 60ch; }
+  .bloc { border: 1px solid var(--poutre); border-radius: var(--rayon); padding: 24px; margin-top: 22px; }
+  .bloc h2 { font-size: 36px; margin-bottom: 6px; }
+  .bloc > p { color: var(--parchemin); font-size: 15px; }
+  .champs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+  .champ { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--parchemin); }
+  .champ input, .champ select, .champ textarea {
+    font: 15px "Rubik", sans-serif; color: var(--mousse); background: var(--nuit); border: 1px solid var(--poutre);
+    border-radius: 10px; padding: 10px 12px; width: 100%;
+  }
+  .champ textarea { font-family: ui-monospace, Consolas, monospace; font-size: 13px; resize: vertical; }
+  .champ input:focus, .champ select:focus, .champ textarea:focus { outline: none; border-color: var(--lanterne); }
+  .rangee { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .erreur { color: var(--braise); margin: 10px 0 0; }
+  .ok { color: var(--houblon); margin: 10px 0 0; }
+  .cles-creees { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 10px; }
+  .cles-creees li { background: var(--nuit); border: 1px solid var(--poutre); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; }
+  .cles-creees .cle-code { background: none; border: 0; padding: 0; font-size: 13px; line-height: 1.5; }
+  .cles-creees small { color: var(--parchemin); grid-column: 1; }
+  .cles-creees .bouton { grid-column: 2; grid-row: 1 / span 2; }
+  .historique td:first-child { font-family: ui-monospace, Consolas, monospace; font-size: 13px; white-space: nowrap; }
+  .historique .desactivee td { color: var(--parchemin); text-decoration: line-through; text-decoration-color: var(--braise); }
+  .historique .desactivee td:last-child { text-decoration: none; }
+  .historique .actions-ligne { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lien-bouton { background: none; border: 0; color: var(--lanterne); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; font-size: 14px; padding: 2px 0; }
+  .lien-bouton:hover { color: var(--mousse); }
+  .a-publier { border-color: var(--lanterne); background: color-mix(in srgb, var(--lanterne) 7%, var(--nuit)); }
+  .a-publier ol { padding-left: 20px; color: var(--mousse); }
+  .a-publier li + li { margin-top: 6px; }
+  .resultat-verif { margin-top: 12px; }
+  .vide { color: var(--parchemin); font-size: 15px; }
+</style>
+
+<div class="enveloppe createur">
+  <h1>Accès créateur</h1>
+  <p class="chapo">Ici, tu crées les clés qui débloquent la version complète. Ta clé de créateur reste chiffrée : sans le mot de passe, cette page ne sert à rien.</p>
+
+  <!-- Connexion -->
+  <form class="bloc" id="connexion" autocomplete="off">
+    <h2>Connexion</h2>
+    <div class="champs">
+      <label class="champ">Mot de passe créateur
+        <input type="password" id="mdp" autocomplete="current-password" required>
+      </label>
+    </div>
+    <div class="rangee"><button class="bouton" type="submit" id="bouton-connexion">Ouvrir</button></div>
+    <p class="erreur" id="erreur-connexion" role="alert" hidden></p>
+  </form>
+
+  <div id="espace" hidden>
+    <!-- Créer -->
+    <form class="bloc" id="creer">
+      <h2>Créer des clés</h2>
+      <p>Chaque clé débloque la version complète sur le PC où elle est activée. Le nom s'affiche dans le logiciel de la personne.</p>
+      <div class="champs">
+        <label class="champ">Pour qui (facultatif)
+          <input id="nom" maxlength="40" placeholder="Pseudo ou prénom">
+        </label>
+        <label class="champ">Durée
+          <select id="duree">
+            <option value="0">À vie</option>
+            <option value="7">7 jours</option>
+            <option value="30">30 jours</option>
+            <option value="90">3 mois</option>
+            <option value="365">1 an</option>
+            <option value="date">Jusqu'au…</option>
+          </select>
+        </label>
+        <label class="champ" id="champ-date" hidden>Dernier jour
+          <input type="date" id="date-fin">
+        </label>
+        <label class="champ">Nombre de clés
+          <input type="number" id="nombre" min="1" max="50" value="1">
+        </label>
+      </div>
+      <div class="rangee">
+        <button class="bouton" type="submit">Créer</button>
+        <button class="bouton second" type="button" id="copier-tout" hidden>Copier toutes les clés</button>
+      </div>
+      <p class="erreur" id="erreur-creer" role="alert" hidden></p>
+      <ul class="cles-creees" id="cles-creees"></ul>
+    </form>
+
+    <!-- Liste à publier -->
+    <div class="bloc a-publier" id="a-publier" hidden>
+      <h2>Clés désactivées à publier</h2>
+      <p id="a-publier-texte"></p>
+      <ol>
+        <li><button class="lien-bouton" type="button" id="copier-revoq">Copie la nouvelle liste</button>.</li>
+        <li>Ouvre <a id="lien-edition" target="_blank" rel="noopener">le fichier sur GitHub</a>, remplace tout son contenu par ce que tu viens de copier et clique sur <strong>Commit changes</strong>.</li>
+        <li>Au plus tard 6 heures après, les logiciels qui utilisent ces clés repassent en démo.</li>
+      </ol>
+    </div>
+
+    <!-- Historique -->
+    <section class="bloc">
+      <h2>Clés créées</h2>
+      <p>La liste est gardée dans ce navigateur. Exporte-la de temps en temps pour ne pas la perdre.</p>
+      <div class="rangee" style="margin:14px 0">
+        <label class="champ" style="flex:1;min-width:200px">Chercher
+          <input id="chercher" placeholder="Numéro ou nom">
+        </label>
+      </div>
+      <div class="tableau">
+        <table class="historique">
+          <thead><tr><th>Numéro</th><th>Pour</th><th>Créée le</th><th>Valable</th><th></th></tr></thead>
+          <tbody id="historique"></tbody>
+        </table>
+      </div>
+      <p class="vide" id="historique-vide">Aucune clé créée depuis ce navigateur.</p>
+      <div class="rangee">
+        <button class="bouton second petit" type="button" id="exporter">Exporter la liste</button>
+        <button class="bouton second petit" type="button" id="importer">Importer une liste</button>
+        <input type="file" id="fichier-import" accept="application/json" hidden>
+      </div>
+      <form class="rangee" id="desactiver-numero" style="margin-top:18px;align-items:flex-end">
+        <label class="champ" style="flex:1;min-width:200px">Désactiver une clé par son numéro
+          <input id="numero-a-desactiver" placeholder="Par exemple DB414D62" maxlength="8">
+        </label>
+        <button class="bouton second" type="submit">Désactiver</button>
+      </form>
+    </section>
+
+    <!-- Vérifier -->
+    <form class="bloc" id="verifier">
+      <h2>Vérifier une clé</h2>
+      <p>Retrouve le numéro, le nom et la durée d'une clé qu'on t'envoie.</p>
+      <label class="champ" style="margin:14px 0">Clé
+        <textarea id="cle-a-verifier" rows="3" spellcheck="false" placeholder="TV1-…"></textarea>
+      </label>
+      <button class="bouton second" type="submit">Vérifier</button>
+      <div class="resultat-verif" id="resultat-verif" role="status"></div>
+    </form>
+
+    <!-- Mot de passe -->
+    <form class="bloc" id="changer-mdp">
+      <h2>Changer le mot de passe</h2>
+      <p>Les clés déjà données continuent de marcher.</p>
+      <div class="champs">
+        <label class="champ">Nouveau mot de passe (12 caractères minimum)
+          <input type="password" id="mdp-nouveau" minlength="12" autocomplete="new-password" required>
+        </label>
+        <label class="champ">Encore une fois
+          <input type="password" id="mdp-confirme" minlength="12" autocomplete="new-password" required>
+        </label>
+      </div>
+      <button class="bouton second" type="submit">Préparer le nouveau fichier</button>
+      <p class="erreur" id="erreur-mdp" role="alert" hidden></p>
+      <div id="etapes-mdp" hidden>
+        <p class="ok">Le fichier <code>cle.json</code> vient d'être téléchargé.</p>
+        <ol>
+          <li>Ouvre <a href="https://github.com/mrtoto-dev/taverne-voice/upload/main/docs/createur" target="_blank" rel="noopener">le dossier docs/createur sur GitHub</a>.</li>
+          <li>Glisse le fichier <code>cle.json</code> dedans et clique sur <strong>Commit changes</strong>.</li>
+          <li>Quelques minutes après, ton nouveau mot de passe marche ici.</li>
+        </ol>
+      </div>
+    </form>
+
+    <p style="margin-top:22px"><button class="bouton second" type="button" id="deconnexion">Fermer l'accès créateur</button></p>
+  </div>
+</div>
+
+<script type="module">
+import * as L from "./createur/licence.js";
+
+const $ = (s) => document.querySelector(s);
+const FICHIER_REVOQ = "https://github.com/mrtoto-dev/taverne-voice/edit/main/docs/licences/revoquees.json";
+const CLE_HISTO = "taverne-createur-historique";
+
+let graine = null, publique = null, fichierCle = null;
+let publiees = new Set();     // numéros déjà dans revoquees.json en ligne
+let dernieres = [];           // clés créées à l'instant
+
+function lireHisto() { try { return JSON.parse(localStorage.getItem(CLE_HISTO)) || []; } catch (e) { return []; } }
+function ecrireHisto(h) { try { localStorage.setItem(CLE_HISTO, JSON.stringify(h)); } catch (e) { /* stockage indisponible */ } }
+const echapper = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dateFr = (j) => L.dateDuJour(j).toLocaleDateString("fr-FR", { timeZone: "UTC" });
+const aujourdhui = () => L.jourDe(new Date());
+
+function montrer(el, texte) { el.textContent = texte; el.hidden = !texte; }
+
+async function copier(texte, bouton) {
+  try {
+    await navigator.clipboard.writeText(texte);
+    if (bouton) { const t = bouton.textContent; bouton.textContent = "Copié"; setTimeout(() => (bouton.textContent = t), 1400); }
+  } catch (e) {
+    prompt("Copie ce texte :", texte);
+  }
+}
+
+// ------------------------------------------------------------ connexion
+async function chargerFichierCle() {
+  const r = await fetch("createur/cle.json", { cache: "no-store" });
+  if (!r.ok) throw new Error("Le fichier de la clé de créateur est introuvable.");
+  return r.json();
+}
+
+$("#connexion").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const b = $("#bouton-connexion");
+  b.disabled = true; b.textContent = "Ouverture…";
+  montrer($("#erreur-connexion"), "");
+  try {
+    fichierCle = fichierCle || await chargerFichierCle();
+    ({ graine, publique } = await L.dechiffrerGraine(fichierCle, $("#mdp").value));
+    $("#mdp").value = "";
+    $("#connexion").hidden = true;
+    $("#espace").hidden = false;
+    await chargerRevocations();
+    afficherHisto();
+  } catch (e) {
+    montrer($("#erreur-connexion"), e.message);
+  } finally {
+    b.disabled = false; b.textContent = "Ouvrir";
+  }
+});
+
+$("#deconnexion").addEventListener("click", () => {
+  graine = null; publique = null; dernieres = [];
+  $("#cles-creees").innerHTML = "";
+  $("#espace").hidden = true;
+  $("#connexion").hidden = false;
+  $("#mdp").focus();
+});
+
+// ------------------------------------------------------------ créer
+$("#duree").addEventListener("change", () => { $("#champ-date").hidden = $("#duree").value !== "date"; });
+
+$("#creer").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const err = $("#erreur-creer");
+  montrer(err, "");
+  const n = Math.max(1, Math.min(50, Number($("#nombre").value) || 1));
+  let expire = 0;
+  const d = $("#duree").value;
+  if (d === "date") {
+    if (!$("#date-fin").value) return montrer(err, "Choisis le dernier jour de validité.");
+    const [a, m, j] = $("#date-fin").value.split("-").map(Number);
+    expire = L.jourDe(new Date(a, m - 1, j));
+    if (expire < aujourdhui()) return montrer(err, "Cette date est déjà passée.");
+  } else if (d !== "0") {
+    expire = aujourdhui() + Number(d);
+  }
+  const nom = L.couperNom($("#nom").value);
+  const histo = lireHisto();
+  dernieres = [];
+  for (let i = 0; i < n; i++) {
+    const c = await L.creerCle(graine, { nom, expire });
+    dernieres.push(c);
+    histo.unshift({ numero: c.numero, nom: c.nom, emise: c.emise, expire: c.expire, cle: c.cle, desactivee: false });
+  }
+  ecrireHisto(histo);
+  $("#cles-creees").innerHTML = dernieres.map((c, i) => `<li>
+    <code class="cle-code">${c.cle}</code>
+    <small>N° ${c.numero}${c.nom ? `, pour ${echapper(c.nom)}` : ""}, ${c.expire ? `valable jusqu'au ${dateFr(c.expire)}` : "à vie"}</small>
+    <button class="bouton second petit" type="button" data-copier="${i}">Copier</button></li>`).join("");
+  $("#copier-tout").hidden = dernieres.length < 2;
+  afficherHisto();
+});
+
+$("#cles-creees").addEventListener("click", (ev) => {
+  const b = ev.target.closest("[data-copier]");
+  if (b) copier(dernieres[Number(b.dataset.copier)].cle, b);
+});
+$("#copier-tout").addEventListener("click", (ev) => copier(dernieres.map((c) => c.cle).join("\n"), ev.target));
+
+// ------------------------------------------------------------ historique
+function afficherHisto() {
+  const q = $("#chercher").value.trim().toLowerCase();
+  const h = lireHisto().filter((c) => !q || c.numero.toLowerCase().includes(q) || (c.nom || "").toLowerCase().includes(q));
+  $("#historique").innerHTML = h.map((c) => `<tr class="${c.desactivee ? "desactivee" : ""}">
+    <td>${c.numero}</td><td>${echapper(c.nom) || "—"}</td><td>${dateFr(c.emise)}</td>
+    <td>${c.desactivee ? "désactivée" : c.expire ? (c.expire < aujourdhui() ? `expirée le ${dateFr(c.expire)}` : `jusqu'au ${dateFr(c.expire)}`) : "à vie"}</td>
+    <td><span class="actions-ligne">
+      <button class="lien-bouton" type="button" data-copier-cle="${c.numero}">Copier</button>
+      <button class="lien-bouton" type="button" data-basculer="${c.numero}">${c.desactivee ? "Réactiver" : "Désactiver"}</button>
+    </span></td></tr>`).join("");
+  $("#historique-vide").hidden = lireHisto().length > 0;
+  afficherAPublier();
+}
+$("#chercher").addEventListener("input", afficherHisto);
+
+$("#historique").addEventListener("click", (ev) => {
+  const c = ev.target.closest("[data-copier-cle]");
+  if (c) { const k = lireHisto().find((x) => x.numero === c.dataset.copierCle); if (k) copier(k.cle, c); }
+  const b = ev.target.closest("[data-basculer]");
+  if (b) {
+    const h = lireHisto();
+    const k = h.find((x) => x.numero === b.dataset.basculer);
+    if (!k) return;
+    if (!k.desactivee && !confirm(`Désactiver la clé ${k.numero}${k.nom ? ` (${k.nom})` : ""} ? Le logiciel qui l'utilise repassera en démo.`)) return;
+    k.desactivee = !k.desactivee;
+    ecrireHisto(h);
+    afficherHisto();
+  }
+});
+
+$("#desactiver-numero").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const num = $("#numero-a-desactiver").value.trim().toUpperCase();
+  if (!/^[0-9A-F]{8}$/.test(num)) return alert("Le numéro fait 8 caractères, chiffres et lettres de A à F. « Vérifier une clé » te le donne.");
+  const h = lireHisto();
+  const k = h.find((x) => x.numero === num);
+  if (k) k.desactivee = true;
+  else h.push({ numero: num, nom: "", emise: aujourdhui(), expire: 0, cle: "", desactivee: true });
+  ecrireHisto(h);
+  $("#numero-a-desactiver").value = "";
+  afficherHisto();
+});
+
+$("#exporter").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(lireHisto(), null, 2)], { type: "application/json" }));
+  a.download = `cles-taverne-voice-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+});
+$("#importer").addEventListener("click", () => $("#fichier-import").click());
+$("#fichier-import").addEventListener("change", async (ev) => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  try {
+    const liste = JSON.parse(await f.text());
+    if (!Array.isArray(liste)) throw new Error();
+    const h = lireHisto();
+    const connus = new Set(h.map((x) => x.numero));
+    for (const k of liste) if (k && /^[0-9A-F]{8}$/.test(k.numero) && !connus.has(k.numero)) h.push(k);
+    ecrireHisto(h);
+    afficherHisto();
+  } catch (e) {
+    alert("Ce fichier n'est pas une liste de clés exportée depuis cette page.");
+  }
+  ev.target.value = "";
+});
+
+// ------------------------------------------------------------ clés désactivées
+async function chargerRevocations() {
+  try {
+    const r = await fetch("licences/revoquees.json", { cache: "no-store" });
+    const j = await r.json();
+    publiees = new Set((j.revoquees || []).map((x) => x.toUpperCase()));
+    // une clé désactivée en ligne apparaît désactivée ici aussi
+    const h = lireHisto();
+    let change = false;
+    for (const k of h) if (publiees.has(k.numero) && !k.desactivee) { k.desactivee = true; change = true; }
+    if (change) ecrireHisto(h);
+  } catch (e) { /* hors ligne : on garde la liste locale */ }
+}
+
+function listeVoulue() {
+  return [...new Set([...lireHisto().filter((k) => k.desactivee).map((k) => k.numero)])].sort();
+}
+
+function afficherAPublier() {
+  const voulue = listeVoulue();
+  const pareil = voulue.length === publiees.size && voulue.every((n) => publiees.has(n));
+  $("#a-publier").hidden = pareil;
+  if (pareil) return;
+  const ajout = voulue.filter((n) => !publiees.has(n)).length;
+  const retrait = [...publiees].filter((n) => !voulue.includes(n)).length;
+  const morceaux = [];
+  if (ajout) morceaux.push(`${ajout} clé${ajout > 1 ? "s" : ""} à désactiver`);
+  if (retrait) morceaux.push(`${retrait} clé${retrait > 1 ? "s" : ""} à réactiver`);
+  $("#a-publier-texte").textContent = `${morceaux.join(" et ")}. La liste en ligne n'est pas encore à jour :`;
+  $("#lien-edition").href = FICHIER_REVOQ;
+}
+$("#copier-revoq").addEventListener("click", (ev) => copier(JSON.stringify({ revoquees: listeVoulue() }, null, 2) + "\n", ev.target));
+
+// ------------------------------------------------------------ vérifier
+$("#verifier").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const z = $("#resultat-verif");
+  const t = $("#cle-a-verifier").value.trim();
+  if (!t) return;
+  const r = await L.lireCle(t, publique);
+  if (!r.valide) { z.innerHTML = `<p class="erreur">${echapper(r.raison)}</p>`; return; }
+  const desactivee = publiees.has(r.numero) || lireHisto().some((k) => k.numero === r.numero && k.desactivee);
+  const expiree = r.expire && r.expire < aujourdhui();
+  z.innerHTML = `<p class="${desactivee || expiree ? "erreur" : "ok"}">Clé n° <strong>${r.numero}</strong>${r.nom ? `, pour <strong>${echapper(r.nom)}</strong>` : ""}, créée le ${dateFr(r.emise)}, ${r.expire ? `valable jusqu'au ${dateFr(r.expire)}` : "à vie"}.
+    ${desactivee ? "Elle est désactivée." : expiree ? "Elle a expiré." : "Elle marche."}</p>`;
+});
+
+// ------------------------------------------------------------ mot de passe
+$("#changer-mdp").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const err = $("#erreur-mdp");
+  montrer(err, "");
+  const a = $("#mdp-nouveau").value, b = $("#mdp-confirme").value;
+  if (a.length < 12) return montrer(err, "Le mot de passe doit faire au moins 12 caractères.");
+  if (a !== b) return montrer(err, "Les deux mots de passe ne sont pas pareils.");
+  const nouveau = await L.chiffrerGraine(graine, a);
+  const lien = document.createElement("a");
+  lien.href = URL.createObjectURL(new Blob([JSON.stringify(nouveau, null, 2) + "\n"], { type: "application/json" }));
+  lien.download = "cle.json";
+  lien.click();
+  $("#mdp-nouveau").value = ""; $("#mdp-confirme").value = "";
+  $("#etapes-mdp").hidden = false;
+});
+</script>
+
+</main>
+<footer class="pied">
+  <div class="enveloppe">
+    <span>Taverne Voice, changeur de voix pour Windows. <span id="version-site"></span></span>
+    <span class="liens-pied"><a href="https://github.com/mrtoto-dev/taverne-voice/releases">Toutes les versions</a> <a href="faq.html">Aide</a></span>
+  </div>
+</footer>
+<script>
+fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
+  .then((r) => r.ok ? r.json() : null)
+  .then((r) => { if (r && r.tag_name) document.querySelector("#version-site").textContent = "Dernière version : " + r.tag_name.replace(/^v/, "") + "."; })
+  .catch(() => {});
+</script>
+</body>
+</html>

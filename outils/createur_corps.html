@@ -1,0 +1,401 @@
+<style>
+  .createur { padding: 48px 0 80px; max-width: 880px; }
+  .createur h1 { font-size: clamp(48px, 7vw, 72px); margin-bottom: 10px; }
+  .createur .chapo { color: var(--parchemin); font-size: 18px; max-width: 60ch; }
+  .bloc { border: 1px solid var(--poutre); border-radius: var(--rayon); padding: 24px; margin-top: 22px; }
+  .bloc h2 { font-size: 36px; margin-bottom: 6px; }
+  .bloc > p { color: var(--parchemin); font-size: 15px; }
+  .champs { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; margin: 16px 0; }
+  .champ { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--parchemin); }
+  .champ input, .champ select, .champ textarea {
+    font: 15px "Rubik", sans-serif; color: var(--mousse); background: var(--nuit); border: 1px solid var(--poutre);
+    border-radius: 10px; padding: 10px 12px; width: 100%;
+  }
+  .champ textarea { font-family: ui-monospace, Consolas, monospace; font-size: 13px; resize: vertical; }
+  .champ input:focus, .champ select:focus, .champ textarea:focus { outline: none; border-color: var(--lanterne); }
+  .rangee { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+  .erreur { color: var(--braise); margin: 10px 0 0; }
+  .ok { color: var(--houblon); margin: 10px 0 0; }
+  .cles-creees { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 10px; }
+  .cles-creees li { background: var(--nuit); border: 1px solid var(--poutre); border-radius: 10px; padding: 12px 14px; display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 6px 12px; align-items: center; }
+  .cles-creees .cle-code { background: none; border: 0; padding: 0; font-size: 13px; line-height: 1.5; }
+  .cles-creees small { color: var(--parchemin); grid-column: 1; }
+  .cles-creees .bouton { grid-column: 2; grid-row: 1 / span 2; }
+  .historique td:first-child { font-family: ui-monospace, Consolas, monospace; font-size: 13px; white-space: nowrap; }
+  .historique .desactivee td { color: var(--parchemin); text-decoration: line-through; text-decoration-color: var(--braise); }
+  .historique .desactivee td:last-child { text-decoration: none; }
+  .historique .actions-ligne { display: flex; gap: 6px; flex-wrap: wrap; }
+  .lien-bouton { background: none; border: 0; color: var(--lanterne); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; font-size: 14px; padding: 2px 0; }
+  .lien-bouton:hover { color: var(--mousse); }
+  .a-publier { border-color: var(--lanterne); background: color-mix(in srgb, var(--lanterne) 7%, var(--nuit)); }
+  .a-publier ol { padding-left: 20px; color: var(--mousse); }
+  .a-publier li + li { margin-top: 6px; }
+  .resultat-verif { margin-top: 12px; }
+  .vide { color: var(--parchemin); font-size: 15px; }
+</style>
+
+<div class="enveloppe createur">
+  <h1>Accès créateur</h1>
+  <p class="chapo">Ici, tu crées les clés qui débloquent la version complète. Ta clé de créateur reste chiffrée : sans le mot de passe, cette page ne sert à rien.</p>
+
+  <!-- Connexion -->
+  <form class="bloc" id="connexion" autocomplete="off">
+    <h2>Connexion</h2>
+    <div class="champs">
+      <label class="champ">Mot de passe créateur
+        <input type="password" id="mdp" autocomplete="current-password" required>
+      </label>
+    </div>
+    <div class="rangee"><button class="bouton" type="submit" id="bouton-connexion">Ouvrir</button></div>
+    <p class="erreur" id="erreur-connexion" role="alert" hidden></p>
+  </form>
+
+  <div id="espace" hidden>
+    <!-- Créer -->
+    <form class="bloc" id="creer">
+      <h2>Créer des clés</h2>
+      <p>Chaque clé débloque la version complète sur le PC où elle est activée. Le nom s'affiche dans le logiciel de la personne.</p>
+      <div class="champs">
+        <label class="champ">Pour qui (facultatif)
+          <input id="nom" maxlength="40" placeholder="Pseudo ou prénom">
+        </label>
+        <label class="champ">Durée
+          <select id="duree">
+            <option value="0">À vie</option>
+            <option value="7">7 jours</option>
+            <option value="30">30 jours</option>
+            <option value="90">3 mois</option>
+            <option value="365">1 an</option>
+            <option value="date">Jusqu'au…</option>
+          </select>
+        </label>
+        <label class="champ" id="champ-date" hidden>Dernier jour
+          <input type="date" id="date-fin">
+        </label>
+        <label class="champ">Nombre de clés
+          <input type="number" id="nombre" min="1" max="50" value="1">
+        </label>
+      </div>
+      <div class="rangee">
+        <button class="bouton" type="submit">Créer</button>
+        <button class="bouton second" type="button" id="copier-tout" hidden>Copier toutes les clés</button>
+      </div>
+      <p class="erreur" id="erreur-creer" role="alert" hidden></p>
+      <ul class="cles-creees" id="cles-creees"></ul>
+    </form>
+
+    <!-- Liste à publier -->
+    <div class="bloc a-publier" id="a-publier" hidden>
+      <h2>Clés désactivées à publier</h2>
+      <p id="a-publier-texte"></p>
+      <ol>
+        <li><button class="lien-bouton" type="button" id="copier-revoq">Copie la nouvelle liste</button>.</li>
+        <li>Ouvre <a id="lien-edition" target="_blank" rel="noopener">le fichier sur GitHub</a>, remplace tout son contenu par ce que tu viens de copier et clique sur <strong>Commit changes</strong>.</li>
+        <li>Au plus tard 6 heures après, les logiciels qui utilisent ces clés repassent en démo.</li>
+      </ol>
+    </div>
+
+    <!-- Historique -->
+    <section class="bloc">
+      <h2>Clés créées</h2>
+      <p>La liste est gardée dans ce navigateur. Exporte-la de temps en temps pour ne pas la perdre.</p>
+      <div class="rangee" style="margin:14px 0">
+        <label class="champ" style="flex:1;min-width:200px">Chercher
+          <input id="chercher" placeholder="Numéro ou nom">
+        </label>
+      </div>
+      <div class="tableau">
+        <table class="historique">
+          <thead><tr><th>Numéro</th><th>Pour</th><th>Créée le</th><th>Valable</th><th></th></tr></thead>
+          <tbody id="historique"></tbody>
+        </table>
+      </div>
+      <p class="vide" id="historique-vide">Aucune clé créée depuis ce navigateur.</p>
+      <div class="rangee">
+        <button class="bouton second petit" type="button" id="exporter">Exporter la liste</button>
+        <button class="bouton second petit" type="button" id="importer">Importer une liste</button>
+        <input type="file" id="fichier-import" accept="application/json" hidden>
+      </div>
+      <form class="rangee" id="desactiver-numero" style="margin-top:18px;align-items:flex-end">
+        <label class="champ" style="flex:1;min-width:200px">Désactiver une clé par son numéro
+          <input id="numero-a-desactiver" placeholder="Par exemple DB414D62" maxlength="8">
+        </label>
+        <button class="bouton second" type="submit">Désactiver</button>
+      </form>
+    </section>
+
+    <!-- Vérifier -->
+    <form class="bloc" id="verifier">
+      <h2>Vérifier une clé</h2>
+      <p>Retrouve le numéro, le nom et la durée d'une clé qu'on t'envoie.</p>
+      <label class="champ" style="margin:14px 0">Clé
+        <textarea id="cle-a-verifier" rows="3" spellcheck="false" placeholder="TV1-…"></textarea>
+      </label>
+      <button class="bouton second" type="submit">Vérifier</button>
+      <div class="resultat-verif" id="resultat-verif" role="status"></div>
+    </form>
+
+    <!-- Mot de passe -->
+    <form class="bloc" id="changer-mdp">
+      <h2>Changer le mot de passe</h2>
+      <p>Les clés déjà données continuent de marcher.</p>
+      <div class="champs">
+        <label class="champ">Nouveau mot de passe (12 caractères minimum)
+          <input type="password" id="mdp-nouveau" minlength="12" autocomplete="new-password" required>
+        </label>
+        <label class="champ">Encore une fois
+          <input type="password" id="mdp-confirme" minlength="12" autocomplete="new-password" required>
+        </label>
+      </div>
+      <button class="bouton second" type="submit">Préparer le nouveau fichier</button>
+      <p class="erreur" id="erreur-mdp" role="alert" hidden></p>
+      <div id="etapes-mdp" hidden>
+        <p class="ok">Le fichier <code>cle.json</code> vient d'être téléchargé.</p>
+        <ol>
+          <li>Ouvre <a href="https://github.com/mrtoto-dev/taverne-voice/upload/main/docs/createur" target="_blank" rel="noopener">le dossier docs/createur sur GitHub</a>.</li>
+          <li>Glisse le fichier <code>cle.json</code> dedans et clique sur <strong>Commit changes</strong>.</li>
+          <li>Quelques minutes après, ton nouveau mot de passe marche ici.</li>
+        </ol>
+      </div>
+    </form>
+
+    <p style="margin-top:22px"><button class="bouton second" type="button" id="deconnexion">Fermer l'accès créateur</button></p>
+  </div>
+</div>
+
+<script type="module">
+import * as L from "./createur/licence.js";
+
+const $ = (s) => document.querySelector(s);
+const FICHIER_REVOQ = "https://github.com/mrtoto-dev/taverne-voice/edit/main/docs/licences/revoquees.json";
+const CLE_HISTO = "taverne-createur-historique";
+
+let graine = null, publique = null, fichierCle = null;
+let publiees = new Set();     // numéros déjà dans revoquees.json en ligne
+let dernieres = [];           // clés créées à l'instant
+
+function lireHisto() { try { return JSON.parse(localStorage.getItem(CLE_HISTO)) || []; } catch (e) { return []; } }
+function ecrireHisto(h) { try { localStorage.setItem(CLE_HISTO, JSON.stringify(h)); } catch (e) { /* stockage indisponible */ } }
+const echapper = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+const dateFr = (j) => L.dateDuJour(j).toLocaleDateString("fr-FR", { timeZone: "UTC" });
+const aujourdhui = () => L.jourDe(new Date());
+
+function montrer(el, texte) { el.textContent = texte; el.hidden = !texte; }
+
+async function copier(texte, bouton) {
+  try {
+    await navigator.clipboard.writeText(texte);
+    if (bouton) { const t = bouton.textContent; bouton.textContent = "Copié"; setTimeout(() => (bouton.textContent = t), 1400); }
+  } catch (e) {
+    prompt("Copie ce texte :", texte);
+  }
+}
+
+// ------------------------------------------------------------ connexion
+async function chargerFichierCle() {
+  const r = await fetch("createur/cle.json", { cache: "no-store" });
+  if (!r.ok) throw new Error("Le fichier de la clé de créateur est introuvable.");
+  return r.json();
+}
+
+$("#connexion").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const b = $("#bouton-connexion");
+  b.disabled = true; b.textContent = "Ouverture…";
+  montrer($("#erreur-connexion"), "");
+  try {
+    fichierCle = fichierCle || await chargerFichierCle();
+    ({ graine, publique } = await L.dechiffrerGraine(fichierCle, $("#mdp").value));
+    $("#mdp").value = "";
+    $("#connexion").hidden = true;
+    $("#espace").hidden = false;
+    await chargerRevocations();
+    afficherHisto();
+  } catch (e) {
+    montrer($("#erreur-connexion"), e.message);
+  } finally {
+    b.disabled = false; b.textContent = "Ouvrir";
+  }
+});
+
+$("#deconnexion").addEventListener("click", () => {
+  graine = null; publique = null; dernieres = [];
+  $("#cles-creees").innerHTML = "";
+  $("#espace").hidden = true;
+  $("#connexion").hidden = false;
+  $("#mdp").focus();
+});
+
+// ------------------------------------------------------------ créer
+$("#duree").addEventListener("change", () => { $("#champ-date").hidden = $("#duree").value !== "date"; });
+
+$("#creer").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const err = $("#erreur-creer");
+  montrer(err, "");
+  const n = Math.max(1, Math.min(50, Number($("#nombre").value) || 1));
+  let expire = 0;
+  const d = $("#duree").value;
+  if (d === "date") {
+    if (!$("#date-fin").value) return montrer(err, "Choisis le dernier jour de validité.");
+    const [a, m, j] = $("#date-fin").value.split("-").map(Number);
+    expire = L.jourDe(new Date(a, m - 1, j));
+    if (expire < aujourdhui()) return montrer(err, "Cette date est déjà passée.");
+  } else if (d !== "0") {
+    expire = aujourdhui() + Number(d);
+  }
+  const nom = L.couperNom($("#nom").value);
+  const histo = lireHisto();
+  dernieres = [];
+  for (let i = 0; i < n; i++) {
+    const c = await L.creerCle(graine, { nom, expire });
+    dernieres.push(c);
+    histo.unshift({ numero: c.numero, nom: c.nom, emise: c.emise, expire: c.expire, cle: c.cle, desactivee: false });
+  }
+  ecrireHisto(histo);
+  $("#cles-creees").innerHTML = dernieres.map((c, i) => `<li>
+    <code class="cle-code">${c.cle}</code>
+    <small>N° ${c.numero}${c.nom ? `, pour ${echapper(c.nom)}` : ""}, ${c.expire ? `valable jusqu'au ${dateFr(c.expire)}` : "à vie"}</small>
+    <button class="bouton second petit" type="button" data-copier="${i}">Copier</button></li>`).join("");
+  $("#copier-tout").hidden = dernieres.length < 2;
+  afficherHisto();
+});
+
+$("#cles-creees").addEventListener("click", (ev) => {
+  const b = ev.target.closest("[data-copier]");
+  if (b) copier(dernieres[Number(b.dataset.copier)].cle, b);
+});
+$("#copier-tout").addEventListener("click", (ev) => copier(dernieres.map((c) => c.cle).join("\n"), ev.target));
+
+// ------------------------------------------------------------ historique
+function afficherHisto() {
+  const q = $("#chercher").value.trim().toLowerCase();
+  const h = lireHisto().filter((c) => !q || c.numero.toLowerCase().includes(q) || (c.nom || "").toLowerCase().includes(q));
+  $("#historique").innerHTML = h.map((c) => `<tr class="${c.desactivee ? "desactivee" : ""}">
+    <td>${c.numero}</td><td>${echapper(c.nom) || "—"}</td><td>${dateFr(c.emise)}</td>
+    <td>${c.desactivee ? "désactivée" : c.expire ? (c.expire < aujourdhui() ? `expirée le ${dateFr(c.expire)}` : `jusqu'au ${dateFr(c.expire)}`) : "à vie"}</td>
+    <td><span class="actions-ligne">
+      <button class="lien-bouton" type="button" data-copier-cle="${c.numero}">Copier</button>
+      <button class="lien-bouton" type="button" data-basculer="${c.numero}">${c.desactivee ? "Réactiver" : "Désactiver"}</button>
+    </span></td></tr>`).join("");
+  $("#historique-vide").hidden = lireHisto().length > 0;
+  afficherAPublier();
+}
+$("#chercher").addEventListener("input", afficherHisto);
+
+$("#historique").addEventListener("click", (ev) => {
+  const c = ev.target.closest("[data-copier-cle]");
+  if (c) { const k = lireHisto().find((x) => x.numero === c.dataset.copierCle); if (k) copier(k.cle, c); }
+  const b = ev.target.closest("[data-basculer]");
+  if (b) {
+    const h = lireHisto();
+    const k = h.find((x) => x.numero === b.dataset.basculer);
+    if (!k) return;
+    if (!k.desactivee && !confirm(`Désactiver la clé ${k.numero}${k.nom ? ` (${k.nom})` : ""} ? Le logiciel qui l'utilise repassera en démo.`)) return;
+    k.desactivee = !k.desactivee;
+    ecrireHisto(h);
+    afficherHisto();
+  }
+});
+
+$("#desactiver-numero").addEventListener("submit", (ev) => {
+  ev.preventDefault();
+  const num = $("#numero-a-desactiver").value.trim().toUpperCase();
+  if (!/^[0-9A-F]{8}$/.test(num)) return alert("Le numéro fait 8 caractères, chiffres et lettres de A à F. « Vérifier une clé » te le donne.");
+  const h = lireHisto();
+  const k = h.find((x) => x.numero === num);
+  if (k) k.desactivee = true;
+  else h.push({ numero: num, nom: "", emise: aujourdhui(), expire: 0, cle: "", desactivee: true });
+  ecrireHisto(h);
+  $("#numero-a-desactiver").value = "";
+  afficherHisto();
+});
+
+$("#exporter").addEventListener("click", () => {
+  const a = document.createElement("a");
+  a.href = URL.createObjectURL(new Blob([JSON.stringify(lireHisto(), null, 2)], { type: "application/json" }));
+  a.download = `cles-taverne-voice-${new Date().toISOString().slice(0, 10)}.json`;
+  a.click();
+});
+$("#importer").addEventListener("click", () => $("#fichier-import").click());
+$("#fichier-import").addEventListener("change", async (ev) => {
+  const f = ev.target.files[0];
+  if (!f) return;
+  try {
+    const liste = JSON.parse(await f.text());
+    if (!Array.isArray(liste)) throw new Error();
+    const h = lireHisto();
+    const connus = new Set(h.map((x) => x.numero));
+    for (const k of liste) if (k && /^[0-9A-F]{8}$/.test(k.numero) && !connus.has(k.numero)) h.push(k);
+    ecrireHisto(h);
+    afficherHisto();
+  } catch (e) {
+    alert("Ce fichier n'est pas une liste de clés exportée depuis cette page.");
+  }
+  ev.target.value = "";
+});
+
+// ------------------------------------------------------------ clés désactivées
+async function chargerRevocations() {
+  try {
+    const r = await fetch("licences/revoquees.json", { cache: "no-store" });
+    const j = await r.json();
+    publiees = new Set((j.revoquees || []).map((x) => x.toUpperCase()));
+    // une clé désactivée en ligne apparaît désactivée ici aussi
+    const h = lireHisto();
+    let change = false;
+    for (const k of h) if (publiees.has(k.numero) && !k.desactivee) { k.desactivee = true; change = true; }
+    if (change) ecrireHisto(h);
+  } catch (e) { /* hors ligne : on garde la liste locale */ }
+}
+
+function listeVoulue() {
+  return [...new Set([...lireHisto().filter((k) => k.desactivee).map((k) => k.numero)])].sort();
+}
+
+function afficherAPublier() {
+  const voulue = listeVoulue();
+  const pareil = voulue.length === publiees.size && voulue.every((n) => publiees.has(n));
+  $("#a-publier").hidden = pareil;
+  if (pareil) return;
+  const ajout = voulue.filter((n) => !publiees.has(n)).length;
+  const retrait = [...publiees].filter((n) => !voulue.includes(n)).length;
+  const morceaux = [];
+  if (ajout) morceaux.push(`${ajout} clé${ajout > 1 ? "s" : ""} à désactiver`);
+  if (retrait) morceaux.push(`${retrait} clé${retrait > 1 ? "s" : ""} à réactiver`);
+  $("#a-publier-texte").textContent = `${morceaux.join(" et ")}. La liste en ligne n'est pas encore à jour :`;
+  $("#lien-edition").href = FICHIER_REVOQ;
+}
+$("#copier-revoq").addEventListener("click", (ev) => copier(JSON.stringify({ revoquees: listeVoulue() }, null, 2) + "\n", ev.target));
+
+// ------------------------------------------------------------ vérifier
+$("#verifier").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const z = $("#resultat-verif");
+  const t = $("#cle-a-verifier").value.trim();
+  if (!t) return;
+  const r = await L.lireCle(t, publique);
+  if (!r.valide) { z.innerHTML = `<p class="erreur">${echapper(r.raison)}</p>`; return; }
+  const desactivee = publiees.has(r.numero) || lireHisto().some((k) => k.numero === r.numero && k.desactivee);
+  const expiree = r.expire && r.expire < aujourdhui();
+  z.innerHTML = `<p class="${desactivee || expiree ? "erreur" : "ok"}">Clé n° <strong>${r.numero}</strong>${r.nom ? `, pour <strong>${echapper(r.nom)}</strong>` : ""}, créée le ${dateFr(r.emise)}, ${r.expire ? `valable jusqu'au ${dateFr(r.expire)}` : "à vie"}.
+    ${desactivee ? "Elle est désactivée." : expiree ? "Elle a expiré." : "Elle marche."}</p>`;
+});
+
+// ------------------------------------------------------------ mot de passe
+$("#changer-mdp").addEventListener("submit", async (ev) => {
+  ev.preventDefault();
+  const err = $("#erreur-mdp");
+  montrer(err, "");
+  const a = $("#mdp-nouveau").value, b = $("#mdp-confirme").value;
+  if (a.length < 12) return montrer(err, "Le mot de passe doit faire au moins 12 caractères.");
+  if (a !== b) return montrer(err, "Les deux mots de passe ne sont pas pareils.");
+  const nouveau = await L.chiffrerGraine(graine, a);
+  const lien = document.createElement("a");
+  lien.href = URL.createObjectURL(new Blob([JSON.stringify(nouveau, null, 2) + "\n"], { type: "application/json" }));
+  lien.download = "cle.json";
+  lien.click();
+  $("#mdp-nouveau").value = ""; $("#mdp-confirme").value = "";
+  $("#etapes-mdp").hidden = false;
+});
+</script>

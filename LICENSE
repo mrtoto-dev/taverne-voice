@@ -1,0 +1,17 @@
+Taverne Voice
+Copyright (c) 2026 mrtoto-dev. Tous droits réservés.
+
+Ce code source est privé. Il est interdit de le copier, le modifier, le
+publier, le distribuer ou de s'en servir pour créer un autre logiciel sans
+l'accord écrit de son auteur.
+
+Le logiciel compilé (Taverne-Voice-Setup.exe, Taverne-Voice.exe et les
+plugins Stream Deck) peut être téléchargé et utilisé gratuitement en version
+démo. La version complète demande une clé donnée par l'auteur. Il est interdit
+de contourner, de modifier ou de partager le système de clés.
+
+Composants tiers inclus, sous leur propre licence :
+- third_party/mp3 : go-mp3, Apache License 2.0
+- malgo / miniaudio : licence MIT-0 / domaine public
+- ws (plugins Stream Deck) : licence MIT
+- @noble/ed25519 (page créateur du site) : licence MIT
