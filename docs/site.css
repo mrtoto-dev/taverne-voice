@@ -178,3 +178,140 @@ details p:last-child { margin-bottom: 0; }
 }
 @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
 .liens-pied { display: flex; gap: 20px; }
+
+/* ================================================================ v2 : accueil, boutique, compte */
+.nav a.bouton-compte { border: 1px solid var(--poutre); border-radius: 999px; padding: 6px 14px; color: var(--mousse); }
+.nav a.bouton-compte:hover { border-color: var(--lanterne); }
+
+/* héros : le logiciel lui-même, avec l'overlay posé dessus */
+.heros2 { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: center; padding: 72px 0 80px; }
+.heros2 h1 { font-size: clamp(56px, 8.5vw, 112px); }
+.heros2 .chapo { font-size: 21px; line-height: 1.5; max-width: 30ch; margin: 18px 0 28px; }
+.heros2 .actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.heros2 .petit-texte { color: var(--parchemin); font-size: 14px; margin-top: 14px; }
+.vitrine { position: relative; }
+.fenetre-app {
+  border-radius: 14px; overflow: hidden; border: 1px solid var(--poutre);
+  box-shadow: 0 30px 80px rgba(0, 0, 0, .55), 0 0 0 1px rgba(242, 169, 59, .06);
+  transform: perspective(1600px) rotateY(-7deg) rotateX(2deg); transform-origin: left center;
+}
+.fenetre-app img { display: block; width: 100%; height: auto; }
+.vitrine .bulle-overlay { position: absolute; left: -36px; bottom: -34px; width: min(330px, 62%); filter: drop-shadow(0 18px 30px rgba(0, 0, 0, .5)); }
+
+/* blocs « fonctionnalité » : texte + capture, en alternance */
+.fonction { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 48px; align-items: center; padding: 56px 0; }
+.fonction + .fonction { border-top: 1px solid var(--poutre); }
+.fonction.inverse > :first-child { order: 2; }
+.fonction h2 { margin-bottom: 12px; }
+.fonction p { color: var(--parchemin); }
+.fonction ul { list-style: none; padding: 0; margin: 16px 0 0; display: flex; flex-direction: column; gap: 10px; }
+.fonction li { padding-left: 26px; position: relative; }
+.fonction li::before { content: ""; position: absolute; left: 4px; top: .55em; width: 10px; height: 10px; border-radius: 50%; border: 2px solid var(--lanterne); }
+.capture { border-radius: 12px; overflow: hidden; border: 1px solid var(--poutre); box-shadow: 0 20px 50px rgba(0, 0, 0, .45); }
+.capture img { display: block; width: 100%; height: auto; }
+
+/* partenaires */
+.partenaires { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; margin-top: 28px; }
+.partenaire { border: 1px solid var(--poutre); border-radius: 18px; overflow: hidden; background: var(--chene); }
+.partenaire .ecran { position: relative; aspect-ratio: 16 / 9; background: radial-gradient(circle at 30% 20%, rgba(169, 112, 255, .35), transparent 60%), #120c09; display: grid; place-items: center; }
+.partenaire .ecran iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.partenaire .ecran button { border: 0; background: #a970ff; color: #fff; font: 600 15px "Rubik", sans-serif; padding: 12px 20px; border-radius: 999px; cursor: pointer; display: inline-flex; gap: 8px; align-items: center; }
+.partenaire .ecran button:hover { background: #bb8cff; }
+.partenaire .infos { padding: 18px 20px 20px; display: flex; align-items: center; gap: 14px; }
+.partenaire .pastille-p { width: 52px; height: 52px; border-radius: 50%; background: #a970ff; color: #fff; display: grid; place-items: center; font: 700 26px "Grenze Gotisch", serif; flex: none; }
+.partenaire h3 { margin: 0; font-size: 30px; }
+.partenaire p { margin: 2px 0 0; color: var(--parchemin); font-size: 15px; }
+.partenaire .infos a { margin-left: auto; }
+
+/* formules */
+.formules { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 18px; margin-top: 30px; }
+.formule { border: 1px solid var(--poutre); border-radius: 18px; padding: 26px; display: flex; flex-direction: column; gap: 10px; background: var(--chene); position: relative; }
+.formule.mise-en-avant { border-color: var(--lanterne); box-shadow: 0 0 0 1px var(--lanterne), 0 18px 50px rgba(242, 169, 59, .12); }
+.formule .etiquette-f { position: absolute; top: -12px; left: 24px; background: var(--lanterne); color: var(--nuit); font-size: 12px; font-weight: 600; padding: 3px 10px; border-radius: 999px; }
+.formule h3 { margin: 0; font-size: 34px; }
+.formule .prix { font: 700 46px/1 "Grenze Gotisch", serif; color: var(--mousse); }
+.formule .prix small { font: 500 15px "Rubik", sans-serif; color: var(--parchemin); }
+.formule p { color: var(--parchemin); margin: 0; font-size: 15px; flex: 1; }
+.formule .bouton { justify-content: center; }
+.note-formules { color: var(--parchemin); font-size: 14px; margin-top: 16px; }
+.bandeau-essai { display: flex; align-items: center; gap: 22px; margin-top: 26px; padding: 22px 26px; border-radius: 18px; border: 1px dashed var(--houblon); background: linear-gradient(100deg, rgba(143, 196, 111, .13), rgba(143, 196, 111, .03) 60%), var(--chene); }
+.bandeau-essai[hidden] { display: none; }
+.bandeau-essai .prix-essai { font: 700 46px/1 "Grenze Gotisch", serif; color: var(--houblon); text-align: center; flex: none; }
+.bandeau-essai .prix-essai small { display: block; font: 500 14px "Rubik", sans-serif; color: var(--parchemin); margin-top: 4px; }
+.bandeau-essai h3 { margin: 0 0 4px; font-size: 30px; }
+.bandeau-essai p { margin: 0; color: var(--parchemin); font-size: 15px; }
+.bandeau-essai .bouton { flex: none; margin-left: auto; }
+@media (max-width: 700px) { .bandeau-essai { flex-direction: column; align-items: flex-start; text-align: left; } .bandeau-essai .bouton { margin-left: 0; } }
+
+/* formulaires (compte, boutique, créateur) */
+.carte { border: 1px solid var(--poutre); border-radius: 18px; padding: 26px; background: var(--chene); }
+.carte h2 { font-size: 38px; margin-bottom: 8px; }
+.carte > p { color: var(--parchemin); }
+.formulaire { display: flex; flex-direction: column; gap: 14px; margin-top: 18px; max-width: 420px; }
+.formulaire label { display: flex; flex-direction: column; gap: 6px; font-size: 14px; color: var(--parchemin); }
+.formulaire input, .formulaire select, .formulaire textarea {
+  font: 16px "Rubik", sans-serif; color: var(--mousse); background: var(--nuit); border: 1px solid var(--poutre);
+  border-radius: 10px; padding: 11px 13px; width: 100%;
+}
+.formulaire input:focus, .formulaire select:focus, .formulaire textarea:focus { outline: none; border-color: var(--lanterne); }
+.formulaire .bouton { align-self: flex-start; }
+.code-saisie { font: 600 28px/1 ui-monospace, Consolas, monospace !important; letter-spacing: 8px; text-align: center; max-width: 240px; }
+.msg { margin: 0; font-size: 15px; }
+.msg.erreur { color: var(--braise); }
+.msg.ok { color: var(--houblon); }
+.lien-bouton { background: none; border: 0; color: var(--lanterne); text-decoration: underline; text-underline-offset: 3px; cursor: pointer; font: inherit; padding: 0; }
+.lien-bouton:hover { color: var(--mousse); }
+.ligne-actions { display: flex; gap: 12px; flex-wrap: wrap; align-items: center; }
+
+.page-etroite { padding: 56px 0 80px; max-width: 980px; }
+.page-etroite > h1 { font-size: clamp(48px, 7vw, 76px); margin-bottom: 12px; }
+.page-etroite > .chapo { color: var(--parchemin); font-size: 19px; max-width: 60ch; margin-bottom: 28px; }
+.colonnes { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 18px; }
+
+/* tableau de bord du compte */
+.statut-abo { display: flex; align-items: center; gap: 14px; padding: 18px 20px; border-radius: 14px; background: var(--nuit); border: 1px solid var(--poutre); margin: 14px 0; }
+.statut-abo .point { width: 14px; height: 14px; border-radius: 50%; background: var(--parchemin); flex: none; }
+.statut-abo.actif .point { background: var(--houblon); box-shadow: 0 0 0 5px rgba(143, 196, 111, .2); }
+.statut-abo strong { display: block; font-size: 18px; }
+.statut-abo span { color: var(--parchemin); font-size: 14px; }
+.liste-simple { list-style: none; margin: 10px 0 0; padding: 0; }
+.liste-simple li { display: flex; justify-content: space-between; gap: 12px; align-items: center; padding: 12px 0; border-bottom: 1px solid var(--poutre); }
+.liste-simple li small { color: var(--parchemin); display: block; font-size: 13px; }
+
+/* étapes de la boutique */
+.etapes-achat { list-style: none; padding: 0; margin: 26px 0 0; display: flex; flex-direction: column; gap: 14px; counter-reset: e; }
+.etapes-achat > li { counter-increment: e; border: 1px solid var(--poutre); border-radius: 18px; padding: 22px 24px 22px 74px; position: relative; background: var(--chene); }
+.etapes-achat > li::before { content: counter(e); position: absolute; left: 22px; top: 18px; font: 700 40px/1 "Grenze Gotisch", serif; color: var(--lanterne); }
+.etapes-achat > li.faite::before { content: "✓"; color: var(--houblon); font-family: "Rubik", sans-serif; font-size: 30px; top: 22px; }
+.etapes-achat h3 { margin: 0 0 6px; font-size: 30px; }
+.etapes-achat p { color: var(--parchemin); margin: 0 0 10px; }
+.choix-formule { display: flex; gap: 10px; flex-wrap: wrap; margin: 10px 0 14px; }
+.choix-formule button { border: 1px solid var(--poutre); background: var(--nuit); color: var(--mousse); border-radius: 12px; padding: 12px 16px; cursor: pointer; font: 500 15px "Rubik", sans-serif; text-align: left; }
+.choix-formule button strong { display: block; font: 700 24px "Grenze Gotisch", serif; }
+.choix-formule button[aria-pressed="true"] { border-color: var(--lanterne); box-shadow: 0 0 0 1px var(--lanterne); }
+.email-rappel { display: inline-flex; gap: 8px; align-items: center; background: var(--nuit); border: 1px dashed var(--lanterne); border-radius: 10px; padding: 8px 12px; font-weight: 500; }
+
+/* panel créateur */
+.tuiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 12px; margin: 14px 0; }
+.tuile { background: var(--nuit); border: 1px solid var(--poutre); border-radius: 14px; padding: 16px; }
+.tuile b { display: block; font: 700 38px/1 "Grenze Gotisch", serif; color: var(--lanterne); }
+.tuile span { color: var(--parchemin); font-size: 13px; }
+.tableau-clients td small { color: var(--parchemin); display: block; }
+.pastille-statut { font-size: 12px; padding: 2px 8px; border-radius: 999px; background: var(--poutre); color: var(--parchemin); white-space: nowrap; }
+.pastille-statut.ok { background: rgba(143, 196, 111, .18); color: var(--houblon); }
+.pastille-statut.ko { background: rgba(224, 87, 58, .18); color: var(--braise); }
+dialog.fiche { width: min(720px, 100% - 32px); border: 1px solid var(--poutre); border-radius: 18px; background: var(--chene); color: var(--mousse); padding: 26px; }
+dialog.fiche::backdrop { background: rgba(10, 6, 4, .7); }
+dialog.fiche h2 { font-size: 34px; }
+
+/* pied */
+.pied-liens { display: flex; gap: 8px 20px; flex-wrap: wrap; }
+
+@media (max-width: 900px) {
+  .heros2, .fonction { grid-template-columns: 1fr; gap: 28px; }
+  .fonction.inverse > :first-child { order: 0; }
+  .fenetre-app { transform: none; }
+  .vitrine .bulle-overlay { left: 8px; bottom: -28px; }
+  .formules { grid-template-columns: 1fr; }
+}
+#t-essai { margin: 0 0 16px; }

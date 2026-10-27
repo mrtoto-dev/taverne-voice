@@ -14,8 +14,23 @@ DOCS = RACINE / "docs"
 DEPOT = "https://github.com/mrtoto-dev/taverne-voice"
 TELECHARGER = DEPOT + "/releases/latest/download/"
 # Où les gens demandent une clé : remplace par ton Discord, ta chaîne Twitch, un formulaire…
-CONTACT = "https://github.com/mrtoto-dev"
-CONTACT_TEXTE = "écris au créateur sur GitHub"
+CONTACT = "mailto:contact@tavernevoice.fr"
+CONTACT_TEXTE = "contact@tavernevoice.fr"
+SITE = "https://tavernevoice.fr"
+
+# Identité du vendeur, obligatoire sur un site qui vend (mentions légales et CGV).
+# À compléter : tant qu'une valeur commence par « [ », la page affiche un rappel.
+IDENTITE = {
+    "nom": "[Prénom Nom ou nom de l'entreprise]",
+    "statut": "[Micro-entrepreneur, SIRET 000 000 000 00000]",
+    "adresse": "[Adresse postale]",
+    "email": "contact@tavernevoice.fr",
+}
+
+PARTENAIRES = [
+    {"chaine": "mrtoto_of", "nom": "MRTOTO_OF", "texte": "Le créateur de Taverne Voice, en live avec toutes les voix de la taverne."},
+    {"chaine": "wapi_twitch", "nom": "Wapi_twitch", "texte": "Streameur partenaire : retrouve Taverne Voice dans ses lives."},
+]
 
 VOIX = json.loads((RACINE / "outils" / "voix.json").read_text(encoding="utf-8"))
 VOIX_DEMO = ["normal", "chipmunk", "robot", "demon", "telephone"]
@@ -27,13 +42,13 @@ def icone(nom):
     return f'<svg class="ic" viewBox="0 0 48 48" aria-hidden="true"><use href="#i-{nom}"/></svg>'
 
 ICONE_TELECHARGER = '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>'
+ICONE_TWITCH = '<svg class="ic" viewBox="0 0 48 48" aria-hidden="true" style="width:20px;height:20px"><path d="M10 6h30v20l-8 8h-7l-6 6v-6h-9V12Z"/><path d="M22 14v9M31 14v9"/></svg>'
 
 MENU = [
-    ("index.html", "Accueil"),
+    ("index.html#fonctions", "Fonctionnalités"),
     ("installation.html", "Guide"),
-    ("stream-deck.html", "Stream Deck"),
-    ("licence.html", "Version complète"),
-    ("faq.html", "Questions"),
+    ("partenaires.html", "Partenaires"),
+    ("boutique.html", "Tarifs"),
 ]
 
 GUIDE = [
@@ -41,14 +56,15 @@ GUIDE = [
     ("obs-discord.html", "OBS et Discord"),
     ("voix.html", "Les voix"),
     ("soundboard.html", "Soundboard"),
+    ("twitch-obs.html", "Twitch et overlay"),
     ("stream-deck.html", "Stream Deck"),
-    ("licence.html", "Version complète"),
+    ("licence.html", "Abonnement et clés"),
     ("faq.html", "Questions"),
 ]
 
 
-def page(fichier, titre, description, corps, guide=False, noindex=False):
-    actif = fichier if fichier != "obs-discord.html" and fichier not in ("voix.html", "soundboard.html") else "installation.html"
+def page(fichier, titre, description, corps, guide=False, noindex=False, scripts=""):
+    actif = "installation.html" if fichier in [h for h, _ in GUIDE] else fichier
     nav = "".join(
         f'<a href="{h}"{" aria-current=\"page\"" if h == actif else ""}>{t}</a>' for h, t in MENU
     )
@@ -58,7 +74,7 @@ def page(fichier, titre, description, corps, guide=False, noindex=False):
         )
         corps = f'<div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>Le guide</p>{sommaire}</nav><article>{corps}</article></div>'
     robots = '<meta name="robots" content="noindex, nofollow">' if noindex else ""
-    titre_complet = "Taverne Voice" if fichier == "index.html" else f"{titre} – Taverne Voice"
+    titre_complet = "Taverne Voice, le changeur de voix des streamers" if fichier == "index.html" else f"{titre} – Taverne Voice"
     return f"""<!doctype html>
 <html lang="fr">
 <head>
@@ -66,6 +82,10 @@ def page(fichier, titre, description, corps, guide=False, noindex=False):
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{e(titre_complet)}</title>
 <meta name="description" content="{e(description)}">
+<meta property="og:title" content="{e(titre_complet)}">
+<meta property="og:description" content="{e(description)}">
+<meta property="og:image" content="{SITE}/img/capture-voix.webp">
+<link rel="canonical" href="{SITE}/{"" if fichier == "index.html" else fichier}">
 {robots}
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -75,7 +95,7 @@ def page(fichier, titre, description, corps, guide=False, noindex=False):
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu">{nav}</nav>
+    <nav class="nav" aria-label="Menu">{nav}<a class="bouton-compte" href="compte.html"{" aria-current=\"page\"" if fichier == "compte.html" else ""}>Mon compte</a></nav>
     <a class="bouton petit" href="{TELECHARGER}Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -85,9 +105,10 @@ def page(fichier, titre, description, corps, guide=False, noindex=False):
 <footer class="pied">
   <div class="enveloppe">
     <span>Taverne Voice, changeur de voix pour Windows. <span id="version-site"></span></span>
-    <span class="liens-pied"><a href="{DEPOT}/releases">Toutes les versions</a> <a href="faq.html">Aide</a></span>
+    <span class="pied-liens"><a href="faq.html">Aide</a><a href="{DEPOT}/releases">Versions</a><a href="cgv.html">CGV</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a></span>
   </div>
 </footer>
+{scripts}
 <script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)
@@ -109,76 +130,518 @@ def bock(v, taille_classe=""):
 def accueil():
     random.seed(7)
     mur = "".join(bock(v) for v in VOIX)
+    partenaires = "".join(carte_partenaire(p) for p in PARTENAIRES)
     return page("index.html", "Accueil",
-        "Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard Myinstants et un plugin pour ton Stream Deck.", f"""
-<div class="enveloppe heros">
+        "Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard, les points de chaîne Twitch, un overlay OBS et des plugins pour tous les Stream Deck.", f"""
+<div class="enveloppe heros2">
   <div>
     <h1>Taverne Voice</h1>
-    <p class="chapo">Change ta voix en direct sur Twitch et Discord. 33 voix, un soundboard et des plugins pour ton Stream Deck.</p>
+    <p class="chapo">Le changeur de voix des streamers. 33 voix, un soundboard, les points de chaîne Twitch et ton Stream Deck, dans un seul logiciel.</p>
     <div class="actions">
-      <a class="bouton" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger pour Windows</a>
-      <a class="bouton second" href="installation.html">Lire le guide</a>
+      <a class="bouton" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger gratuitement</a>
+      <a class="bouton second" href="compte.html?vue=inscription">Essai gratuit 14 jours</a>
     </div>
-    <p class="petit-texte">Gratuit en démo. Windows 10 et 11.</p>
+    <p class="petit-texte">14 jours de version complète offerts, sans carte bancaire. Ensuite la démo reste gratuite. Windows 10 et 11.</p>
   </div>
-  <div>
-    <div class="mur" aria-label="Les 33 voix">{mur}</div>
-    <p class="legende-mur"><span class="l-libre">5 voix dans la démo</span><span class="l-complete">28 de plus avec une clé</span></p>
+  <div class="vitrine">
+    <div class="fenetre-app"><img src="img/capture-voix-petit.webp" srcset="img/capture-voix-petit.webp 1360w, img/capture-voix.webp 2720w" sizes="(max-width: 900px) 100vw, 640px" width="1360" height="820" alt="La fenêtre de Taverne Voice : les voix en sous-bocks colorés et les réglages de la voix French Touch"></div>
+    <img class="bulle-overlay" src="img/capture-overlay.webp" width="460" height="140" alt="L'overlay OBS : « Wapi_twitch t'a mis la voix Chipmunk », 17 secondes restantes">
   </div>
 </div>
+
+<section class="section" id="fonctions">
+  <div class="enveloppe">
+    <div class="fonction">
+      <div>
+        <h2>33 voix, réglées pour le live</h2>
+        <p>Un clic sur un sous-bock et tout ton chat t'entend avec. <kbd>F8</kbd> coupe l'effet, même en plein jeu.</p>
+        <ul>
+          <li>Autotune, vocodeur French Touch, robots, démons, ambiances de grotte ou de stade</li>
+          <li>Des curseurs pour régler chaque voix et enregistrer les tiennes</li>
+          <li>OBS et Discord la reçoivent par un câble audio virtuel, installé avec le logiciel</li>
+        </ul>
+      </div>
+      <div class="capture"><img src="img/capture-voix-petit.webp" loading="lazy" width="1360" height="820" alt="Les voix de Taverne Voice"></div>
+    </div>
+    <div class="fonction inverse">
+      <div>
+        <h2>Un soundboard rangé</h2>
+        <p>Les sons tendance de Myinstants en un clic, ou tes propres MP3. Range-les par dossiers et donne-leur un raccourci.</p>
+        <ul>
+          <li>Dossiers : Mèmes, Bruitages, Musiques…</li>
+          <li>Ta voix baisse toute seule pendant qu'un son joue</li>
+          <li>Un raccourci clavier par son, même en jeu</li>
+        </ul>
+      </div>
+      <div class="capture"><img src="img/capture-soundboard-petit.webp" loading="lazy" width="1360" height="820" alt="Le soundboard de Taverne Voice avec ses dossiers"></div>
+    </div>
+    <div class="fonction">
+      <div>
+        <h2>Tes viewers prennent le micro</h2>
+        <p>Relie ta chaîne Twitch : tes viewers dépensent leurs points de chaîne pour te mettre une voix pendant 30 secondes ou lancer un son. L'overlay OBS l'affiche dans ton live, avec le compte à rebours.</p>
+        <ul>
+          <li>Les récompenses se créent depuis le logiciel</li>
+          <li>Remboursées toutes seules si le logiciel ne peut pas les jouer</li>
+          <li>Overlay en source navigateur, dans le coin de ton choix</li>
+        </ul>
+        <p><a href="twitch-obs.html">Voir comment ça marche</a></p>
+      </div>
+      <div class="capture"><img src="img/capture-twitch-petit.webp" loading="lazy" width="1360" height="820" alt="L'onglet Twitch et OBS de Taverne Voice"></div>
+    </div>
+    <div class="fonction inverse">
+      <div>
+        <h2>Ton Stream Deck, quelle que soit la marque</h2>
+        <p>Une touche par son, une touche par voix. Elles s'allument quand le son joue ou quand la voix est active.</p>
+        <p><a class="bouton second petit" href="stream-deck.html">Installer le plugin</a></p>
+      </div>
+      <div class="marques" style="margin-top:0">
+        <div class="carte-marque"><h3>Elgato</h3><p>Stream Deck, MK.2, XL, Mini, +, Neo.</p></div>
+        <div class="carte-marque"><h3>StreamDock</h3><p>Mars Gaming, Mirabox, Ajazz, Soomfon.</p></div>
+        <div class="carte-marque"><h3>Ulanzi</h3><p>Stream Controller D200, D200H, D200X.</p></div>
+        <div class="carte-marque"><h3>Les autres</h3><p>Razer, Loupedeck, Touch Portal, avec des raccourcis.</p></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Toutes les voix de la taverne</h2>
+    <p class="intro">Les 5 voix allumées marchent dans la démo. Les 28 autres se débloquent avec un abonnement.</p>
+    <div class="mur" aria-label="Les 33 voix" style="margin-top:22px">{mur}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Ils streament avec Taverne Voice</h2>
+    <p class="intro">Les streamers partenaires de la taverne. Passe leur dire bonjour.</p>
+    <div class="partenaires">{partenaires}</div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="enveloppe">
+    <h2>Les formules</h2>
+    <p class="intro">Essaie tout pendant 14 jours, gratuitement. Ensuite la démo reste gratuite et sans limite de temps, et un abonnement débloque tout, sur 2 PC.</p>
+    {bandeau_essai()}
+    {cartes_formules()}
+  </div>
+</section>
 
 <section class="section">
   <div class="enveloppe">
     <h2>Prêt en trois minutes</h2>
-    <p class="intro">Taverne Voice transforme ta voix et l'envoie dans un câble audio virtuel. OBS et Discord écoutent ce câble au lieu de ton micro.</p>
     <ol class="etapes">
       <li><h3>Installe</h3><p>L'installateur ajoute le logiciel, le câble audio gratuit de VB-Audio et le plugin de ton Stream Deck.</p></li>
       <li><h3>Branche</h3><p>Dans OBS et Discord, choisis <strong>CABLE Output</strong> comme micro. <a href="obs-discord.html">Voir comment</a>.</p></li>
-      <li><h3>Choisis ta voix</h3><p>Un clic sur un sous-bock et tout le monde t'entend avec. <kbd>F8</kbd> coupe l'effet, même en jeu.</p></li>
+      <li><h3>Choisis ta voix</h3><p>Un clic sur un sous-bock et tout le monde t'entend avec.</p></li>
     </ol>
   </div>
 </section>
+""", scripts=SCRIPT_PARTENAIRES)
 
-<section class="section">
-  <div class="enveloppe">
-    <h2>Démo ou version complète</h2>
-    <p class="intro">La démo n'a pas de limite de temps. Une clé débloque tout le reste, sur ce PC, sans compte à créer.</p>
-    <div class="offres">
-      <div class="offre">
-        <h3>Démo</h3>
-        <ul>
-          <li><strong>5 voix</strong> : Normal, Chipmunk, Robot, Démon, Téléphone</li>
-          <li><strong>3 sons</strong> dans le soundboard</li>
-          <li>La touche <kbd>F8</kbd> et les mises à jour automatiques</li>
-        </ul>
-      </div>
-      <div class="offre">
-        <h3>Version complète</h3>
-        <ul>
-          <li><strong>Les 33 voix</strong>, dont l'autotune, la French Touch et les créatures</li>
-          <li><strong>Les curseurs</strong> pour régler chaque voix et enregistrer les tiennes</li>
-          <li><strong>Un soundboard sans limite</strong>, avec Myinstants et tes MP3</li>
-          <li><strong>Les plugins Stream Deck</strong> pour toutes les marques</li>
-        </ul>
-        <p style="margin:18px 0 0"><a class="bouton petit" href="licence.html">Obtenir une clé</a></p>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="enveloppe">
-    <h2>Ton Stream Deck, quelle que soit la marque</h2>
-    <p class="intro">Une touche pour chaque son, une touche pour chaque voix. Les touches s'allument quand le son joue ou quand la voix est active.</p>
-    <div class="marques">
-      <div class="carte-marque"><h3>Elgato</h3><p>Stream Deck, MK.2, XL, Mini, +, Neo.</p><a class="bouton second petit" href="stream-deck.html#elgato">Installer</a></div>
-      <div class="carte-marque"><h3>StreamDock</h3><p>Mars Gaming, Mirabox, Ajazz, Soomfon.</p><a class="bouton second petit" href="stream-deck.html#streamdock">Installer</a></div>
-      <div class="carte-marque"><h3>Ulanzi</h3><p>Stream Controller D200, D200H, D200X.</p><a class="bouton second petit" href="stream-deck.html#ulanzi">Installer</a></div>
-      <div class="carte-marque"><h3>Les autres</h3><p>Razer, Loupedeck, Touch Portal : avec des raccourcis.</p><a class="bouton second petit" href="stream-deck.html#autres">Voir comment</a></div>
-    </div>
+SCRIPT_PARTENAIRES = """<script>
+// le lecteur Twitch ne se charge qu'au clic (la page reste légère)
+document.addEventListener("click", (ev) => {
+  const b = ev.target.closest("[data-chaine]");
+  if (!b) return;
+  const parents = ["tavernevoice.fr", "www.tavernevoice.fr", location.hostname].filter((v, i, a) => a.indexOf(v) === i).map((p) => "&parent=" + p).join("");
+  const f = document.createElement("iframe");
+  f.src = "https://player.twitch.tv/?channel=" + encodeURIComponent(b.dataset.chaine) + parents + "&muted=false&autoplay=true";
+  f.allow = "autoplay; fullscreen";
+  f.allowFullscreen = true;
+  f.title = "Live Twitch de " + b.dataset.chaine;
+  b.parentElement.replaceChildren(f);
+});
+</script>"""
+
+
+def carte_partenaire(p):
+    return f"""<article class="partenaire">
+  <div class="ecran"><button type="button" data-chaine="{e(p["chaine"])}">{ICONE_TWITCH}Regarder le live</button></div>
+  <div class="infos">
+    <span class="pastille-p">{e(p["nom"][0])}</span>
+    <div><h3>{e(p["nom"])}</h3><p>{e(p["texte"])}</p></div>
+    <a class="bouton second petit" href="https://www.twitch.tv/{e(p["chaine"])}" target="_blank" rel="noopener">Suivre</a>
   </div>
-</section>
+</article>"""
+
+
+def bandeau_essai():
+    return f"""<div class="bandeau-essai">
+    <div class="prix-essai">0 €<small>14 jours</small></div>
+    <div><h3>Essai gratuit</h3><p>Toute la version complète pendant 14 jours, sans carte bancaire et sans engagement. Crée ton compte, puis connecte-toi dans le logiciel : l'essai démarre tout seul.</p></div>
+    <a class="bouton" href="compte.html?vue=inscription">Commencer l'essai</a>
+  </div>"""
+
+
+def cartes_formules(lien=True):
+    def carte(id_, nom, prix, unite, texte, mise=False, etiquette=""):
+        bouton = f'<a class="bouton{"" if mise else " second"}" href="boutique.html?formule={id_}">Choisir</a>' if lien else ""
+        return f"""<div class="formule{" mise-en-avant" if mise else ""}">
+      {f'<span class="etiquette-f">{etiquette}</span>' if etiquette else ""}
+      <h3>{nom}</h3>
+      <div class="prix">{prix} <small>{unite}</small></div>
+      <p>{texte}</p>
+      {bouton}
+    </div>"""
+    return f"""<div class="formules">
+    {carte("mensuel", "Mensuel", "4,99 €", "par mois", "Renouvelé tout seul. Tu l'arrêtes quand tu veux depuis Ko-fi.", True, "Le plus souple")}
+    {carte("trimestre", "3 mois", "14,99 €", "une fois", "Trois mois d'accès, sans renouvellement automatique.")}
+    {carte("annuel", "1 an", "59,99 €", "une fois", "Une année entière, payée une seule fois, sans renouvellement.")}
+  </div>
+  <p class="note-formules">Chaque formule débloque les 33 voix, les réglages, le soundboard sans limite, les points de chaîne Twitch, l'overlay OBS et les plugins Stream Deck. Paiement sécurisé par Ko-fi (carte ou PayPal).</p>"""
+
+
+def partenaires_page():
+    return page("partenaires.html", "Partenaires", "Les streamers partenaires de Taverne Voice : MRTOTO_OF et Wapi_twitch.", f"""
+<div class="enveloppe page-etroite">
+  <h1>Partenaires</h1>
+  <p class="chapo">Les streamers qui font vivre la taverne. Lance leur live directement ici.</p>
+  <div class="partenaires">{"".join(carte_partenaire(p) for p in PARTENAIRES)}</div>
+  <div class="carte" style="margin-top:28px">
+    <h2>Devenir partenaire</h2>
+    <p>Tu streames avec Taverne Voice et tu veux apparaître ici ? Écris à <a href="{CONTACT}">{CONTACT_TEXTE}</a> avec le lien de ta chaîne.</p>
+  </div>
+</div>
+""", scripts=SCRIPT_PARTENAIRES)
+
+
+def boutique():
+    return page("boutique.html", "Tarifs", "Les formules de Taverne Voice : 4,99 € par mois, 14,99 € pour 3 mois ou 59,99 € pour un an.", f"""
+<div class="enveloppe page-etroite">
+  <h1>Débloquer Taverne Voice</h1>
+  <p class="chapo">Choisis ta formule, crée ton compte, paie sur Ko-fi : ton logiciel se débloque tout seul.</p>
+  <div class="encadre"><p>Pas encore sûr ? <a href="compte.html?vue=inscription">Crée ton compte</a> et connecte-toi dans le logiciel : <strong>14 jours d'essai gratuit</strong>, sans payer. Si tu achètes pendant l'essai, les jours restants sont gardés.</p></div>
+  {cartes_formules(lien=False).replace('<div class="formules">', '<div class="formules" hidden>')}
+  <ol class="etapes-achat">
+    <li>
+      <h3>Choisis ta formule</h3>
+      <div class="choix-formule">
+        <button type="button" data-formule="mensuel" aria-pressed="true"><strong>4,99 €</strong>par mois</button>
+        <button type="button" data-formule="trimestre" aria-pressed="false"><strong>14,99 €</strong>pour 3 mois</button>
+        <button type="button" data-formule="annuel" aria-pressed="false"><strong>59,99 €</strong>pour 1 an</button>
+      </div>
+      <p id="b-detail"></p>
+    </li>
+    <li id="etape-compte">
+      <h3>Ton compte Taverne Voice</h3>
+      <p>Il relie ton paiement à ton logiciel, sur 2 PC maximum.</p>
+      <div class="ligne-actions" id="b-compte"></div>
+      <p class="msg ok" id="b-deja" hidden></p>
+    </li>
+    <li>
+      <h3>Paie sur Ko-fi</h3>
+      <div id="b-email-zone" hidden>
+        <p>Sur Ko-fi, utilise <strong>exactement la même adresse e-mail</strong> que ton compte :</p>
+        <p class="ligne-actions"><span class="email-rappel" id="b-email"></span><button class="lien-bouton" type="button" id="b-copier">Copier</button></p>
+      </div>
+      <label class="ligne-actions" id="b-accord-zone" style="margin:12px 0;align-items:flex-start;gap:10px;color:var(--parchemin);font-size:15px">
+        <input type="checkbox" id="b-accord" style="margin-top:4px;width:18px;height:18px">
+        <span>J'accepte les <a href="cgv.html" target="_blank">conditions de vente</a>. Je demande l'accès tout de suite et je renonce donc à mon droit de rétractation de 14 jours pour ce contenu numérique.</span>
+      </label>
+      <a class="bouton" id="b-payer" href="#" rel="noopener">Payer sur Ko-fi</a>
+      <p class="msg erreur" id="b-bientot" hidden>Le paiement ouvre très bientôt. Reviens dans quelques jours !</p>
+    </li>
+    <li id="etape-activation" hidden>
+      <h3>Activation</h3>
+      <div id="b-attente"><p>Dès que Ko-fi confirme ton paiement, ton compte s'active tout seul. Garde cette page ouverte…</p></div>
+      <div id="b-active" hidden>
+        <p class="msg ok">C'est activé, merci ! Ton accès va jusqu'au <strong id="b-fin"></strong>.</p>
+        <p>Dans Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi.</p>
+        <a class="bouton second petit" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger Taverne Voice</a>
+      </div>
+    </li>
+  </ol>
+  <p class="note-formules">Paiement sécurisé par Ko-fi, par carte ou PayPal. L'abonnement mensuel s'arrête quand tu veux depuis ton compte Ko-fi ; les passes 3 mois et 1 an ne se renouvellent pas. Une question ? <a href="{CONTACT}">{CONTACT_TEXTE}</a>.</p>
+</div>
+<style>.formule .bouton{{display:none}} #b-payer.desactive{{opacity:.55}} #b-accord-zone.a-cocher span{{color:var(--lanterne)}}</style>
+""", scripts='<script src="config.js"></script><script src="js/api.js"></script><script src="js/boutique.js"></script>')
+
+
+def compte():
+    return page("compte.html", "Mon compte", "Ton compte Taverne Voice : abonnement, PC reliés et paiements.", f"""
+<div class="enveloppe page-etroite">
+  <div id="vue-chargement" hidden><p>Chargement…</p></div>
+
+  <section class="carte" id="vue-connexion" hidden style="max-width:520px">
+    <h2>Connexion</h2>
+    <p>Avec ton compte Taverne Voice.</p>
+    <form class="formulaire" id="form-connexion">
+      <label>Adresse e-mail<input type="email" id="c-email" autocomplete="username" required></label>
+      <label>Mot de passe<input type="password" id="c-mdp" autocomplete="current-password" required></label>
+      <p class="msg erreur" id="msg-connexion" hidden></p>
+      <button class="bouton" type="submit">Me connecter</button>
+    </form>
+    <p style="margin-top:18px"><a href="#" data-vue="oubli">Mot de passe oublié ?</a></p>
+    <p>Pas encore de compte ? <a href="#" data-vue="inscription">Crée-le en une minute</a>.</p>
+  </section>
+
+  <section class="carte" id="vue-inscription" hidden style="max-width:520px">
+    <h2>Créer mon compte</h2>
+    <p>Ton compte t'offre <strong>14 jours d'essai gratuit</strong> de la version complète. Si tu paies plus tard, utilise la même adresse sur Ko-fi : c'est elle qui relie ton paiement à ton compte.</p>
+    <form class="formulaire" id="form-inscription">
+      <label>Adresse e-mail<input type="email" id="i-email" autocomplete="email" required></label>
+      <label>Pseudo (affiché dans le logiciel)<input id="i-pseudo" maxlength="40" placeholder="Ton pseudo Twitch par exemple"></label>
+      <label>Mot de passe (8 caractères minimum)<input type="password" id="i-mdp" autocomplete="new-password" minlength="8" required></label>
+      <label>Encore une fois<input type="password" id="i-mdp2" autocomplete="new-password" minlength="8" required></label>
+      <label style="flex-direction:row;gap:10px;align-items:flex-start"><input type="checkbox" id="i-accord" style="width:18px;height:18px;margin-top:3px"><span>J'accepte les <a href="cgv.html" target="_blank">conditions de vente</a> et la <a href="confidentialite.html" target="_blank">politique de confidentialité</a>.</span></label>
+      <p class="msg erreur" id="msg-inscription" hidden></p>
+      <button class="bouton" type="submit">Créer mon compte</button>
+    </form>
+    <p style="margin-top:18px">Déjà un compte ? <a href="#" data-vue="connexion">Me connecter</a></p>
+  </section>
+
+  <section class="carte" id="vue-verif" hidden style="max-width:520px">
+    <h2>Confirme ton adresse</h2>
+    <p>On vient d'envoyer un code à 6 chiffres à <strong id="verif-email"></strong>. Regarde aussi dans tes spams.</p>
+    <form class="formulaire" id="form-verif">
+      <label>Code<input id="v-code" class="code-saisie" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label>
+      <p class="msg" id="msg-verif" hidden></p>
+      <button class="bouton" type="submit">Confirmer</button>
+    </form>
+    <p style="margin-top:18px"><button class="lien-bouton" type="button" id="renvoyer">Renvoyer un code</button></p>
+  </section>
+
+  <section class="carte" id="vue-oubli" hidden style="max-width:520px">
+    <h2>Mot de passe oublié</h2>
+    <p>On t'envoie un code pour en choisir un nouveau.</p>
+    <form class="formulaire" id="form-oubli">
+      <label>Adresse e-mail<input type="email" id="o-email" autocomplete="email" required></label>
+      <p class="msg erreur" id="msg-oubli" hidden></p>
+      <button class="bouton" type="submit">Envoyer le code</button>
+    </form>
+    <p style="margin-top:18px"><a href="#" data-vue="connexion">Retour à la connexion</a></p>
+  </section>
+
+  <section class="carte" id="vue-oubli2" hidden style="max-width:520px">
+    <h2>Nouveau mot de passe</h2>
+    <p>Si un compte existe pour <strong id="oubli-email"></strong>, un code vient de partir.</p>
+    <form class="formulaire" id="form-oubli2">
+      <label>Code<input id="o-code" class="code-saisie" inputmode="numeric" maxlength="6" autocomplete="one-time-code" required></label>
+      <label>Nouveau mot de passe<input type="password" id="o-mdp" autocomplete="new-password" minlength="8" required></label>
+      <p class="msg erreur" id="msg-oubli2" hidden></p>
+      <button class="bouton" type="submit">Changer mon mot de passe</button>
+    </form>
+  </section>
+
+  <div id="vue-tableau" hidden>
+    <h1 style="font-size:clamp(44px,7vw,72px)">Bonjour <span id="t-nom"></span></h1>
+    <p style="color:var(--parchemin)">Connecté avec <span id="t-email"></span>.</p>
+    <div class="statut-abo" id="t-statut"><span class="point"></span><div><strong id="t-statut-titre"></strong><span id="t-statut-detail"></span></div></div>
+    <div class="bandeau-essai" id="t-essai" hidden>
+      <div class="prix-essai">0 €<small id="t-essai-jours">14 jours</small></div>
+      <div><h3>Ton essai gratuit t'attend</h3><p>Installe Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi avec ce compte. La version complète se débloque tout de suite, sans payer.</p></div>
+      <a class="bouton" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger</a>
+    </div>
+    <div class="ligne-actions">
+      <a class="bouton" id="t-acheter" href="boutique.html">Choisir une formule</a>
+      <a class="bouton second" id="t-kofi" href="https://ko-fi.com/" target="_blank" rel="noopener" hidden>Gérer mon abonnement sur Ko-fi</a>
+      <a class="bouton second" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger</a>
+    </div>
+    <p class="note-formules">Pour arrêter l'abonnement mensuel : sur Ko-fi, menu <em>Account &amp; Billing</em>, puis <em>Subscriptions</em>. Ton accès reste jusqu'à la fin du mois payé.</p>
+
+    <div class="colonnes" style="margin-top:26px">
+      <section class="carte">
+        <h2>Mes PC <small style="font:500 15px Rubik,sans-serif;color:var(--parchemin)" id="t-pcs-compte"></small></h2>
+        <p>Retire un PC pour libérer sa place (nouvel ordinateur, Windows réinstallé…).</p>
+        <ul class="liste-simple" id="t-pcs"></ul>
+      </section>
+      <section class="carte">
+        <h2>Mes paiements</h2>
+        <ul class="liste-simple" id="t-paiements"></ul>
+      </section>
+    </div>
+
+    <div class="colonnes" style="margin-top:18px">
+      <section class="carte">
+        <h2>Mon pseudo</h2>
+        <form class="formulaire" id="form-pseudo">
+          <label>Affiché dans le logiciel<input id="t-pseudo" maxlength="40"></label>
+          <p class="msg" id="msg-pseudo" hidden></p>
+          <button class="bouton second petit" type="submit">Enregistrer</button>
+        </form>
+      </section>
+      <section class="carte">
+        <h2>Mot de passe</h2>
+        <form class="formulaire" id="form-mdp">
+          <label>Mot de passe actuel<input type="password" id="m-ancien" autocomplete="current-password" required></label>
+          <label>Nouveau mot de passe<input type="password" id="m-nouveau" autocomplete="new-password" minlength="8" required></label>
+          <p class="msg" id="msg-mdp" hidden></p>
+          <button class="bouton second petit" type="submit">Changer</button>
+        </form>
+      </section>
+    </div>
+    <p class="ligne-actions" style="margin-top:24px">
+      <button class="bouton second" type="button" id="t-deconnexion">Me déconnecter</button>
+      <button class="lien-bouton" type="button" id="t-supprimer" style="color:var(--braise)">Supprimer mon compte</button>
+    </p>
+  </div>
+</div>
+""", noindex=True, scripts='<script src="config.js"></script><script src="js/api.js"></script><script src="js/compte.js"></script>')
+
+
+def twitch_obs():
+    return page("twitch-obs.html", "Twitch et overlay", "Les points de chaîne Twitch et l'overlay OBS de Taverne Voice.", """
+<h1>Twitch et overlay</h1>
+<p class="chapo">Tes viewers dépensent leurs points de chaîne pour te changer la voix ou lancer un son, et l'overlay l'affiche dans ton live.</p>
+<div class="encadre"><p>Les points de chaîne et l'overlay font partie de l'<a href="boutique.html">abonnement</a>. Les points de chaîne demandent d'être affilié ou partenaire Twitch.</p></div>
+
+<h2>Relier ta chaîne</h2>
+<ol>
+  <li>Dans Taverne Voice, ouvre l'onglet <strong>Twitch et OBS</strong>.</li>
+  <li>Clique sur <strong>Relier ma chaîne Twitch</strong>. Une page Twitch s'ouvre avec un code.</li>
+  <li>Connecte-toi avec le compte de ta chaîne et tape le code affiché dans le logiciel.</li>
+</ol>
+<p>Taverne Voice ne voit jamais ton mot de passe Twitch. Tu peux délier ta chaîne à tout moment ; les récompenses créées par Taverne Voice sont alors retirées.</p>
+
+<h2>Créer une récompense</h2>
+<ol>
+  <li>Choisis <strong>Changer ma voix</strong> (avec une durée) ou <strong>Lancer un son</strong>.</li>
+  <li>Choisis la voix ou le son, le prix en points et le titre affiché sur Twitch.</li>
+  <li>Clique sur <strong>Créer sur Twitch</strong>. La récompense apparaît tout de suite sur ta chaîne.</li>
+</ol>
+<p><strong>Tester</strong> joue la récompense sans Twitch, pour vérifier le rendu dans ton live. <strong>Mettre en pause</strong> la cache sur Twitch sans la supprimer.</p>
+<ul>
+  <li>Les voix passent l'une après l'autre : si deux viewers en demandent une en même temps, la deuxième attend son tour.</li>
+  <li>À la fin, ta voix d'avant revient toute seule.</li>
+  <li>Si le logiciel ne peut pas jouer la récompense (son coupé, voix supprimée…), les points sont rendus au viewer.</li>
+</ul>
+
+<h2>L'overlay OBS</h2>
+<ol>
+  <li>Dans OBS, ajoute une <strong>Source navigateur</strong>.</li>
+  <li>Adresse : <code>http://127.0.0.1:47321/overlay</code>, largeur <strong>1920</strong>, hauteur <strong>1080</strong>.</li>
+  <li>Dans Taverne Voice, choisis ce qu'il montre (voix active, sons en cours, points de chaîne), le coin de l'écran et la taille. Les changements s'appliquent sans toucher à OBS.</li>
+</ol>
+<p><img src="img/capture-overlay.webp" width="460" height="140" alt="L'overlay pendant une récompense Twitch" style="max-width:100%"></p>
+""", guide=True)
+
+
+def licence():
+    return page("licence.html", "Abonnement et clés", "Débloquer la version complète de Taverne Voice avec un compte ou une clé.", f"""
+<h1>Abonnement et clés</h1>
+<p class="chapo">La démo marche sans limite de temps. Un abonnement débloque tout le reste.</p>
+
+<div class="tableau"><table>
+  <tr><th></th><th>Démo</th><th>Abonnement</th></tr>
+  <tr><td>Voix</td><td>5</td><td>33, plus les tiennes</td></tr>
+  <tr><td>Curseurs de réglage</td><td>non</td><td>oui</td></tr>
+  <tr><td>Sons dans le soundboard</td><td>3</td><td>sans limite, en dossiers</td></tr>
+  <tr><td>Points de chaîne et overlay OBS</td><td>non</td><td>oui</td></tr>
+  <tr><td>Plugins Stream Deck</td><td>non</td><td>toutes les marques</td></tr>
+  <tr><td>Nombre de PC</td><td>sans limite</td><td>2 par compte</td></tr>
+</table></div>
+<p><a class="bouton" href="boutique.html">Voir les formules</a></p>
+
+<h2>L'essai gratuit de 14 jours</h2>
+<p>Chaque nouveau compte a droit à 14 jours de version complète, sans payer et sans carte bancaire. L'essai démarre la première fois que tu te connectes dans le logiciel avec ton compte. À la fin, le logiciel repasse en démo, sauf si tu as choisi une formule. Il y a un seul essai par compte et par PC.</p>
+
+<h2>Se connecter dans le logiciel</h2>
+<ol>
+  <li>Crée ton compte sur <a href="compte.html">Mon compte</a>. Pour continuer après l'essai, choisis ta formule dans la <a href="boutique.html">boutique</a>.</li>
+  <li>Dans Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>.</li>
+  <li>Entre ton adresse e-mail et ton mot de passe.</li>
+</ol>
+<p>Ton PC est relié à ton compte (2 PC maximum). La licence se renouvelle toute seule tant que ton abonnement est actif. Le logiciel marche aussi hors ligne pendant plusieurs semaines.</p>
+
+<h2>Changer de PC</h2>
+<p>Dans le logiciel : <strong>Réglages → Licence → Se déconnecter de ce PC</strong>. Ou sur le site, dans <a href="compte.html">Mon compte</a>, retire l'ancien PC. Puis connecte-toi sur le nouveau.</p>
+
+<h2>Tu as reçu une clé</h2>
+<p>Une clé commence par <code>TV1-</code> et t'a été donnée par le créateur (concours, partenaire…). Dans le logiciel : <strong>Démo : débloquer</strong>, onglet <strong>J'ai une clé</strong>, colle-la et clique sur <strong>Activer la clé</strong>.</p>
+<div class="encadre"><p>Une clé ou un compte sont personnels. S'ils sont partagés, le créateur peut les désactiver : le logiciel repasse alors en démo.</p></div>
+""", guide=True)
+
+
+def bandeau_identite():
+    manque = any(v.startswith("[") for v in IDENTITE.values())
+    return '<div class="encadre alerte"><p>Informations du vendeur à compléter avant d\'ouvrir la boutique.</p></div>' if manque else ""
+
+
+def mentions():
+    i = IDENTITE
+    return page("mentions-legales.html", "Mentions légales", "Mentions légales de tavernevoice.fr.", f"""
+<div class="enveloppe page-etroite"><article>
+<h1>Mentions légales</h1>
+{bandeau_identite()}
+<h2>Éditeur</h2>
+<p>{e(i["nom"])}<br>{e(i["statut"])}<br>{e(i["adresse"])}<br>Contact : <a href="mailto:{e(i["email"])}">{e(i["email"])}</a></p>
+<h2>Hébergement</h2>
+<p>Site : GitHub Pages, GitHub Inc., 88 Colin P. Kelly Jr Street, San Francisco, CA 94107, États-Unis.<br>
+Serveur des comptes : Cloudflare, Inc., 101 Townsend St, San Francisco, CA 94107, États-Unis.</p>
+<h2>Propriété</h2>
+<p>Le logiciel Taverne Voice, ses voix, ses icônes et ce site appartiennent à l'éditeur. Toute copie ou redistribution sans accord est interdite. Les sons Myinstants restent la propriété de leurs auteurs.</p>
+</article></div>
 """)
+
+
+def cgv():
+    i = IDENTITE
+    return page("cgv.html", "Conditions de vente", "Conditions générales de vente de Taverne Voice.", f"""
+<div class="enveloppe page-etroite"><article>
+<h1>Conditions de vente</h1>
+{bandeau_identite()}
+<p class="chapo">En vigueur au 27 octobre 2026.</p>
+<h2>1. Vendeur</h2>
+<p>{e(i["nom"])}, {e(i["statut"])}, {e(i["adresse"])}. Contact : {e(i["email"])}.</p>
+<h2>2. Ce qui est vendu</h2>
+<p>Un accès à la version complète du logiciel Taverne Voice pour Windows : toutes les voix, les réglages, le soundboard sans limite, les points de chaîne Twitch, l'overlay OBS et les plugins Stream Deck. L'accès est lié à un compte personnel et peut être utilisé sur 2 ordinateurs à la fois. La démo gratuite reste disponible sans achat.</p>
+<h2>3. Prix et formules</h2>
+<ul>
+  <li><strong>Mensuel</strong> : 4,99 € par mois, renouvelé automatiquement chaque mois jusqu'à son arrêt.</li>
+  <li><strong>3 mois</strong> : 14,99 €, payé une fois, sans renouvellement.</li>
+  <li><strong>1 an</strong> : 59,99 €, payé une fois, sans renouvellement.</li>
+</ul>
+<p>Les prix sont en euros, toutes taxes comprises{"" if "TVA" in i["statut"] else " (TVA non applicable, article 293 B du CGI, si le vendeur est micro-entrepreneur)"}. Le paiement se fait sur Ko-fi, par carte bancaire ou PayPal. Ko-fi et ses prestataires de paiement traitent les données de paiement ; le vendeur n'y a pas accès.</p>
+<h2>4. Accès</h2>
+<p>L'accès s'active dès que Ko-fi confirme le paiement, sur le compte qui a la même adresse e-mail. Un nouvel achat s'ajoute à la suite de l'accès en cours.</p>
+<h2>4 bis. Essai gratuit</h2>
+<p>Chaque nouveau compte peut essayer gratuitement la version complète pendant 14 jours, sans moyen de paiement et sans engagement. L'essai démarre à la première connexion du logiciel avec le compte et s'arrête tout seul à la fin des 14 jours ; rien n'est facturé. Un seul essai est accordé par personne, par compte et par ordinateur. Un achat fait pendant l'essai s'ajoute après la fin de l'essai.</p>
+<h2>5. Arrêt de l'abonnement mensuel</h2>
+<p>Le client arrête son abonnement mensuel quand il veut, sans frais, depuis son compte Ko-fi (<em>Account &amp; Billing → Subscriptions</em>). L'accès reste actif jusqu'à la fin de la période payée.</p>
+<h2>6. Droit de rétractation</h2>
+<p>Il s'agit d'un contenu numérique fourni immédiatement. Au moment de l'achat, le client demande expressément l'accès immédiat et reconnaît perdre son droit de rétractation de 14 jours (article L221-28 13° du Code de la consommation). En cas de problème technique empêchant d'utiliser le logiciel, le client peut écrire au vendeur pour trouver une solution ou obtenir un remboursement.</p>
+<h2>7. Utilisation</h2>
+<p>Le compte est personnel. Le partage de compte, la revente ou le contournement de la protection du logiciel peuvent entraîner la suspension de l'accès, sans remboursement. Le client respecte les droits d'auteur des sons qu'il diffuse.</p>
+<h2>8. Garanties</h2>
+<p>Le vendeur fait de son mieux pour que le logiciel fonctionne sur Windows 10 et 11 et soit mis à jour. Les garanties légales de conformité des contenus numériques s'appliquent.</p>
+<h2>9. Litiges</h2>
+<p>Ces conditions sont soumises au droit français. En cas de litige, le client peut recourir gratuitement à un médiateur de la consommation, ou à la plateforme européenne de règlement en ligne des litiges.</p>
+</article></div>
+""")
+
+
+def confidentialite():
+    i = IDENTITE
+    return page("confidentialite.html", "Confidentialité", "Quelles données Taverne Voice garde, et pourquoi.", f"""
+<div class="enveloppe page-etroite"><article>
+<h1>Confidentialité</h1>
+{bandeau_identite()}
+<p class="chapo">Ce que Taverne Voice garde, pourquoi, et comment le supprimer.</p>
+<h2>Ce qui est gardé</h2>
+<ul>
+  <li><strong>Ton compte</strong> : adresse e-mail, pseudo, mot de passe (jamais en clair, seulement une empreinte).</li>
+  <li><strong>Tes PC</strong> : un code de 8 caractères calculé à partir de l'identifiant Windows (il ne dit rien de ton PC), le nom de l'ordinateur et la dernière connexion.</li>
+  <li><strong>Tes paiements</strong> : formule, montant, date et adresse e-mail envoyés par Ko-fi.</li>
+  <li><strong>Un historique</strong> des connexions et des changements du compte, pour la sécurité.</li>
+</ul>
+<p>Le logiciel ne s'écoute pas : ta voix reste sur ton PC. Ta connexion Twitch reste chiffrée sur ton PC.</p>
+<h2>Pourquoi</h2>
+<p>Pour faire marcher ton accès (exécution du contrat), envoyer les codes de vérification, et respecter les obligations comptables.</p>
+<h2>Qui les traite</h2>
+<p>{e(i["nom"])}, responsable du traitement. Hébergement du serveur : Cloudflare. Envoi des e-mails : Brevo. Paiements : Ko-fi.</p>
+<h2>Combien de temps</h2>
+<p>Tant que ton compte existe. Les paiements sont gardés 10 ans pour la comptabilité.</p>
+<h2>Tes droits</h2>
+<p>Tu peux supprimer ton compte toi-même dans <a href="compte.html">Mon compte</a>. Pour toute autre demande (accès, correction, effacement) : <a href="mailto:{e(i["email"])}">{e(i["email"])}</a>. Tu peux aussi saisir la CNIL.</p>
+<h2>Cookies</h2>
+<p>Le site n'utilise pas de cookie publicitaire ni de mesure d'audience. Il garde seulement ta connexion dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
+</article></div>
+""")
+
 
 
 def installation():
@@ -291,6 +754,12 @@ def soundboard():
 </ul>
 <div class="encadre"><p>La démo garde 3 sons. La <a href="licence.html">version complète</a> n'a pas de limite.</p></div>
 
+<h2>Ranger en dossiers</h2>
+<p>Clique sur <strong>+ Nouveau dossier</strong> au-dessus de tes sons (Mèmes, Bruitages, Musiques…). Glisse un son sur l'onglet d'un dossier pour l'y ranger, ou choisis son dossier dans son panneau. Les sons ajoutés pendant qu'un dossier est ouvert y vont directement.</p>
+
+<h2>Baisser ta voix pendant les sons</h2>
+<p>Dans le panneau de droite, active <strong>Baisser ma voix pendant les sons</strong> : tant qu'un son joue, ta voix baisse au niveau choisi, puis remonte en douceur. Pratique quand tu parles par-dessus un son.</p>
+
 <h2>Régler un son</h2>
 <p>Clique sur un son pour ouvrir son panneau : volume, nom, raccourci clavier et lien pour Stream Deck. Le raccourci marche même quand Taverne Voice est en arrière-plan.</p>
 <p>« Tout arrêter » coupe tous les sons en cours ; tu peux lui donner un raccourci aussi.</p>
@@ -376,38 +845,6 @@ def stream_deck():
 """, guide=True)
 
 
-def licence():
-    return page("licence.html", "Version complète", "Débloquer la version complète de Taverne Voice avec une clé.", f"""
-<h1>Version complète</h1>
-<p class="chapo">La démo marche sans limite de temps. Une clé débloque tout le reste.</p>
-
-<div class="tableau"><table>
-  <tr><th></th><th>Démo</th><th>Version complète</th></tr>
-  <tr><td>Voix</td><td>5</td><td>33, plus les tiennes</td></tr>
-  <tr><td>Curseurs de réglage</td><td>non</td><td>oui</td></tr>
-  <tr><td>Sons dans le soundboard</td><td>3</td><td>sans limite</td></tr>
-  <tr><td>Raccourcis clavier et <kbd>F8</kbd></td><td>oui</td><td>oui</td></tr>
-  <tr><td>Plugins Stream Deck</td><td>non</td><td>toutes les marques</td></tr>
-  <tr><td>Mises à jour</td><td>oui</td><td>oui</td></tr>
-</table></div>
-
-<h2>Obtenir une clé</h2>
-<p>Les clés sont données par le créateur de Taverne Voice : <a href="{CONTACT}">{CONTACT_TEXTE}</a>. Une clé peut être à vie ou valable pour une durée limitée.</p>
-
-<h2>Activer ta clé</h2>
-<ol>
-  <li>Dans Taverne Voice, clique sur <strong>Démo · Débloquer</strong> à côté du nom, en haut.</li>
-  <li>Colle ta clé (elle commence par <code>TV1-</code>) et clique sur <strong>Activer la clé</strong>.</li>
-</ol>
-<p>Pas besoin d'internet ni de compte. La clé est gardée sur ce PC, même après une mise à jour.</p>
-
-<h2>Changer de PC</h2>
-<p>Sur l'ancien PC : <strong>Réglages → Licence → Retirer la clé de ce PC</strong>. Puis active la même clé sur le nouveau.</p>
-
-<div class="encadre"><p>Une clé est personnelle. Si elle est partagée, le créateur peut la désactiver : le logiciel repasse alors en démo.</p></div>
-""", guide=True)
-
-
 def faq():
     q = [
         ("Windows dit que le logiciel est dangereux. C'est un virus ?",
@@ -424,6 +861,14 @@ def faq():
          "<p>Ferme complètement le logiciel du Stream Deck (clic droit sur son icône près de l'horloge → Quitter) puis rouvre-le. Les plugins ne sont chargés qu'au démarrage. Voir le <a href=\"stream-deck.html\">guide Stream Deck</a>.</p>"),
         ("Où sont mes réglages et mes sons ?",
          "<p>Dans <code>%APPDATA%\\TaverneVoice</code>. Ils sont gardés pendant les mises à jour.</p>"),
+        ("Comment marche l'essai gratuit ?",
+         "<p>Crée ton compte sur <a href=\"compte.html?vue=inscription\">Mon compte</a>, puis dans le logiciel clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi. Tu as 14 jours de version complète, sans payer. À la fin, le logiciel repasse en démo si tu n'as pas choisi de formule : rien n'est prélevé. Un seul essai par compte et par PC.</p>"),
+        ("Combien de PC avec un abonnement ?",
+         "<p>2 PC à la fois. Pour en changer, retire l'ancien dans <a href=\"compte.html\">Mon compte</a> ou clique sur <strong>Se déconnecter de ce PC</strong> dans les Réglages du logiciel.</p>"),
+        ("J'ai payé sur Ko-fi mais rien ne se débloque.",
+         "<p>Vérifie que ton compte Taverne Voice a <strong>la même adresse e-mail</strong> que sur Ko-fi. Dans le logiciel, Réglages → Licence → <strong>Actualiser</strong>. Si tu as payé avec une autre adresse, écris à contact@tavernevoice.fr : ton paiement sera rattaché à ton compte.</p>"),
+        ("Comment arrêter mon abonnement ?",
+         "<p>Sur Ko-fi : menu <em>Account &amp; Billing</em> → <em>Subscriptions</em>. Ton accès reste jusqu'à la fin du mois payé. Les passes 3 mois et 1 an ne se renouvellent pas.</p>"),
         ("Ça marche sur Mac ou Linux ?",
          "<p>Non, Taverne Voice est fait pour Windows 10 et 11.</p>"),
         ("Le logiciel reste ouvert quand je ferme la fenêtre.",
@@ -449,9 +894,11 @@ def page404():
 
 
 PAGES = {
-    "index.html": accueil, "installation.html": installation, "obs-discord.html": obs_discord,
-    "voix.html": voix, "soundboard.html": soundboard, "stream-deck.html": stream_deck,
-    "licence.html": licence, "faq.html": faq, "createur.html": createur, "404.html": page404,
+    "index.html": accueil, "boutique.html": boutique, "compte.html": compte, "partenaires.html": partenaires_page,
+    "installation.html": installation, "obs-discord.html": obs_discord, "voix.html": voix, "soundboard.html": soundboard,
+    "twitch-obs.html": twitch_obs, "stream-deck.html": stream_deck, "licence.html": licence, "faq.html": faq,
+    "createur.html": createur, "mentions-legales.html": mentions, "cgv.html": cgv, "confidentialite.html": confidentialite,
+    "404.html": page404,
 }
 
 if __name__ == "__main__":
