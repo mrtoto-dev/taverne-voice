@@ -280,8 +280,8 @@ def cartes_formules(lien=True):
     </div>"""
     return f"""<div class="formules">
     {carte("mensuel", "Mensuel", "4,99 €", "par mois", "Renouvelé tout seul. Tu l'arrêtes quand tu veux depuis Ko-fi.", True, "Le plus souple")}
-    {carte("trimestre", "3 mois", "14,97 €", "une fois", "Trois mois d'accès, sans renouvellement automatique.")}
-    {carte("annuel", "1 an", "59,88 €", "une fois", "Une année entière, payée une seule fois, sans renouvellement.")}
+    {carte("trimestre", "3 mois", "14,99 €", "une fois", "Trois mois d'accès, sans renouvellement automatique.")}
+    {carte("annuel", "1 an", "59,99 €", "une fois", "Une année entière, payée une seule fois, sans renouvellement.")}
   </div>
   <p class="note-formules">Chaque formule débloque les 33 voix, les réglages, le soundboard sans limite, les points de chaîne Twitch, l'overlay OBS et les plugins Stream Deck. Paiement sécurisé par Ko-fi (carte ou PayPal).</p>"""
 
@@ -301,7 +301,7 @@ def partenaires_page():
 
 
 def boutique():
-    return page("boutique.html", "Tarifs", "Les formules de Taverne Voice : 4,99 € par mois, 14,97 € pour 3 mois ou 59,88 € pour un an.", f"""
+    return page("boutique.html", "Tarifs", "Les formules de Taverne Voice : 4,99 € par mois, 14,99 € pour 3 mois ou 59,99 € pour un an.", f"""
 <div class="enveloppe page-etroite">
   <h1>Débloquer Taverne Voice</h1>
   <p class="chapo">Choisis ta formule, crée ton compte, paie sur Ko-fi : ton logiciel se débloque tout seul.</p>
@@ -311,8 +311,8 @@ def boutique():
       <h3>Choisis ta formule</h3>
       <div class="choix-formule">
         <button type="button" data-formule="mensuel" aria-pressed="true"><strong>4,99 €</strong>par mois</button>
-        <button type="button" data-formule="trimestre" aria-pressed="false"><strong>14,97 €</strong>pour 3 mois</button>
-        <button type="button" data-formule="annuel" aria-pressed="false"><strong>59,88 €</strong>pour 1 an</button>
+        <button type="button" data-formule="trimestre" aria-pressed="false"><strong>14,99 €</strong>pour 3 mois</button>
+        <button type="button" data-formule="annuel" aria-pressed="false"><strong>59,99 €</strong>pour 1 an</button>
       </div>
       <p id="b-detail"></p>
     </li>
@@ -574,8 +574,8 @@ def cgv():
 <h2>3. Prix et formules</h2>
 <ul>
   <li><strong>Mensuel</strong> : 4,99 € par mois, renouvelé automatiquement chaque mois jusqu'à son arrêt.</li>
-  <li><strong>3 mois</strong> : 14,97 €, payé une fois, sans renouvellement.</li>
-  <li><strong>1 an</strong> : 59,88 €, payé une fois, sans renouvellement.</li>
+  <li><strong>3 mois</strong> : 14,99 €, payé une fois, sans renouvellement.</li>
+  <li><strong>1 an</strong> : 59,99 €, payé une fois, sans renouvellement.</li>
 </ul>
 <p>Les prix sont en euros, toutes taxes comprises{"" if "TVA" in i["statut"] else " (TVA non applicable, article 293 B du CGI, si le vendeur est micro-entrepreneur)"}. Le paiement se fait sur Ko-fi, par carte bancaire ou PayPal. Ko-fi et ses prestataires de paiement traitent les données de paiement ; le vendeur n'y a pas accès.</p>
 <h2>4. Accès</h2>

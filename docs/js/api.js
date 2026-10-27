@@ -25,8 +25,8 @@ window.TV = (() => {
 
   const FORMULES = {
     mensuel: { nom: "Mensuel", prix: "4,99 €", detail: "par mois, renouvelé tout seul" },
-    trimestre: { nom: "3 mois", prix: "14,97 €", detail: "payé une fois" },
-    annuel: { nom: "1 an", prix: "59,88 €", detail: "payé une fois" },
+    trimestre: { nom: "3 mois", prix: "14,99 €", detail: "payé une fois" },
+    annuel: { nom: "1 an", prix: "59,99 €", detail: "payé une fois" },
     offert: { nom: "Accès offert", prix: "", detail: "" },
   };
 
