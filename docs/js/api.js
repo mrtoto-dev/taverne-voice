@@ -28,6 +28,7 @@ window.TV = (() => {
     trimestre: { nom: "3 mois", prix: "14,99 €", detail: "payé une fois" },
     annuel: { nom: "1 an", prix: "59,99 €", detail: "payé une fois" },
     offert: { nom: "Accès offert", prix: "", detail: "" },
+    essai: { nom: "Essai gratuit", prix: "0 €", detail: "14 jours" },
   };
 
   const date = (ms) => new Date(ms).toLocaleDateString("fr-FR", { day: "numeric", month: "long", year: "numeric" });

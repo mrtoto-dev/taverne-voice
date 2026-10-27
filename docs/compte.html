@@ -122,7 +122,7 @@
 
   <section class="carte" id="vue-inscription" hidden style="max-width:520px">
     <h2>Créer mon compte</h2>
-    <p>Utilise la même adresse que sur Ko-fi : c'est elle qui relie ton paiement à ton compte.</p>
+    <p>Ton compte t'offre <strong>14 jours d'essai gratuit</strong> de la version complète. Si tu paies plus tard, utilise la même adresse sur Ko-fi : c'est elle qui relie ton paiement à ton compte.</p>
     <form class="formulaire" id="form-inscription">
       <label>Adresse e-mail<input type="email" id="i-email" autocomplete="email" required></label>
       <label>Pseudo (affiché dans le logiciel)<input id="i-pseudo" maxlength="40" placeholder="Ton pseudo Twitch par exemple"></label>
@@ -172,6 +172,11 @@
     <h1 style="font-size:clamp(44px,7vw,72px)">Bonjour <span id="t-nom"></span></h1>
     <p style="color:var(--parchemin)">Connecté avec <span id="t-email"></span>.</p>
     <div class="statut-abo" id="t-statut"><span class="point"></span><div><strong id="t-statut-titre"></strong><span id="t-statut-detail"></span></div></div>
+    <div class="bandeau-essai" id="t-essai" hidden>
+      <div class="prix-essai">0 €<small id="t-essai-jours">14 jours</small></div>
+      <div><h3>Ton essai gratuit t'attend</h3><p>Installe Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi avec ce compte. La version complète se débloque tout de suite, sans payer.</p></div>
+      <a class="bouton" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true" style="stroke-width:2.2"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>Télécharger</a>
+    </div>
     <div class="ligne-actions">
       <a class="bouton" id="t-acheter" href="boutique.html">Choisir une formule</a>
       <a class="bouton second" id="t-kofi" href="https://ko-fi.com/" target="_blank" rel="noopener" hidden>Gérer mon abonnement sur Ko-fi</a>

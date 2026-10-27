@@ -234,6 +234,14 @@ details p:last-child { margin-bottom: 0; }
 .formule p { color: var(--parchemin); margin: 0; font-size: 15px; flex: 1; }
 .formule .bouton { justify-content: center; }
 .note-formules { color: var(--parchemin); font-size: 14px; margin-top: 16px; }
+.bandeau-essai { display: flex; align-items: center; gap: 22px; margin-top: 26px; padding: 22px 26px; border-radius: 18px; border: 1px dashed var(--houblon); background: linear-gradient(100deg, rgba(143, 196, 111, .13), rgba(143, 196, 111, .03) 60%), var(--chene); }
+.bandeau-essai[hidden] { display: none; }
+.bandeau-essai .prix-essai { font: 700 46px/1 "Grenze Gotisch", serif; color: var(--houblon); text-align: center; flex: none; }
+.bandeau-essai .prix-essai small { display: block; font: 500 14px "Rubik", sans-serif; color: var(--parchemin); margin-top: 4px; }
+.bandeau-essai h3 { margin: 0 0 4px; font-size: 30px; }
+.bandeau-essai p { margin: 0; color: var(--parchemin); font-size: 15px; }
+.bandeau-essai .bouton { flex: none; margin-left: auto; }
+@media (max-width: 700px) { .bandeau-essai { flex-direction: column; align-items: flex-start; text-align: left; } .bandeau-essai .bouton { margin-left: 0; } }
 
 /* formulaires (compte, boutique, créateur) */
 .carte { border: 1px solid var(--poutre); border-radius: 18px; padding: 26px; background: var(--chene); }
@@ -306,3 +314,4 @@ dialog.fiche h2 { font-size: 34px; }
   .vitrine .bulle-overlay { left: 8px; bottom: -28px; }
   .formules { grid-template-columns: 1fr; }
 }
+#t-essai { margin: 0 0 16px; }

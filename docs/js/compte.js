@@ -121,16 +121,24 @@
     const f = TV.FORMULES[a.formule] || { nom: "" };
     const statut = $("#t-statut");
     statut.classList.toggle("actif", a.actif);
-    if (a.actif) {
+    const essai = infos.essai || {};
+    $("#t-essai").hidden = !essai.disponible;
+    $("#t-essai-jours").textContent = (essai.jours || 14) + " jours";
+    if (a.actif && a.formule === "essai") {
+      const reste = Math.max(0, Math.ceil((a.fin - Date.now()) / 86400000));
+      $("#t-statut-titre").textContent = `Essai gratuit : encore ${reste} jour${reste > 1 ? "s" : ""}`;
+      $("#t-statut-detail").textContent = `Version complète jusqu'au ${TV.date(a.fin)}. Ensuite, choisis une formule pour continuer : les jours d'essai restants sont gardés.`;
+    } else if (a.actif) {
       $("#t-statut-titre").textContent = `Version complète active${f.nom ? ", " + f.nom.toLowerCase() : ""}`;
       $("#t-statut-detail").textContent = a.mensuel
         ? `Abonnement Ko-fi mensuel. Prochaine échéance vers le ${TV.date(a.fin)}.`
         : `Accès jusqu'au ${TV.date(a.fin)}.`;
     } else {
-      $("#t-statut-titre").textContent = "Pas d'abonnement en cours";
-      $("#t-statut-detail").textContent = a.fin ? `Ton dernier accès s'est terminé le ${TV.date(a.fin)}.` : "Choisis une formule pour débloquer la version complète.";
+      $("#t-statut-titre").textContent = essai.disponible ? "Version démo pour l'instant" : "Pas d'abonnement en cours";
+      $("#t-statut-detail").textContent = a.fin ? `Ton dernier accès s'est terminé le ${TV.date(a.fin)}.`
+        : essai.disponible ? "Commence ton essai gratuit dans le logiciel, ou choisis une formule." : "Choisis une formule pour débloquer la version complète.";
     }
-    $("#t-acheter").textContent = a.actif ? "Prolonger ou changer de formule" : "Choisir une formule";
+    $("#t-acheter").textContent = a.actif && a.formule !== "essai" ? "Prolonger ou changer de formule" : "Choisir une formule";
     $("#t-kofi").hidden = !a.mensuel;
 
     const pcs = infos.pcs.map((p) => `<li><span>${TV.echapper(p.nom || "PC " + p.pc)}<small>Code ${TV.echapper(p.pc)}, vu le ${TV.date(p.vu)}</small></span>

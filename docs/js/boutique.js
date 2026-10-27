@@ -49,7 +49,9 @@
       finAvant = i.abonnement.fin || 0;
       if (i.abonnement.actif) {
         $("#b-deja").hidden = false;
-        $("#b-deja").textContent = `Tu as déjà accès jusqu'au ${TV.date(i.abonnement.fin)}. Un nouvel achat s'ajoute à la suite.`;
+        $("#b-deja").textContent = i.abonnement.formule === "essai"
+          ? `Ton essai gratuit dure jusqu'au ${TV.date(i.abonnement.fin)}. Ton achat s'ajoutera à la suite : tu ne perds aucun jour.`
+          : `Tu as déjà accès jusqu'au ${TV.date(i.abonnement.fin)}. Un nouvel achat s'ajoute à la suite.`;
       }
     } else {
       const r = encodeURIComponent(formule);

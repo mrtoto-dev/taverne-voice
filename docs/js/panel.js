@@ -7,7 +7,7 @@ const API = window.TAVERNE.api;
 const hex = (b) => [...b].map((x) => x.toString(16).padStart(2, "0")).join("");
 const echapper = (t) => String(t ?? "").replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
 const date = (ms) => ms ? new Date(ms).toLocaleDateString("fr-FR") : "—";
-const FORMULES = { mensuel: "Mensuel", trimestre: "3 mois", annuel: "1 an", offert: "Offert" };
+const FORMULES = { mensuel: "Mensuel", trimestre: "3 mois", annuel: "1 an", offert: "Offert", essai: "Essai" };
 
 let graine = null;
 let clientOuvert = null;

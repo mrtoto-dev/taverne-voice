@@ -139,9 +139,9 @@ def accueil():
     <p class="chapo">Le changeur de voix des streamers. 33 voix, un soundboard, les points de chaîne Twitch et ton Stream Deck, dans un seul logiciel.</p>
     <div class="actions">
       <a class="bouton" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger gratuitement</a>
-      <a class="bouton second" href="boutique.html">Voir les formules</a>
+      <a class="bouton second" href="compte.html?vue=inscription">Essai gratuit 14 jours</a>
     </div>
-    <p class="petit-texte">Démo gratuite, sans limite de temps. Windows 10 et 11.</p>
+    <p class="petit-texte">14 jours de version complète offerts, sans carte bancaire. Ensuite la démo reste gratuite. Windows 10 et 11.</p>
   </div>
   <div class="vitrine">
     <div class="fenetre-app"><img src="img/capture-voix-petit.webp" srcset="img/capture-voix-petit.webp 1360w, img/capture-voix.webp 2720w" sizes="(max-width: 900px) 100vw, 640px" width="1360" height="820" alt="La fenêtre de Taverne Voice : les voix en sous-bocks colorés et les réglages de la voix French Touch"></div>
@@ -223,7 +223,8 @@ def accueil():
 <section class="section">
   <div class="enveloppe">
     <h2>Les formules</h2>
-    <p class="intro">La démo est gratuite et sans limite de temps. Un abonnement débloque tout, sur 2 PC.</p>
+    <p class="intro">Essaie tout pendant 14 jours, gratuitement. Ensuite la démo reste gratuite et sans limite de temps, et un abonnement débloque tout, sur 2 PC.</p>
+    {bandeau_essai()}
     {cartes_formules()}
   </div>
 </section>
@@ -268,6 +269,14 @@ def carte_partenaire(p):
 </article>"""
 
 
+def bandeau_essai():
+    return f"""<div class="bandeau-essai">
+    <div class="prix-essai">0 €<small>14 jours</small></div>
+    <div><h3>Essai gratuit</h3><p>Toute la version complète pendant 14 jours, sans carte bancaire et sans engagement. Crée ton compte, puis connecte-toi dans le logiciel : l'essai démarre tout seul.</p></div>
+    <a class="bouton" href="compte.html?vue=inscription">Commencer l'essai</a>
+  </div>"""
+
+
 def cartes_formules(lien=True):
     def carte(id_, nom, prix, unite, texte, mise=False, etiquette=""):
         bouton = f'<a class="bouton{"" if mise else " second"}" href="boutique.html?formule={id_}">Choisir</a>' if lien else ""
@@ -305,6 +314,7 @@ def boutique():
 <div class="enveloppe page-etroite">
   <h1>Débloquer Taverne Voice</h1>
   <p class="chapo">Choisis ta formule, crée ton compte, paie sur Ko-fi : ton logiciel se débloque tout seul.</p>
+  <div class="encadre"><p>Pas encore sûr ? <a href="compte.html?vue=inscription">Crée ton compte</a> et connecte-toi dans le logiciel : <strong>14 jours d'essai gratuit</strong>, sans payer. Si tu achètes pendant l'essai, les jours restants sont gardés.</p></div>
   {cartes_formules(lien=False).replace('<div class="formules">', '<div class="formules" hidden>')}
   <ol class="etapes-achat">
     <li>
@@ -371,7 +381,7 @@ def compte():
 
   <section class="carte" id="vue-inscription" hidden style="max-width:520px">
     <h2>Créer mon compte</h2>
-    <p>Utilise la même adresse que sur Ko-fi : c'est elle qui relie ton paiement à ton compte.</p>
+    <p>Ton compte t'offre <strong>14 jours d'essai gratuit</strong> de la version complète. Si tu paies plus tard, utilise la même adresse sur Ko-fi : c'est elle qui relie ton paiement à ton compte.</p>
     <form class="formulaire" id="form-inscription">
       <label>Adresse e-mail<input type="email" id="i-email" autocomplete="email" required></label>
       <label>Pseudo (affiché dans le logiciel)<input id="i-pseudo" maxlength="40" placeholder="Ton pseudo Twitch par exemple"></label>
@@ -421,6 +431,11 @@ def compte():
     <h1 style="font-size:clamp(44px,7vw,72px)">Bonjour <span id="t-nom"></span></h1>
     <p style="color:var(--parchemin)">Connecté avec <span id="t-email"></span>.</p>
     <div class="statut-abo" id="t-statut"><span class="point"></span><div><strong id="t-statut-titre"></strong><span id="t-statut-detail"></span></div></div>
+    <div class="bandeau-essai" id="t-essai" hidden>
+      <div class="prix-essai">0 €<small id="t-essai-jours">14 jours</small></div>
+      <div><h3>Ton essai gratuit t'attend</h3><p>Installe Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi avec ce compte. La version complète se débloque tout de suite, sans payer.</p></div>
+      <a class="bouton" href="{TELECHARGER}Taverne-Voice-Setup.exe">{ICONE_TELECHARGER}Télécharger</a>
+    </div>
     <div class="ligne-actions">
       <a class="bouton" id="t-acheter" href="boutique.html">Choisir une formule</a>
       <a class="bouton second" id="t-kofi" href="https://ko-fi.com/" target="_blank" rel="noopener" hidden>Gérer mon abonnement sur Ko-fi</a>
@@ -521,9 +536,12 @@ def licence():
 </table></div>
 <p><a class="bouton" href="boutique.html">Voir les formules</a></p>
 
+<h2>L'essai gratuit de 14 jours</h2>
+<p>Chaque nouveau compte a droit à 14 jours de version complète, sans payer et sans carte bancaire. L'essai démarre la première fois que tu te connectes dans le logiciel avec ton compte. À la fin, le logiciel repasse en démo, sauf si tu as choisi une formule. Il y a un seul essai par compte et par PC.</p>
+
 <h2>Se connecter dans le logiciel</h2>
 <ol>
-  <li>Crée ton compte sur <a href="compte.html">Mon compte</a> et choisis ta formule dans la <a href="boutique.html">boutique</a>.</li>
+  <li>Crée ton compte sur <a href="compte.html">Mon compte</a>. Pour continuer après l'essai, choisis ta formule dans la <a href="boutique.html">boutique</a>.</li>
   <li>Dans Taverne Voice, clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>.</li>
   <li>Entre ton adresse e-mail et ton mot de passe.</li>
 </ol>
@@ -580,6 +598,8 @@ def cgv():
 <p>Les prix sont en euros, toutes taxes comprises{"" if "TVA" in i["statut"] else " (TVA non applicable, article 293 B du CGI, si le vendeur est micro-entrepreneur)"}. Le paiement se fait sur Ko-fi, par carte bancaire ou PayPal. Ko-fi et ses prestataires de paiement traitent les données de paiement ; le vendeur n'y a pas accès.</p>
 <h2>4. Accès</h2>
 <p>L'accès s'active dès que Ko-fi confirme le paiement, sur le compte qui a la même adresse e-mail. Un nouvel achat s'ajoute à la suite de l'accès en cours.</p>
+<h2>4 bis. Essai gratuit</h2>
+<p>Chaque nouveau compte peut essayer gratuitement la version complète pendant 14 jours, sans moyen de paiement et sans engagement. L'essai démarre à la première connexion du logiciel avec le compte et s'arrête tout seul à la fin des 14 jours ; rien n'est facturé. Un seul essai est accordé par personne, par compte et par ordinateur. Un achat fait pendant l'essai s'ajoute après la fin de l'essai.</p>
 <h2>5. Arrêt de l'abonnement mensuel</h2>
 <p>Le client arrête son abonnement mensuel quand il veut, sans frais, depuis son compte Ko-fi (<em>Account &amp; Billing → Subscriptions</em>). L'accès reste actif jusqu'à la fin de la période payée.</p>
 <h2>6. Droit de rétractation</h2>
@@ -841,6 +861,8 @@ def faq():
          "<p>Ferme complètement le logiciel du Stream Deck (clic droit sur son icône près de l'horloge → Quitter) puis rouvre-le. Les plugins ne sont chargés qu'au démarrage. Voir le <a href=\"stream-deck.html\">guide Stream Deck</a>.</p>"),
         ("Où sont mes réglages et mes sons ?",
          "<p>Dans <code>%APPDATA%\\TaverneVoice</code>. Ils sont gardés pendant les mises à jour.</p>"),
+        ("Comment marche l'essai gratuit ?",
+         "<p>Crée ton compte sur <a href=\"compte.html?vue=inscription\">Mon compte</a>, puis dans le logiciel clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi. Tu as 14 jours de version complète, sans payer. À la fin, le logiciel repasse en démo si tu n'as pas choisi de formule : rien n'est prélevé. Un seul essai par compte et par PC.</p>"),
         ("Combien de PC avec un abonnement ?",
          "<p>2 PC à la fois. Pour en changer, retire l'ancien dans <a href=\"compte.html\">Mon compte</a> ou clique sur <strong>Se déconnecter de ce PC</strong> dans les Réglages du logiciel.</p>"),
         ("J'ai payé sur Ko-fi mais rien ne se débloque.",
