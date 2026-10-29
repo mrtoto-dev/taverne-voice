@@ -315,3 +315,6 @@ dialog.fiche h2 { font-size: 34px; }
   .formules { grid-template-columns: 1fr; }
 }
 #t-essai { margin: 0 0 16px; }
+
+/* Captures dans les pages du guide (2.0) */
+.capture-guide { display: block; width: 100%; height: auto; border-radius: 10px; border: 1px solid rgba(242, 169, 59, .25); box-shadow: 0 10px 30px rgba(0, 0, 0, .35); }

@@ -56,8 +56,11 @@ GUIDE = [
     ("obs-discord.html", "OBS et Discord"),
     ("voix.html", "Les voix"),
     ("soundboard.html", "Soundboard"),
+    ("interactif.html", "Roulette et défis"),
+    ("atelier.html", "Atelier et profils"),
     ("twitch-obs.html", "Twitch et overlay"),
     ("stream-deck.html", "Stream Deck"),
+    ("reglages.html", "Sauvegardes et diagnostic"),
     ("licence.html", "Abonnement et clés"),
     ("faq.html", "Questions"),
 ]
@@ -211,6 +214,32 @@ def accueil():
         <p><a href="twitch-obs.html">Voir comment ça marche</a></p>
       </div>
       <div class="capture"><img src="img/capture-twitch-petit.webp" loading="lazy" width="1360" height="820" alt="L'onglet Twitch et OBS de Taverne Voice"></div>
+    </div>
+    <div class="fonction inverse">
+      <div>
+        <h2>Roulette, défis et automatismes</h2>
+        <p>Fais tourner la roulette des voix, lance un défi « Chaos » où ta voix change toute seule, ou laisse Taverne Voice réagir quand tu cries.</p>
+        <ul>
+          <li>4 défis : Chaos, Escalade, Cumul, Voix piège</li>
+          <li>Minuteur : chaque voix repart toute seule après 30 secondes</li>
+          <li>Tes viewers peuvent lancer la roulette ou un défi avec leurs points de chaîne</li>
+        </ul>
+        <p><a href="interactif.html">Voir les défis</a></p>
+      </div>
+      <div class="capture"><img src="img/capture-interactif-petit.webp" loading="lazy" width="1360" height="820" alt="L'onglet Interactif : roulette, défi Chaos en cours et minuteur"></div>
+    </div>
+    <div class="fonction">
+      <div>
+        <h2>Crée ta propre voix dans l'atelier</h2>
+        <p>Empile les effets comme des ingrédients, mélange deux voix avec un curseur, ou laisse le hasard inventer. Tu entends le résultat en direct.</p>
+        <ul>
+          <li>Enregistre tes voix avec leur nom, leur couleur et leur icône</li>
+          <li>Partage-les avec un simple code à coller dans Discord</li>
+          <li>Un raccourci clavier par voix, même en jeu</li>
+        </ul>
+        <p><a href="atelier.html">Découvrir l'atelier</a></p>
+      </div>
+      <div class="capture"><img src="img/capture-atelier-petit.webp" loading="lazy" width="1360" height="820" alt="L'atelier de création : effets, mélange de deux voix et enregistrement"></div>
     </div>
     <div class="fonction inverse">
       <div>
@@ -555,6 +584,9 @@ def licence():
   <tr><td>Curseurs de réglage</td><td>non</td><td>oui</td></tr>
   <tr><td>Sons dans le soundboard</td><td>3</td><td>sans limite, en dossiers</td></tr>
   <tr><td>Points de chaîne et overlay OBS</td><td>non</td><td>oui</td></tr>
+  <tr><td>Roulette, défis et automatismes</td><td>non</td><td>oui</td></tr>
+  <tr><td>Atelier, voix perso et partage</td><td>non</td><td>oui</td></tr>
+  <tr><td>Minuteur, raccourcis, sauvegardes, diagnostic</td><td>oui</td><td>oui</td></tr>
   <tr><td>Plugins Stream Deck</td><td>non</td><td>toutes les marques</td></tr>
   <tr><td>Nombre de PC</td><td>sans limite</td><td>2 par compte</td></tr>
 </table></div>
@@ -868,6 +900,11 @@ def stream_deck():
   <tr><td><code>taverne://effet</code>, <code>/on</code>, <code>/off</code></td><td>active ou coupe l'effet</td></tr>
   <tr><td><code>taverne://stop</code></td><td>arrête tous les sons</td></tr>
   <tr><td><code>taverne://ouvrir</code></td><td>ouvre la fenêtre</td></tr>
+  <tr><td><code>taverne://voix/robot/30</code></td><td>passe à une voix pendant 30 secondes</td></tr>
+  <tr><td><code>taverne://normal</code></td><td>revient à la voix Normal</td></tr>
+  <tr><td><code>taverne://suivante</code>, <code>taverne://precedente</code></td><td>voix suivante ou précédente (dans tes favoris)</td></tr>
+  <tr><td><code>taverne://roulette</code>, <code>taverne://roulette/30</code></td><td>fait tourner la roulette (la voix tirée dure 30 s)</td></tr>
+  <tr><td><code>taverne://defi/chaos</code>, <code>/escalade</code>, <code>/cumul</code>, <code>/piege</code>, <code>/stop</code></td><td>lance ou arrête un défi</td></tr>
 </table></div>
 <p>Le panneau de chaque son a un bouton <strong>Copier</strong> pour son lien.</p>
 """, guide=True)
@@ -889,6 +926,12 @@ def faq():
          "<p>Ferme complètement le logiciel du Stream Deck (clic droit sur son icône près de l'horloge → Quitter) puis rouvre-le. Les plugins ne sont chargés qu'au démarrage. Voir le <a href=\"stream-deck.html\">guide Stream Deck</a>.</p>"),
         ("Où sont mes réglages et mes sons ?",
          "<p>Dans <code>%APPDATA%\\TaverneVoice</code>. Ils sont gardés pendant les mises à jour.</p>"),
+        ("On ne m'entend pas ou le son grésille.",
+         "<p>Ouvre <strong>Réglages → Diagnostic audio</strong> et parle pendant le test : il vérifie le micro, la sortie, le câble, la charge des effets et dit quoi faire. <strong>Copier le rapport</strong> te permet d'envoyer le résultat si tu as besoin d'aide. Voir <a href=\"reglages.html\">Sauvegardes et diagnostic</a>.</p>"),
+        ("J'ai perdu mes réglages ou mes voix.",
+         "<p>Taverne Voice fait une sauvegarde chaque jour. Dans <strong>Réglages → Sauvegardes</strong>, clique sur <strong>Restaurer</strong> à côté de la date voulue. Si le fichier des réglages est abîmé (coupure de courant), la dernière sauvegarde est remise toute seule.</p>"),
+        ("Comment partager une voix avec un ami ?",
+         "<p>Choisis ta voix, clique sur <strong>Partager</strong> et copie le code (il commence par <code>TVP1.</code>). Ton ami clique sur <strong>Importer une voix</strong> dans « Mes voix » et colle le code.</p>"),
         ("Comment marche l'essai gratuit ?",
          "<p>Crée ton compte sur <a href=\"compte.html?vue=inscription\">Mon compte</a>, puis dans le logiciel clique sur <strong>Démo : débloquer</strong>, onglet <strong>Mon compte</strong>, et connecte-toi. Tu as 14 jours de version complète, sans payer. À la fin, le logiciel repasse en démo si tu n'as pas choisi de formule : rien n'est prélevé. Un seul essai par compte et par PC.</p>"),
         ("Combien de PC avec un abonnement ?",
@@ -924,10 +967,131 @@ def page404():
 """, noindex=True)
 
 
+def interactif():
+    return page("interactif.html", "Roulette et défis", "La roulette des voix, les défis, le minuteur et les automatismes de Taverne Voice.", """
+<h1>Roulette et défis</h1>
+<p class="chapo">L'onglet <strong>Interactif</strong> transforme ta voix en jeu : roulette, défis, minuteur et réactions automatiques.</p>
+<p><img class="capture-guide" src="img/capture-interactif-petit.webp" loading="lazy" width="1360" height="820" alt="L'onglet Interactif"></p>
+<div class="encadre"><p>La roulette, les défis et les automatismes font partie de l'<a href="boutique.html">abonnement</a>. Le minuteur marche aussi dans la démo.</p></div>
+
+<h2>La roulette</h2>
+<p>Clique sur <strong>Faire tourner</strong> (ou sur <strong>Roulette</strong> en bas de la fenêtre) : les voix défilent et une tombe au hasard, jamais celle que tu as déjà. Tu choisis :</p>
+<ul>
+  <li><strong>Parmi</strong> : toutes les voix, tes favoris, les voix de Taverne Voice ou tes voix perso.</li>
+  <li><strong>La voix tirée dure</strong> : jusqu'au prochain changement, ou 15 s à 5 min.</li>
+</ul>
+<p>L'overlay OBS montre la roue qui tourne et la voix gagnante.</p>
+
+<h2>Les défis</h2>
+<p>Un défi change ta voix tout seul pendant quelques minutes. Choisis l'intervalle (10 s à 1 min) et la durée (1 à 10 min), puis clique sur un défi. <strong>Arrêter</strong> remet ta voix d'avant.</p>
+<div class="tableau"><table>
+  <tr><th>Défi</th><th>Ce qui se passe</th></tr>
+  <tr><td>Chaos</td><td>Une nouvelle voix au hasard à chaque intervalle.</td></tr>
+  <tr><td>Escalade</td><td>Ta voix monte d'un cran à chaque intervalle, du plus grave au plus aigu.</td></tr>
+  <tr><td>Cumul</td><td>Un effet s'ajoute à chaque intervalle : écho, robot, grotte, vibrato… jusqu'au chaos total.</td></tr>
+  <tr><td>Voix piège</td><td>À chaque intervalle, une chance sur trois de tomber sur une voix piège pendant 10 secondes.</td></tr>
+</table></div>
+
+<h2>Le minuteur d'effet</h2>
+<p>Active-le dans l'onglet Interactif ou avec le bouton <strong>Minuteur</strong> en bas de la fenêtre : chaque voix que tu choisis repart toute seule au bout du temps réglé (5 s à 10 min), vers <strong>Normal</strong> ou vers <strong>la voix d'avant</strong>. Le compte à rebours s'affiche dans le logiciel et dans l'overlay.</p>
+
+<h2>Les automatismes</h2>
+<p>Compose des phrases « Quand… alors… ». Exemples :</p>
+<ul>
+  <li>Quand <strong>je crie dans le micro</strong>, alors <strong>jouer le son</strong> « Foule en délire ».</li>
+  <li>Quand <strong>je ne parle plus pendant</strong> 2 minutes, alors <strong>faire tourner la roulette</strong>.</li>
+  <li>Quand <strong>je prends la voix</strong> Démon, alors <strong>jouer le son</strong> « Tonnerre ».</li>
+  <li>Quand <strong>Taverne Voice démarre</strong>, alors <strong>prendre la voix</strong> de ton choix.</li>
+</ul>
+<p>Chaque automatisme a une pause (5 s à 5 min) pour ne pas se répéter en boucle. <strong>Tester</strong> le lance tout de suite pour essayer.</p>
+
+<h2>Avec Twitch et le Stream Deck</h2>
+<ul>
+  <li>Dans l'onglet <strong>Twitch et OBS</strong>, une récompense peut <strong>faire tourner la roulette</strong> ou <strong>lancer un défi</strong> : le pseudo du viewer s'affiche dans l'overlay.</li>
+  <li>Sur un Stream Deck : <code>taverne://roulette</code>, <code>taverne://defi/chaos</code>… (voir <a href="stream-deck.html">Stream Deck</a>).</li>
+  <li>Au clavier : choisis une touche pour la roulette, le défi, la voix suivante ou le minuteur dans <a href="reglages.html">Réglages → Raccourcis clavier</a>.</li>
+</ul>
+""", guide=True)
+
+
+def atelier():
+    return page("atelier.html", "Atelier et profils", "Créer, modifier, dupliquer et partager ses voix dans Taverne Voice.", """
+<h1>Atelier et profils</h1>
+<p class="chapo">Crée tes propres voix, range-les, et partage-les avec un code.</p>
+<p><img class="capture-guide" src="img/capture-atelier-petit.webp" loading="lazy" width="1360" height="820" alt="L'atelier de création"></p>
+<div class="encadre"><p>L'atelier et les voix perso font partie de l'<a href="boutique.html">abonnement</a>.</p></div>
+
+<h2>L'atelier</h2>
+<ol>
+  <li>Ouvre l'onglet <strong>Atelier</strong>. Il part de la voix que tu utilises (change-la dans <strong>Partir de</strong>).</li>
+  <li>Allume des effets et règle leur dose : hauteur, autotune, chœur, vibrato, vocodeur, robot, 8-bit, doublage, écho, grotte, grain et filtre. Parle : tu entends le résultat en direct.</li>
+  <li>Donne un nom, une couleur et une icône, puis <strong>Enregistrer comme nouvelle voix</strong>.</li>
+</ol>
+<ul>
+  <li><strong>Mélanger deux voix</strong> : choisis deux voix et glisse le curseur entre les deux (par exemple 70 % Robot + 30 % Démon).</li>
+  <li><strong>Au hasard</strong> : une combinaison surprise d'effets, à garder si elle te plaît.</li>
+  <li><strong>Tout à zéro</strong> : repars de ta voix normale.</li>
+</ul>
+
+<h2>Tes voix (profils)</h2>
+<p>Tes voix perso sont dans la catégorie <strong>Mes voix</strong>. Glisse-les pour changer leur ordre. Dans le panneau d'une voix :</p>
+<div class="tableau"><table>
+  <tr><th>Bouton</th><th>Ce qu'il fait</th></tr>
+  <tr><td>Dupliquer</td><td>Crée une copie modifiable (marche aussi sur les voix de Taverne Voice).</td></tr>
+  <tr><td>Mettre à jour</td><td>Après avoir bougé les curseurs, enregistre les changements dans cette voix.</td></tr>
+  <tr><td>Réinitialiser</td><td>Remet les réglages de la voix d'origine (pour une copie d'une voix de Taverne Voice).</td></tr>
+  <tr><td>Renommer, icône…</td><td>Change le nom, la description, la couleur et l'icône.</td></tr>
+  <tr><td>Partager</td><td>Donne un code à envoyer, ou un fichier <code>.tvprofil</code>.</td></tr>
+  <tr><td>Raccourci clavier</td><td>Une touche pour passer à cette voix, même en jeu.</td></tr>
+</table></div>
+<p>Tes favoris (l'étoile) servent aussi à la roulette et aux touches « voix suivante / précédente ».</p>
+
+<h2>Partager une voix</h2>
+<ol>
+  <li>Choisis ta voix et clique sur <strong>Partager</strong>.</li>
+  <li><strong>Copier le code</strong> (il commence par <code>TVP1.</code>) et colle-le dans Discord, ton chat…</li>
+  <li>Ton ami clique sur <strong>Importer une voix</strong> dans « Mes voix » et colle le code, même avec du texte autour.</li>
+</ol>
+""", guide=True)
+
+
+def reglages():
+    return page("reglages.html", "Sauvegardes et diagnostic", "Sauvegardes, raccourcis clavier, diagnostic audio et statistiques de Taverne Voice.", """
+<h1>Sauvegardes et diagnostic</h1>
+<p class="chapo">Tout est dans <strong>Réglages</strong>, le bouton en haut de la fenêtre.</p>
+
+<h2>Sauvegardes</h2>
+<ul>
+  <li>Taverne Voice sauvegarde tes réglages tout seul, une fois par jour. Les 10 dernières sont gardées.</li>
+  <li><strong>Sauvegarder maintenant</strong> : avant de tout changer, par exemple.</li>
+  <li><strong>Restaurer</strong> : remet les réglages d'une date. L'état d'avant est gardé dans une sauvegarde « Avant restauration ».</li>
+  <li><strong>Exporter tout</strong> : un fichier .zip avec tes voix, tes sons, tes raccourcis et tes automatismes. Pour changer de PC : <strong>Importer…</strong> ce fichier sur le nouveau. Tes micros et ta sortie restent ceux du nouveau PC.</li>
+  <li>Si une coupure de courant abîme le fichier des réglages, la dernière sauvegarde est remise toute seule, et un message te le dit.</li>
+</ul>
+
+<h2>Raccourcis clavier</h2>
+<p>Ils marchent même en plein jeu. Clique sur la case d'une action puis appuie sur la touche voulue : changeur de voix on/off (<kbd>F8</kbd> par défaut, modifiable), revenir à Normal, voix suivante ou précédente, roulette, défi, minuteur, arrêter les sons. Une voix ou un son peuvent aussi avoir leur touche, depuis leur panneau. Une touche ne sert qu'à une seule chose : si tu la donnes à une autre action, elle est retirée de l'ancienne.</p>
+<p>Pour une lettre ou un chiffre, ajoute <kbd>Ctrl</kbd>, <kbd>Alt</kbd> ou <kbd>Maj</kbd>, sinon tu ne pourrais plus l'écrire. Si une touche apparaît en rouge, un autre logiciel l'utilise déjà.</p>
+
+<h2>Diagnostic audio</h2>
+<p><strong>Lancer le diagnostic</strong>, puis parle normalement. Il vérifie :</p>
+<ul>
+  <li>que le micro est branché et capte ta voix (sans saturer) ;</li>
+  <li>que la sortie est bien le câble virtuel (CABLE Input) et que le câble est installé ;</li>
+  <li>que l'audio tourne, et combien de temps de calcul prennent les effets ;</li>
+  <li>les raccourcis refusés par Windows et les mises à jour disponibles.</li>
+</ul>
+<p>Chaque problème vient avec un bouton pour le régler. <strong>Copier le rapport</strong> donne un résumé à envoyer si tu as besoin d'aide.</p>
+
+<h2>Statistiques anonymes</h2>
+<p>Pour savoir quelles voix et fonctions servent le plus, Taverne Voice envoie des compteurs anonymes toutes les 12 heures. Rien sur toi, tes voix perso, tes sons ou ce que tu dis. <strong>Voir exactement ce qui est envoyé</strong> affiche le contenu, et l'interrupteur coupe l'envoi. Détails dans la <a href="confidentialite.html">politique de confidentialité</a>.</p>
+""", guide=True)
+
+
 PAGES = {
     "index.html": accueil, "boutique.html": boutique, "compte.html": compte, "partenaires.html": partenaires_page,
     "installation.html": installation, "obs-discord.html": obs_discord, "voix.html": voix, "soundboard.html": soundboard,
-    "twitch-obs.html": twitch_obs, "stream-deck.html": stream_deck, "licence.html": licence, "faq.html": faq,
+    "twitch-obs.html": twitch_obs, "stream-deck.html": stream_deck, "interactif.html": interactif, "atelier.html": atelier, "reglages.html": reglages, "licence.html": licence, "faq.html": faq,
     "createur.html": createur, "mentions-legales.html": mentions, "cgv.html": cgv, "confidentialite.html": confidentialite,
     "404.html": page404,
 }
