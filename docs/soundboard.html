@@ -136,6 +136,25 @@
 </footer>
 
 <script>
+(function () {
+  try {
+    if (navigator.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+    var api = "https://api.tavernevoice.fr/stats/";
+    var q = new URLSearchParams(location.search);
+    var envoyer = function (chemin, d) { try { navigator.sendBeacon(api + chemin, JSON.stringify(d)); } catch (e) {} };
+    envoyer("vue", { page: location.pathname, ref: document.referrer, utm: q.get("utm_source") || q.get("ref") || "" });
+    document.addEventListener("click", function (ev) {
+      var a = ev.target.closest && ev.target.closest("a[href]");
+      if (!a) return;
+      var h = a.getAttribute("href") || "";
+      var type = /Setup\.exe|releases\/latest\/download/.test(h) ? "telechargement" : /twitch\.tv\//.test(h) ? "partenaire" : "";
+      if (type) envoyer("evenement", { type: type, detail: h.slice(0, 120), page: location.pathname });
+    }, true);
+    window.taverneMesure = envoyer;
+  } catch (e) {}
+})();
+</script>
+<script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)
   .then((r) => { if (r && r.tag_name) document.querySelector("#version-site").textContent = "Dernière version : " + r.tag_name.replace(/^v/, "") + "."; })

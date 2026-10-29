@@ -32,6 +32,143 @@
   .a-publier li + li { margin-top: 6px; }
   .resultat-verif { margin-top: 12px; }
   .vide { color: var(--parchemin); font-size: 15px; }
+
+  /* ---------- navigation de l'accès créateur */
+  .createur.large { max-width: 1280px; }
+  .adm-nav { display: flex; align-items: center; gap: 6px; margin: 22px 0 18px; border-bottom: 1px solid var(--poutre); }
+  .adm-nav [data-adm] { background: none; border: 0; padding: 10px 14px; font: 600 16px "Rubik", sans-serif; color: var(--parchemin); border-bottom: 3px solid transparent; margin-bottom: -1px; cursor: pointer; }
+  .adm-nav [data-adm]:hover { color: var(--mousse); }
+  .adm-nav [data-adm][aria-current] { color: var(--mousse); border-bottom-color: var(--lanterne); }
+  .adm-espace { flex: 1; }
+
+  /* ---------- tableau de bord */
+  .tdb-tete { display: flex; justify-content: space-between; align-items: flex-end; gap: 16px; flex-wrap: wrap; margin-bottom: 16px; }
+  .tdb-titre { font: 700 44px/1 "Grenze Gotisch", serif; margin: 0; }
+  .tdb-sous { margin: 6px 0 0; color: var(--parchemin); font-size: 14px; }
+  .tdb-filtres { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .tdb-direct { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--parchemin); padding: 6px 12px; border-radius: 999px; border: 1px solid var(--poutre); }
+  .tdb-direct i { width: 9px; height: 9px; border-radius: 50%; background: var(--poutre); }
+  .tdb-direct.vivant { color: var(--mousse); border-color: color-mix(in srgb, #0ca30c 50%, var(--poutre)); }
+  .tdb-direct.vivant i { background: #0ca30c; animation: battement 1.6s ease-in-out infinite; }
+  @keyframes battement { 50% { box-shadow: 0 0 0 6px rgba(12, 163, 12, .18); } }
+  .segments-tdb { display: inline-flex; flex-wrap: wrap; max-width: 100%; background: var(--nuit); border: 1px solid var(--poutre); border-radius: 12px; padding: 3px; }
+  .tdb-grille > *, .tdb-tuiles > * { min-width: 0; }
+  @media (max-width: 640px) { .entonnoir li { grid-template-columns: 96px 1fr 44px 46px; } .tdb-chiffre { font-size: 44px; } .adm-nav { flex-wrap: wrap; } }
+  .segments-tdb button { border: 0; background: none; color: var(--parchemin); padding: 7px 12px; border-radius: 9px; font: 500 13px "Rubik", sans-serif; cursor: pointer; white-space: nowrap; }
+  .segments-tdb button[aria-checked="true"] { background: var(--poutre); color: var(--mousse); }
+  .segments-tdb.petit button { padding: 5px 9px; font-size: 12.5px; }
+
+  .tdb-grille { display: grid; grid-template-columns: repeat(12, minmax(0, 1fr)); gap: 14px; transition: opacity .2s; }
+  .tdb-grille.rafraichit { opacity: .6; }
+  .tdb-carte { border: 1px solid var(--poutre); border-radius: 18px; padding: 18px 20px; background: var(--chene); min-width: 0; }
+  .tdb-carte-tete { display: flex; align-items: center; gap: 10px; margin-bottom: 12px; flex-wrap: wrap; }
+  .tdb-carte-tete h3 { margin: 0; font: 600 16px "Rubik", sans-serif; flex: 1; min-width: 140px; }
+  .tdb-vue-tableau { font-size: 13px !important; }
+  .tdb-hero { grid-column: span 7; display: flex; flex-direction: column; gap: 10px; background: radial-gradient(120% 140% at 0% 0%, color-mix(in srgb, var(--lanterne) 14%, transparent), transparent 55%), var(--chene); }
+  .tdb-chope { grid-column: span 5; display: flex; align-items: center; gap: 16px; }
+  .tdb-tuiles { grid-column: 1 / -1; display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+  .tdb-large { grid-column: span 8; }
+  .tdb-journal { grid-column: span 4; display: flex; flex-direction: column; max-height: 360px; }
+  .tdb-moitie { grid-column: span 6; }
+  .tdb-quart { grid-column: span 3; }
+  .tdb-tiers { grid-column: span 4; }
+  .tdb-section { grid-column: 1 / -1; font: 700 30px/1 "Grenze Gotisch", serif; margin: 18px 0 0; }
+  @media (max-width: 1100px) {
+    .tdb-hero, .tdb-chope, .tdb-large, .tdb-journal, .tdb-moitie { grid-column: 1 / -1; }
+    .tdb-quart, .tdb-tiers { grid-column: span 6; }
+    .tdb-tuiles { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  }
+  @media (max-width: 640px) { .tdb-quart, .tdb-tiers { grid-column: 1 / -1; } .tdb-tuiles { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+
+  .tdb-etiquette { color: var(--parchemin); font-size: 13px; }
+  .tdb-chiffre { font: 600 56px/1 "Rubik", sans-serif; color: var(--mousse); letter-spacing: -1px; }
+  .tdb-objectif { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; }
+  .tdb-objectif span { font-size: 13px; color: var(--parchemin); }
+  .tdb-jauge { flex: 1; min-width: 160px; height: 8px; border-radius: 4px; background: color-mix(in srgb, var(--lanterne) 18%, var(--nuit)); overflow: hidden; }
+  .tdb-jauge i { display: block; height: 100%; border-radius: 4px; background: var(--lanterne); transition: width .6s; }
+  .tdb-mini { display: flex; gap: 22px; flex-wrap: wrap; margin: 6px 0 0; }
+  .tdb-mini dt { color: var(--parchemin); font-size: 12.5px; }
+  .tdb-mini dd { margin: 2px 0 0; font: 600 20px "Rubik", sans-serif; }
+  .chope { width: 150px; flex: none; }
+  .chope svg { width: 100%; height: auto; display: block; }
+  .chope-biere, .chope-mousse { transition: y .8s ease, d .8s ease; }
+  .chope-bulles circle { animation: bulle linear infinite; }
+  @keyframes bulle { from { transform: translateY(0); opacity: .9; } to { transform: translateY(-150px); opacity: 0; } }
+  @media (prefers-reduced-motion: reduce) { .chope-bulles circle, .tdb-direct.vivant i { animation: none; } }
+  .chope-texte { display: flex; flex-direction: column; gap: 4px; }
+  .chope-texte strong { font: 700 28px/1 "Grenze Gotisch", serif; }
+  .chope-texte span { color: var(--parchemin); font-size: 14px; }
+  .chope-texte .lien-bouton { align-self: flex-start; }
+
+  .tdb-tuile { border: 1px solid var(--poutre); border-radius: 16px; padding: 14px 16px; background: var(--chene); display: flex; flex-direction: column; gap: 4px; min-width: 0; }
+  .tdb-tuile strong { font: 600 30px/1.1 "Rubik", sans-serif; }
+  .tendance { width: 100%; height: 30px; margin-top: 4px; }
+  .delta { font-size: 12.5px; font-weight: 500; }
+  .delta.bien { color: #0ca30c; }
+  .delta.mal { color: #d03b3b; }
+  .delta.monte { color: var(--houblon); }
+  .delta.neutre { color: var(--parchemin); }
+
+  .tdb-graphe svg { display: block; overflow: visible; }
+  .tdb-graphe .grille { stroke: #33261d; stroke-width: 1; }
+  .tdb-graphe .base { stroke: #4a3a2e; stroke-width: 1; }
+  .tdb-graphe .axe { fill: var(--parchemin); font: 11px "Rubik", sans-serif; font-variant-numeric: tabular-nums; }
+  .tdb-graphe .valeur { fill: var(--mousse); font: 600 12px "Rubik", sans-serif; }
+  .colonne { cursor: default; outline: none; }
+  .colonne:hover path, .colonne:focus path { filter: brightness(1.15); }
+  .colonne:focus rect { stroke: var(--lanterne); stroke-width: 1; }
+
+  .journal { list-style: none; margin: 0; padding: 0; overflow-y: auto; display: flex; flex-direction: column; gap: 2px; }
+  .journal li { display: grid; grid-template-columns: 28px 1fr; gap: 8px; padding: 7px 4px; border-bottom: 1px solid #2e221a; font-size: 13.5px; }
+  .journal small { display: block; color: var(--parchemin); font-size: 12px; }
+  .j-icone { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; background: var(--nuit); font-size: 14px; }
+  .j-achat .j-icone { background: color-mix(in srgb, var(--lanterne) 25%, var(--nuit)); }
+
+  .barres { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 7px; }
+  .barres li { display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(60px, 1fr) auto; align-items: center; gap: 10px; font-size: 13.5px; outline: none; border-radius: 6px; }
+  .barres li:focus-visible { box-shadow: 0 0 0 2px var(--lanterne); }
+  .barre-nom { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+  .barre-piste { height: 10px; }
+  .barre-piste i { display: block; height: 100%; border-radius: 0 4px 4px 0; background: #f2a93b; }
+  .barre-valeur { font-variant-numeric: tabular-nums; color: var(--parchemin); font-size: 12.5px; min-width: 28px; text-align: right; }
+  .pastille-voix { display: inline-block; width: 9px; height: 9px; border-radius: 50%; background: var(--c); margin-right: 7px; vertical-align: 0; }
+
+  .repartition { display: flex; gap: 2px; height: 14px; border-radius: 4px; overflow: hidden; }
+  .repartition i { min-width: 3px; outline: none; }
+  .repartition i:focus-visible { box-shadow: inset 0 0 0 2px var(--mousse); }
+  .legende { list-style: none; margin: 12px 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 13px; color: var(--parchemin); }
+  .legende i { display: inline-block; width: 10px; height: 10px; border-radius: 3px; margin-right: 6px; vertical-align: -1px; }
+  .legende strong { color: var(--mousse); font-weight: 500; }
+
+  .entonnoir { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; gap: 9px; }
+  .entonnoir li { display: grid; grid-template-columns: 128px 1fr 54px 56px; align-items: center; gap: 10px; font-size: 13.5px; outline: none; border-radius: 6px; }
+  .entonnoir li:focus-visible { box-shadow: 0 0 0 2px var(--lanterne); }
+  .e-piste { height: 22px; }
+  .e-piste i { display: block; height: 100%; border-radius: 0 4px 4px 0; }
+  .e-valeur { text-align: right; font-weight: 600; font-variant-numeric: tabular-nums; }
+  .e-taux { text-align: right; color: var(--parchemin); font-size: 12.5px; font-variant-numeric: tabular-nums; }
+
+  .affluence { display: grid; grid-template-columns: 34px repeat(24, minmax(0, 1fr)); gap: 2px; align-items: center; }
+  .affluence i { aspect-ratio: 1; border-radius: 3px; outline: none; }
+  .affluence i:focus-visible { box-shadow: 0 0 0 2px var(--mousse); }
+  .a-jour { font-size: 11.5px; color: var(--parchemin); }
+  .a-heure { font-size: 11px; color: var(--parchemin); }
+  .echelle { display: flex; align-items: center; gap: 3px; margin-top: 10px; font-size: 11.5px; color: var(--parchemin); }
+  .echelle i { width: 16px; height: 10px; border-radius: 2px; }
+  .echelle span:first-child { margin-right: 4px; } .echelle span:last-child { margin-left: 4px; }
+
+  .tdb-note { color: var(--parchemin); font-size: 13px; margin: 12px 0 0; }
+  .tdb-vide { color: var(--parchemin); font-size: 13.5px; margin: 0; }
+  .tdb-taux { display: flex; flex-direction: column; gap: 6px; margin-top: 18px; }
+  .tdb-taux span:last-child { font-size: 13px; color: var(--parchemin); }
+  .tdb-taux strong { color: var(--mousse); }
+  .tdb-table { overflow: auto; max-height: 320px; }
+  .tdb-table table { width: 100%; border-collapse: collapse; font-size: 13px; }
+  .tdb-table th { text-align: left; color: var(--parchemin); font-weight: 500; padding: 6px 8px; border-bottom: 1px solid var(--poutre); position: sticky; top: 0; background: var(--chene); }
+  .tdb-table td { padding: 6px 8px; border-bottom: 1px solid #2e221a; }
+  .tdb-table td.nb { text-align: right; font-variant-numeric: tabular-nums; }
+  .tdb-bulle { position: fixed; z-index: 30; pointer-events: none; max-width: 260px; padding: 8px 11px; border-radius: 10px; background: var(--mousse); color: #1a120d; font-size: 13px; line-height: 1.4; box-shadow: 0 10px 30px rgba(0, 0, 0, .45); }
+  .tdb-bulle strong { font-weight: 600; }
 </style>
 
 <div class="enveloppe createur">
@@ -51,6 +188,104 @@
   </form>
 
   <div id="espace" hidden>
+    <nav class="adm-nav" id="adm-nav" aria-label="Accès créateur">
+      <button type="button" data-adm="tableau" aria-current="page">Tableau de bord</button>
+      <button type="button" data-adm="clients">Clients</button>
+      <button type="button" data-adm="cles">Clés</button>
+      <span class="adm-espace"></span>
+      <button class="lien-bouton" type="button" id="deconnexion-haut">Fermer l'accès</button>
+    </nav>
+
+    <!-- Tableau de bord -->
+    <div data-vue-adm="tableau" id="tdb">
+      <div class="tdb-tete">
+        <div>
+          <h2 class="tdb-titre">La taverne en chiffres</h2>
+          <p class="tdb-sous" id="tdb-maj">Chargement…</p>
+        </div>
+        <div class="tdb-filtres">
+          <span class="tdb-direct" id="tdb-direct"><i></i><span>…</span></span>
+          <div class="segments-tdb" id="tdb-periode" role="radiogroup" aria-label="Période">
+            <button type="button" role="radio" data-jours="7" aria-checked="false">7 jours</button>
+            <button type="button" role="radio" data-jours="30" aria-checked="true">30 jours</button>
+            <button type="button" role="radio" data-jours="90" aria-checked="false">90 jours</button>
+            <button type="button" role="radio" data-jours="365" aria-checked="false">1 an</button>
+          </div>
+        </div>
+      </div>
+      <p class="msg erreur" id="tdb-erreur" hidden></p>
+
+      <div class="tdb-grille" id="tdb-contenu" aria-busy="true">
+        <section class="tdb-carte tdb-hero">
+          <span class="tdb-etiquette">Revenus du mois</span>
+          <strong class="tdb-chiffre" id="tdb-revenu">—</strong>
+          <div class="tdb-objectif">
+            <div class="tdb-jauge"><i id="tdb-jauge"></i></div>
+            <span id="tdb-objectif-texte"></span>
+          </div>
+          <dl class="tdb-mini" id="tdb-ventes-mini"></dl>
+        </section>
+
+        <section class="tdb-carte tdb-chope" aria-label="La chope du mois">
+          <div class="chope" id="chope"></div>
+          <div class="chope-texte">
+            <strong>La chope du mois</strong>
+            <span id="chope-texte">Elle se remplit avec tes ventes.</span>
+            <button class="lien-bouton" type="button" id="tdb-objectif-changer">Changer l'objectif</button>
+          </div>
+        </section>
+
+        <div class="tdb-tuiles" id="tdb-tuiles"></div>
+
+        <section class="tdb-carte tdb-large">
+          <div class="tdb-carte-tete">
+            <h3 id="tdb-graphe-titre">Visiteurs par jour</h3>
+            <div class="segments-tdb petit" id="tdb-mesure" role="radiogroup" aria-label="Ce que montre le graphique">
+              <button type="button" role="radio" data-mesure="visiteurs" aria-checked="true">Visiteurs</button>
+              <button type="button" role="radio" data-mesure="telechargements" aria-checked="false">Téléchargements</button>
+              <button type="button" role="radio" data-mesure="comptes" aria-checked="false">Comptes</button>
+              <button type="button" role="radio" data-mesure="revenus" aria-checked="false">Revenus</button>
+              <button type="button" role="radio" data-mesure="appli" aria-checked="false">Logiciels ouverts</button>
+            </div>
+            <button class="lien-bouton tdb-vue-tableau" type="button" data-tableau="graphe">Tableau</button>
+          </div>
+          <div class="tdb-graphe" id="tdb-graphe"></div>
+        </section>
+
+        <section class="tdb-carte tdb-journal">
+          <div class="tdb-carte-tete"><h3>Journal de la taverne</h3></div>
+          <ul class="journal" id="tdb-journal"></ul>
+        </section>
+
+        <section class="tdb-carte tdb-moitie">
+          <div class="tdb-carte-tete"><h3>De la porte au comptoir</h3><button class="lien-bouton tdb-vue-tableau" type="button" data-tableau="entonnoir">Tableau</button></div>
+          <div id="tdb-entonnoir"></div>
+        </section>
+
+        <section class="tdb-carte tdb-moitie">
+          <div class="tdb-carte-tete"><h3>Heures d'affluence</h3><button class="lien-bouton tdb-vue-tableau" type="button" data-tableau="affluence">Tableau</button></div>
+          <div id="tdb-affluence"></div>
+        </section>
+
+        <section class="tdb-carte tdb-quart"><div class="tdb-carte-tete"><h3>D'où ils viennent</h3></div><div id="tdb-sources"></div></section>
+        <section class="tdb-carte tdb-quart"><div class="tdb-carte-tete"><h3>Pays</h3></div><div id="tdb-pays"></div></section>
+        <section class="tdb-carte tdb-quart"><div class="tdb-carte-tete"><h3>Pages lues</h3></div><div id="tdb-pages"></div></section>
+        <section class="tdb-carte tdb-quart"><div class="tdb-carte-tete"><h3>Appareils</h3></div><div id="tdb-appareils"></div></section>
+
+        <h3 class="tdb-section">Le logiciel</h3>
+        <div class="tdb-tuiles" id="tdb-appli-tuiles"></div>
+        <section class="tdb-carte tdb-tiers"><div class="tdb-carte-tete"><h3>Voix les plus utilisées</h3></div><div id="tdb-voix"></div></section>
+        <section class="tdb-carte tdb-tiers"><div class="tdb-carte-tete"><h3>Fonctions</h3></div><div id="tdb-fonctions"></div></section>
+        <section class="tdb-carte tdb-tiers"><div class="tdb-carte-tete"><h3>Versions et licences</h3></div><div id="tdb-versions"></div><div id="tdb-licences" style="margin-top:18px"></div></section>
+
+        <h3 class="tdb-section">Les ventes</h3>
+        <section class="tdb-carte tdb-moitie"><div class="tdb-carte-tete"><h3>Par formule</h3></div><div id="tdb-formules"></div></section>
+        <section class="tdb-carte tdb-moitie"><div class="tdb-carte-tete"><h3>Abonnés et essais</h3></div><div id="tdb-abonnes"></div></section>
+      </div>
+      <div class="tdb-bulle" id="tdb-bulle" role="tooltip" hidden></div>
+    </div>
+
+    <div data-vue-adm="clients" hidden>
     <!-- Panel des clients -->
     <section class="bloc" id="panel">
       <div class="ligne-actions" style="justify-content:space-between">
@@ -107,7 +342,9 @@
         <button class="lien-bouton" type="button" id="f-supprimer" style="color:var(--braise)">Supprimer le compte</button>
       </div>
     </dialog>
+    </div>
 
+    <div data-vue-adm="cles" hidden>
     <!-- Créer -->
     <form class="bloc" id="creer">
       <h2>Créer des clés à la main</h2>
@@ -216,12 +453,14 @@
       </div>
     </form>
 
+    </div>
     <p style="margin-top:22px"><button class="bouton second" type="button" id="deconnexion">Fermer l'accès créateur</button></p>
   </div>
 </div>
 
 <script src="config.js"></script>
 <script type="module" src="js/panel.js"></script>
+<script type="module" src="js/tableau.js"></script>
 <script type="module">
 import * as L from "./createur/licence.js";
 

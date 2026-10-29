@@ -70,6 +70,7 @@
     if (!infos) { ev.preventDefault(); $("#etape-compte").scrollIntoView({ behavior: "smooth", block: "center" }); return; }
     if (!$("#b-accord").checked) { ev.preventDefault(); $("#b-accord").focus(); $("#b-accord-zone").classList.add("a-cocher"); return; }
     ev.preventDefault();
+    if (window.taverneMesure) window.taverneMesure("evenement", { type: "kofi", detail: formule, page: location.pathname });
     window.open(LIENS[formule], "kofi", "width=520,height=820");
     attendrePaiement();
   });

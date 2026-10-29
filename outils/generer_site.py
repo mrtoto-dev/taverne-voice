@@ -63,6 +63,29 @@ GUIDE = [
 ]
 
 
+# Mesure d'audience sans cookies (voir confidentialite.html) : rien n'est stocké dans le navigateur,
+# l'adresse IP n'est pas enregistrée, et « Ne pas suivre » est respecté.
+MESURE = r"""<script>
+(function () {
+  try {
+    if (navigator.doNotTrack === "1" || navigator.globalPrivacyControl) return;
+    var api = "https://api.tavernevoice.fr/stats/";
+    var q = new URLSearchParams(location.search);
+    var envoyer = function (chemin, d) { try { navigator.sendBeacon(api + chemin, JSON.stringify(d)); } catch (e) {} };
+    envoyer("vue", { page: location.pathname, ref: document.referrer, utm: q.get("utm_source") || q.get("ref") || "" });
+    document.addEventListener("click", function (ev) {
+      var a = ev.target.closest && ev.target.closest("a[href]");
+      if (!a) return;
+      var h = a.getAttribute("href") || "";
+      var type = /Setup\.exe|releases\/latest\/download/.test(h) ? "telechargement" : /twitch\.tv\//.test(h) ? "partenaire" : "";
+      if (type) envoyer("evenement", { type: type, detail: h.slice(0, 120), page: location.pathname });
+    }, true);
+    window.taverneMesure = envoyer;
+  } catch (e) {}
+})();
+</script>"""
+
+
 def page(fichier, titre, description, corps, guide=False, noindex=False, scripts=""):
     actif = "installation.html" if fichier in [h for h, _ in GUIDE] else fichier
     nav = "".join(
@@ -109,6 +132,7 @@ def page(fichier, titre, description, corps, guide=False, noindex=False, scripts
   </div>
 </footer>
 {scripts}
+{"" if fichier == "createur.html" else MESURE}
 <script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)
@@ -629,6 +653,10 @@ def confidentialite():
   <li><strong>Un historique</strong> des connexions et des changements du compte, pour la sécurité.</li>
 </ul>
 <p>Le logiciel ne s'écoute pas : ta voix reste sur ton PC. Ta connexion Twitch reste chiffrée sur ton PC.</p>
+<h2>Mesure d'audience du site</h2>
+<p>Pour savoir quelles pages sont lues et d'où viennent les visiteurs (TikTok, Twitch, Google…), chaque page envoie au serveur : la page vue, le site d'où tu viens, ton pays (déduit par Cloudflare) et le type d'appareil (ordinateur, mobile, tablette). Pour compter les visiteurs sans les suivre, le serveur calcule une empreinte à partir de ton adresse IP, de ton navigateur et d'une valeur secrète qui change <strong>chaque jour</strong> : impossible de te reconnaître d'un jour à l'autre ou de retrouver ton adresse IP, qui n'est jamais enregistrée. Aucun cookie, rien n'est stocké dans ton navigateur. Si ton navigateur demande à ne pas être suivi (« Do Not Track » ou « Global Privacy Control »), rien n'est envoyé. Ces visites détaillées sont effacées au bout de 13 mois.</p>
+<h2>Statistiques du logiciel</h2>
+<p>Toutes les 12 heures, Taverne Voice envoie des statistiques anonymes : un identifiant tiré au hasard à l'installation, la version, le type de licence (démo, essai, abonnement, clé), le nombre de voix perso, de sons et d'automatismes, et combien de fois chaque voix de Taverne Voice et chaque fonction (roulette, défis…) ont servi. Jamais le nom de tes voix ou de tes sons, tes périphériques, ni ce que tu dis. Tu peux voir exactement ce qui est envoyé, et le couper, dans <strong>Réglages → Statistiques anonymes</strong>.</p>
 <h2>Pourquoi</h2>
 <p>Pour faire marcher ton accès (exécution du contrat), envoyer les codes de vérification, et respecter les obligations comptables.</p>
 <h2>Qui les traite</h2>
@@ -638,7 +666,7 @@ def confidentialite():
 <h2>Tes droits</h2>
 <p>Tu peux supprimer ton compte toi-même dans <a href="compte.html">Mon compte</a>. Pour toute autre demande (accès, correction, effacement) : <a href="mailto:{e(i["email"])}">{e(i["email"])}</a>. Tu peux aussi saisir la CNIL.</p>
 <h2>Cookies</h2>
-<p>Le site n'utilise pas de cookie publicitaire ni de mesure d'audience. Il garde seulement ta connexion dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
+<p>Le site n'utilise aucun cookie publicitaire ni cookie de mesure d'audience (la mesure décrite plus haut n'en a pas besoin). Il garde seulement ta connexion à ton compte dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
 </article></div>
 """)
 
@@ -884,6 +912,9 @@ def faq():
 
 def createur():
     corps = (RACINE / "outils" / "createur_corps.html").read_text(encoding="utf-8")
+    noms = {v["id"]: {"nom": v["nom"], "couleur": v["couleur"]} for v in VOIX}
+    noms["perso"] = {"nom": "Voix perso", "couleur": "#b9a286"}
+    corps = corps.replace("<script src=\"config.js\"></script>", "<script src=\"config.js\"></script>\n<script>window.VOIX_NOMS = " + json.dumps(noms, ensure_ascii=False) + ";</script>", 1)
     return page("createur.html", "Accès créateur", "Réservé au créateur de Taverne Voice.", corps, noindex=True)
 
 
