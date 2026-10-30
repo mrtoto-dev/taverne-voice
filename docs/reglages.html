@@ -9,6 +9,10 @@
 <meta property="og:description" content="Sauvegardes, raccourcis clavier, diagnostic audio et statistiques de Taverne Voice.">
 <meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
 <link rel="canonical" href="https://tavernevoice.fr/reglages.html">
+<link rel="alternate" hreflang="fr" href="https://tavernevoice.fr/reglages.html">
+<link rel="alternate" hreflang="en" href="https://tavernevoice.fr/en/reglages.html">
+<link rel="alternate" hreflang="x-default" href="https://tavernevoice.fr/reglages.html">
+
 
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -98,7 +102,7 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html" aria-current="page">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html" aria-current="page">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a><a class="langue" href="en/reglages.html" hreflang="en" lang="en" data-langue="en" title="English version">EN</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -106,6 +110,9 @@
 <div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>Le guide</p><a href="installation.html">Installer</a><a href="obs-discord.html">OBS et Discord</a><a href="voix.html">Les voix</a><a href="soundboard.html">Soundboard</a><a href="interactif.html">Roulette et défis</a><a href="atelier.html">Atelier et profils</a><a href="twitch-obs.html">Twitch et overlay</a><a href="stream-deck.html">Stream Deck</a><a href="reglages.html" aria-current="page">Sauvegardes et diagnostic</a><a href="licence.html">Abonnement et clés</a><a href="faq.html">Questions</a></nav><article>
 <h1>Sauvegardes et diagnostic</h1>
 <p class="chapo">Tout est dans <strong>Réglages</strong>, le bouton en haut de la fenêtre.</p>
+
+<h2>Langue</h2>
+<p>Taverne Voice parle français ou anglais. Par défaut, il suit la langue de Windows ; <strong>Réglages → Langue</strong> permet de choisir.</p>
 
 <h2>Sauvegardes</h2>
 <ul>
@@ -141,6 +148,12 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
+});
+</script>
 <script>
 (function () {
   try {

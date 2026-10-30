@@ -9,7 +9,9 @@
 <meta property="og:description" content="Cette page n&#x27;existe pas.">
 <meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
 <link rel="canonical" href="https://tavernevoice.fr/404.html">
+
 <meta name="robots" content="noindex, nofollow">
+
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
 </head>
@@ -98,7 +100,7 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a><a class="langue" href="en/404.html" hreflang="en" lang="en" data-langue="en" title="English version">EN</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -114,6 +116,12 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
+});
+</script>
 <script>
 (function () {
   try {

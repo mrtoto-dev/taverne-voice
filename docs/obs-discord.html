@@ -9,6 +9,10 @@
 <meta property="og:description" content="Brancher la voix de Taverne Voice dans OBS et dans Discord.">
 <meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
 <link rel="canonical" href="https://tavernevoice.fr/obs-discord.html">
+<link rel="alternate" hreflang="fr" href="https://tavernevoice.fr/obs-discord.html">
+<link rel="alternate" hreflang="en" href="https://tavernevoice.fr/en/obs-discord.html">
+<link rel="alternate" hreflang="x-default" href="https://tavernevoice.fr/obs-discord.html">
+
 
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -98,7 +102,7 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html" aria-current="page">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html" aria-current="page">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a><a class="langue" href="en/obs-discord.html" hreflang="en" lang="en" data-langue="en" title="English version">EN</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -141,6 +145,12 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
+});
+</script>
 <script>
 (function () {
   try {

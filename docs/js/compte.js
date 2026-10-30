@@ -24,7 +24,7 @@
   async function envoyer(form, fn) {
     const b = form.querySelector("button[type=submit]");
     const t = b.textContent;
-    b.disabled = true; b.textContent = "Un instant…";
+    b.disabled = true; b.textContent = TV.t("Un instant…", "One moment…");
     try { await fn(); } finally { b.disabled = false; b.textContent = t; }
   }
 
@@ -54,8 +54,8 @@
     ev.preventDefault();
     envoyer(ev.target, async () => {
       message("#msg-inscription", "");
-      if ($("#i-mdp").value !== $("#i-mdp2").value) return message("#msg-inscription", "Les deux mots de passe ne sont pas pareils.");
-      if (!$("#i-accord").checked) return message("#msg-inscription", "Coche la case pour accepter les conditions.");
+      if ($("#i-mdp").value !== $("#i-mdp2").value) return message("#msg-inscription", TV.t("Les deux mots de passe ne sont pas pareils.", "The two passwords don't match."));
+      if (!$("#i-accord").checked) return message("#msg-inscription", TV.t("Coche la case pour accepter les conditions.", "Check the box to accept the terms."));
       const email = $("#i-email").value.trim();
       try {
         const r = await TV.appel("/inscription", { email, mdp: $("#i-mdp").value, pseudo: $("#i-pseudo").value.trim() });
@@ -76,7 +76,7 @@
   });
   $("#renvoyer").addEventListener("click", async () => {
     await TV.appel("/renvoyer-code", { email: emailEnCours }).catch(() => {});
-    message("#msg-verif", "Un nouveau code vient de partir. Regarde aussi dans tes spams.", true);
+    message("#msg-verif", TV.t("Un nouveau code vient de partir. Regarde aussi dans tes spams.", "A new code is on its way. Check your spam folder too."), true);
   });
 
   $("#form-oubli").addEventListener("submit", (ev) => {
@@ -123,44 +123,44 @@
     statut.classList.toggle("actif", a.actif);
     const essai = infos.essai || {};
     $("#t-essai").hidden = !essai.disponible;
-    $("#t-essai-jours").textContent = (essai.jours || 14) + " jours";
+    $("#t-essai-jours").textContent = (essai.jours || 14) + TV.t(" jours", " days");
     if (a.actif && a.formule === "essai") {
       const reste = Math.max(0, Math.ceil((a.fin - Date.now()) / 86400000));
-      $("#t-statut-titre").textContent = `Essai gratuit : encore ${reste} jour${reste > 1 ? "s" : ""}`;
-      $("#t-statut-detail").textContent = `Version complète jusqu'au ${TV.date(a.fin)}. Ensuite, choisis une formule pour continuer : les jours d'essai restants sont gardés.`;
+      $("#t-statut-titre").textContent = TV.t(`Essai gratuit : encore ${reste} jour${reste > 1 ? "s" : ""}`, `Free trial: ${reste} day${reste > 1 ? "s" : ""} left`);
+      $("#t-statut-detail").textContent = TV.t(`Version complète jusqu'au ${TV.date(a.fin)}. Ensuite, choisis une formule pour continuer : les jours d'essai restants sont gardés.`, `Full version until ${TV.date(a.fin)}. After that, choose a plan to continue: your remaining trial days are kept.`);
     } else if (a.actif) {
-      $("#t-statut-titre").textContent = `Version complète active${f.nom ? ", " + f.nom.toLowerCase() : ""}`;
+      $("#t-statut-titre").textContent = TV.t(`Version complète active${f.nom ? ", " + f.nom.toLowerCase() : ""}`, `Full version active${f.nom ? ", " + f.nom.toLowerCase() : ""}`);
       $("#t-statut-detail").textContent = a.mensuel
-        ? `Abonnement Ko-fi mensuel. Prochaine échéance vers le ${TV.date(a.fin)}.`
-        : `Accès jusqu'au ${TV.date(a.fin)}.`;
+        ? TV.t(`Abonnement Ko-fi mensuel. Prochaine échéance vers le ${TV.date(a.fin)}.`, `Monthly Ko-fi subscription. Next payment around ${TV.date(a.fin)}.`)
+        : TV.t(`Accès jusqu'au ${TV.date(a.fin)}.`, `Access until ${TV.date(a.fin)}.`);
     } else {
-      $("#t-statut-titre").textContent = essai.disponible ? "Version démo pour l'instant" : "Pas d'abonnement en cours";
-      $("#t-statut-detail").textContent = a.fin ? `Ton dernier accès s'est terminé le ${TV.date(a.fin)}.`
-        : essai.disponible ? "Commence ton essai gratuit dans le logiciel, ou choisis une formule." : "Choisis une formule pour débloquer la version complète.";
+      $("#t-statut-titre").textContent = essai.disponible ? TV.t("Version démo pour l'instant", "Demo version for now") : TV.t("Pas d'abonnement en cours", "No active subscription");
+      $("#t-statut-detail").textContent = a.fin ? TV.t(`Ton dernier accès s'est terminé le ${TV.date(a.fin)}.`, `Your last access ended on ${TV.date(a.fin)}.`)
+        : essai.disponible ? TV.t("Commence ton essai gratuit dans le logiciel, ou choisis une formule.", "Start your free trial in the app, or choose a plan.") : TV.t("Choisis une formule pour débloquer la version complète.", "Choose a plan to unlock the full version.");
     }
-    $("#t-acheter").textContent = a.actif && a.formule !== "essai" ? "Prolonger ou changer de formule" : "Choisir une formule";
+    $("#t-acheter").textContent = a.actif && a.formule !== "essai" ? TV.t("Prolonger ou changer de formule", "Extend or change plan") : TV.t("Choisir une formule", "Choose a plan");
     $("#t-kofi").hidden = !a.mensuel;
 
-    const pcs = infos.pcs.map((p) => `<li><span>${TV.echapper(p.nom || "PC " + p.pc)}<small>Code ${TV.echapper(p.pc)}, vu le ${TV.date(p.vu)}</small></span>
-      <button class="bouton second petit" type="button" data-retirer="${TV.echapper(p.pc)}">Retirer</button></li>`).join("");
-    $("#t-pcs").innerHTML = pcs || `<li><span>Aucun PC pour l'instant.<small>Dans Taverne Voice : « Démo : débloquer » → Mon compte.</small></span></li>`;
-    $("#t-pcs-compte").textContent = `${infos.pcs.length} sur ${infos.pcMax}`;
+    const pcs = infos.pcs.map((p) => `<li><span>${TV.echapper(p.nom || "PC " + p.pc)}<small>${TV.t("Code", "Code")} ${TV.echapper(p.pc)}, ${TV.t("vu le", "last seen")} ${TV.date(p.vu)}</small></span>
+      <button class="bouton second petit" type="button" data-retirer="${TV.echapper(p.pc)}">${TV.t("Retirer", "Remove")}</button></li>`).join("");
+    $("#t-pcs").innerHTML = pcs || TV.t(`<li><span>Aucun PC pour l'instant.<small>Dans Taverne Voice : « Démo : débloquer » → Mon compte.</small></span></li>`, `<li><span>No PCs yet.<small>In Taverne Voice: “Demo: unlock” → My account.</small></span></li>`);
+    $("#t-pcs-compte").textContent = TV.t(`${infos.pcs.length} sur ${infos.pcMax}`, `${infos.pcs.length} of ${infos.pcMax}`);
 
     const pa = infos.paiements.map((p) => `<li><span>${TV.echapper((TV.FORMULES[p.formule] || { nom: p.type }).nom)}<small>${TV.date(p.quand)}</small></span>
-      <span>${p.montant ? TV.echapper(p.montant + " " + p.devise) : "offert"}</span></li>`).join("");
-    $("#t-paiements").innerHTML = pa || `<li><span>Aucun paiement pour l'instant.</span></li>`;
+      <span>${p.montant ? TV.echapper(p.montant + " " + p.devise) : TV.t("offert", "free")}</span></li>`).join("");
+    $("#t-paiements").innerHTML = pa || TV.t(`<li><span>Aucun paiement pour l'instant.</span></li>`, `<li><span>No payments yet.</span></li>`);
     vue("tableau");
   }
 
   $("#t-pcs").addEventListener("click", async (ev) => {
     const b = ev.target.closest("[data-retirer]");
-    if (!b || !confirm("Retirer ce PC ? Taverne Voice y repassera en démo, et sa place se libère pour un autre PC.")) return;
+    if (!b || !confirm(TV.t("Retirer ce PC ? Taverne Voice y repassera en démo, et sa place se libère pour un autre PC.", "Remove this PC? Taverne Voice will go back to demo there, and its spot frees up for another PC."))) return;
     try { await TV.appel("/compte/pc/retirer", { pc: b.dataset.retirer }, true); afficherTableau(); } catch (e) { alert(e.message); }
   });
   $("#form-pseudo").addEventListener("submit", (ev) => {
     ev.preventDefault();
     envoyer(ev.target, async () => {
-      try { await TV.appel("/compte/pseudo", { pseudo: $("#t-pseudo").value.trim() }, true); message("#msg-pseudo", "Enregistré. Il s'affichera dans le logiciel à la prochaine actualisation.", true); }
+      try { await TV.appel("/compte/pseudo", { pseudo: $("#t-pseudo").value.trim() }, true); message("#msg-pseudo", TV.t("Enregistré. Il s'affichera dans le logiciel à la prochaine actualisation.", "Saved. It will show up in the app at the next refresh."), true); }
       catch (e) { message("#msg-pseudo", e.message); }
     });
   });
@@ -170,7 +170,7 @@
       try {
         await TV.appel("/compte/mdp", { ancien: $("#m-ancien").value, nouveau: $("#m-nouveau").value }, true);
         ev.target.reset();
-        message("#msg-mdp", "Mot de passe changé.", true);
+        message("#msg-mdp", TV.t("Mot de passe changé.", "Password changed."), true);
       } catch (e) { message("#msg-mdp", e.message); }
     });
   });
@@ -180,9 +180,9 @@
     vue("connexion");
   });
   $("#t-supprimer").addEventListener("click", async () => {
-    const mdp = prompt("Pour supprimer ton compte, tape ton mot de passe. Tes PC seront déconnectés et ton accès s'arrêtera. Ça ne s'annule pas.");
+    const mdp = prompt(TV.t("Pour supprimer ton compte, tape ton mot de passe. Tes PC seront déconnectés et ton accès s'arrêtera. Ça ne s'annule pas.", "To delete your account, type your password. Your PCs will be signed out and your access will stop. This can't be undone."));
     if (!mdp) return;
-    try { await TV.appel("/compte/supprimer", { mdp }, true); TV.ecrireJeton(""); alert("Ton compte est supprimé."); vue("connexion"); }
+    try { await TV.appel("/compte/supprimer", { mdp }, true); TV.ecrireJeton(""); alert(TV.t("Ton compte est supprimé.", "Your account has been deleted.")); vue("connexion"); }
     catch (e) { alert(e.message); }
   });
 

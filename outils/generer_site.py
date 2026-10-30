@@ -6,6 +6,7 @@ Les pages sont écrites ici en HTML ; ce script ajoute l'en-tête, le menu et le
 """
 import html
 import json
+import sys
 import random
 from pathlib import Path
 
@@ -89,20 +90,65 @@ MESURE = r"""<script>
 </script>"""
 
 
-def page(fichier, titre, description, corps, guide=False, noindex=False, scripts=""):
-    actif = "installation.html" if fichier in [h for h, _ in GUIDE] else fichier
+# textes communs à toutes les pages, en français et en anglais
+COMMUN = {
+    "fr": {"guide": "Le guide", "compte": "Mon compte", "telecharger": "Télécharger", "accueil_titre": "Taverne Voice, le changeur de voix des streamers",
+           "pied": "Taverne Voice, changeur de voix pour Windows.", "aide": "Aide", "versions": "Versions", "cgv": "CGV",
+           "confidentialite": "Confidentialité", "mentions": "Mentions légales", "derniere": "Dernière version : ",
+           "autre": "EN", "autre_titre": "English version", "autre_langue": "en"},
+    "en": {"guide": "The guide", "compte": "My account", "telecharger": "Download", "accueil_titre": "Taverne Voice, the voice changer for streamers",
+           "pied": "Taverne Voice, voice changer for Windows.", "aide": "Help", "versions": "Releases", "cgv": "Terms of sale",
+           "confidentialite": "Privacy", "mentions": "Legal notice", "derniere": "Latest version: ",
+           "autre": "FR", "autre_titre": "Version française", "autre_langue": "fr"},
+}
+# pages qui n'existent qu'en français
+SANS_ANGLAIS = {"createur.html"}
+
+# Sur la page d'accueil française : une seule fois, un navigateur qui n'est pas en
+# français est envoyé vers la version anglaise. Cliquer sur FR / EN retient le choix.
+SCRIPT_LANGUE = r"""<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
+});
+</script>"""
+REDIRECTION_ANGLAIS = r"""<script>
+(function () {
+  try {
+    if (localStorage.getItem("taverne-langue")) return;
+    var l = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]).join(",").toLowerCase();
+    if (l && !/(^|,)fr/.test(l)) location.replace("en/" + location.search + location.hash);
+  } catch (e) {}
+})();
+</script>"""
+
+
+def page(fichier, titre, description, corps, guide=False, noindex=False, scripts="", L="fr", menu=None, sommaire_guide=None):
+    C = COMMUN[L]
+    R = "../" if L == "en" else ""          # les pages anglaises sont dans docs/en/
+    menu = menu or MENU
+    sommaire_guide = sommaire_guide or GUIDE
+    actif = "installation.html" if fichier in [h for h, _ in sommaire_guide] else fichier
     nav = "".join(
-        f'<a href="{h}"{" aria-current=\"page\"" if h == actif else ""}>{t}</a>' for h, t in MENU
+        f'<a href="{h}"{" aria-current=\"page\"" if h == actif else ""}>{t}</a>' for h, t in menu
     )
     if guide:
         sommaire = "".join(
-            f'<a href="{h}"{" aria-current=\"page\"" if h == fichier else ""}>{t}</a>' for h, t in GUIDE
+            f'<a href="{h}"{" aria-current=\"page\"" if h == fichier else ""}>{t}</a>' for h, t in sommaire_guide
         )
-        corps = f'<div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>Le guide</p>{sommaire}</nav><article>{corps}</article></div>'
+        corps = f'<div class="enveloppe guide"><nav class="sommaire" aria-label="Guide"><p>{C["guide"]}</p>{sommaire}</nav><article>{corps}</article></div>'
     robots = '<meta name="robots" content="noindex, nofollow">' if noindex else ""
-    titre_complet = "Taverne Voice, le changeur de voix des streamers" if fichier == "index.html" else f"{titre} – Taverne Voice"
+    titre_complet = C["accueil_titre"] if fichier == "index.html" else f"{titre} – Taverne Voice"
+    chemin = "" if fichier == "index.html" else fichier
+    bilingue = fichier not in SANS_ANGLAIS
+    alternatives = (f'<link rel="alternate" hreflang="fr" href="{SITE}/{chemin}">\n<link rel="alternate" hreflang="en" href="{SITE}/en/{chemin}">\n'
+                    f'<link rel="alternate" hreflang="x-default" href="{SITE}/{chemin}">') if bilingue and not noindex else ""
+    canonique = f"{SITE}/{'en/' if L == 'en' else ''}{chemin}"
+    lien_autre = (f'<a class="langue" href="{"../" if L == "en" else "en/"}{chemin}" hreflang="{C["autre_langue"]}" lang="{C["autre_langue"]}" '
+                  f'data-langue="{C["autre_langue"]}" title="{C["autre_titre"]}">{C["autre"]}</a>') if bilingue else ""
+    redirection = REDIRECTION_ANGLAIS if (L == "fr" and fichier == "index.html") else ""
     return f"""<!doctype html>
-<html lang="fr">
+<html lang="{L}">
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -110,19 +156,21 @@ def page(fichier, titre, description, corps, guide=False, noindex=False, scripts
 <meta name="description" content="{e(description)}">
 <meta property="og:title" content="{e(titre_complet)}">
 <meta property="og:description" content="{e(description)}">
-<meta property="og:image" content="{SITE}/img/capture-voix.webp">
-<link rel="canonical" href="{SITE}/{"" if fichier == "index.html" else fichier}">
+<meta property="og:image" content="{SITE}/img/{"en/" if L == "en" else ""}capture-voix.webp">
+<link rel="canonical" href="{canonique}">
+{alternatives}
 {robots}
-<link rel="icon" href="img/icone.png">
-<link rel="stylesheet" href="site.css">
+{redirection}
+<link rel="icon" href="{R}img/icone.png">
+<link rel="stylesheet" href="{R}site.css">
 </head>
 <body>
 {SYMBOLES}
 <header class="entete">
   <div class="enveloppe">
-    <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu">{nav}<a class="bouton-compte" href="compte.html"{" aria-current=\"page\"" if fichier == "compte.html" else ""}>Mon compte</a></nav>
-    <a class="bouton petit" href="{TELECHARGER}Taverne-Voice-Setup.exe">Télécharger</a>
+    <a class="marque" href="index.html"><img src="{R}img/icone.png" alt=""><span>Taverne Voice</span></a>
+    <nav class="nav" aria-label="Menu">{nav}<a class="bouton-compte" href="compte.html"{" aria-current=\"page\"" if fichier == "compte.html" else ""}>{C["compte"]}</a>{lien_autre}</nav>
+    <a class="bouton petit" href="{TELECHARGER}Taverne-Voice-Setup.exe">{C["telecharger"]}</a>
   </div>
 </header>
 <main>
@@ -130,16 +178,17 @@ def page(fichier, titre, description, corps, guide=False, noindex=False, scripts
 </main>
 <footer class="pied">
   <div class="enveloppe">
-    <span>Taverne Voice, changeur de voix pour Windows. <span id="version-site"></span></span>
-    <span class="pied-liens"><a href="faq.html">Aide</a><a href="{DEPOT}/releases">Versions</a><a href="cgv.html">CGV</a><a href="confidentialite.html">Confidentialité</a><a href="mentions-legales.html">Mentions légales</a></span>
+    <span>{C["pied"]} <span id="version-site"></span></span>
+    <span class="pied-liens"><a href="faq.html">{C["aide"]}</a><a href="{DEPOT}/releases">{C["versions"]}</a><a href="cgv.html">{C["cgv"]}</a><a href="confidentialite.html">{C["confidentialite"]}</a><a href="mentions-legales.html">{C["mentions"]}</a></span>
   </div>
 </footer>
 {scripts}
+{SCRIPT_LANGUE if bilingue else ""}
 {"" if fichier == "createur.html" else MESURE}
 <script>
 fetch("https://api.github.com/repos/mrtoto-dev/taverne-voice/releases/latest")
   .then((r) => r.ok ? r.json() : null)
-  .then((r) => {{ if (r && r.tag_name) document.querySelector("#version-site").textContent = "Dernière version : " + r.tag_name.replace(/^v/, "") + "."; }})
+  .then((r) => {{ if (r && r.tag_name) document.querySelector("#version-site").textContent = "{C["derniere"]}" + r.tag_name.replace(/^v/, "") + "."; }})
   .catch(() => {{}});
 </script>
 </body>
@@ -679,7 +728,7 @@ def confidentialite():
 <p class="chapo">Ce que Taverne Voice garde, pourquoi, et comment le supprimer.</p>
 <h2>Ce qui est gardé</h2>
 <ul>
-  <li><strong>Ton compte</strong> : adresse e-mail, pseudo, mot de passe (jamais en clair, seulement une empreinte).</li>
+  <li><strong>Ton compte</strong> : adresse e-mail, pseudo, mot de passe (jamais en clair, seulement une empreinte) et ta langue (français ou anglais), pour t'écrire dans cette langue.</li>
   <li><strong>Tes PC</strong> : un code de 8 caractères calculé à partir de l'identifiant Windows (il ne dit rien de ton PC), le nom de l'ordinateur et la dernière connexion.</li>
   <li><strong>Tes paiements</strong> : formule, montant, date et adresse e-mail envoyés par Ko-fi.</li>
   <li><strong>Un historique</strong> des connexions et des changements du compte, pour la sécurité.</li>
@@ -698,7 +747,7 @@ def confidentialite():
 <h2>Tes droits</h2>
 <p>Tu peux supprimer ton compte toi-même dans <a href="compte.html">Mon compte</a>. Pour toute autre demande (accès, correction, effacement) : <a href="mailto:{e(i["email"])}">{e(i["email"])}</a>. Tu peux aussi saisir la CNIL.</p>
 <h2>Cookies</h2>
-<p>Le site n'utilise aucun cookie publicitaire ni cookie de mesure d'audience (la mesure décrite plus haut n'en a pas besoin). Il garde seulement ta connexion à ton compte dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
+<p>Le site n'utilise aucun cookie publicitaire ni cookie de mesure d'audience (la mesure décrite plus haut n'en a pas besoin). Il garde seulement ta connexion à ton compte et ton choix de langue dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
 </article></div>
 """)
 
@@ -1060,6 +1109,9 @@ def reglages():
 <h1>Sauvegardes et diagnostic</h1>
 <p class="chapo">Tout est dans <strong>Réglages</strong>, le bouton en haut de la fenêtre.</p>
 
+<h2>Langue</h2>
+<p>Taverne Voice parle français ou anglais. Par défaut, il suit la langue de Windows ; <strong>Réglages → Langue</strong> permet de choisir.</p>
+
 <h2>Sauvegardes</h2>
 <ul>
   <li>Taverne Voice sauvegarde tes réglages tout seul, une fois par jour. Les 10 dernières sont gardées.</li>
@@ -1100,3 +1152,9 @@ if __name__ == "__main__":
     for nom, f in PAGES.items():
         (DOCS / nom).write_text(f(), encoding="utf-8")
         print("écrit", nom)
+    # version anglaise (docs/en/)
+    import site_en
+    (DOCS / "en").mkdir(exist_ok=True)
+    for nom, f in site_en.pages(sys.modules[__name__]).items():
+        (DOCS / "en" / nom).write_text(f(), encoding="utf-8")
+        print("écrit en/" + nom)

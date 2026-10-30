@@ -9,6 +9,10 @@
 <meta property="og:description" content="Quelles données Taverne Voice garde, et pourquoi.">
 <meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
 <link rel="canonical" href="https://tavernevoice.fr/confidentialite.html">
+<link rel="alternate" hreflang="fr" href="https://tavernevoice.fr/confidentialite.html">
+<link rel="alternate" hreflang="en" href="https://tavernevoice.fr/en/confidentialite.html">
+<link rel="alternate" hreflang="x-default" href="https://tavernevoice.fr/confidentialite.html">
+
 
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
@@ -98,7 +102,7 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a><a class="langue" href="en/confidentialite.html" hreflang="en" lang="en" data-langue="en" title="English version">EN</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -110,7 +114,7 @@
 <p class="chapo">Ce que Taverne Voice garde, pourquoi, et comment le supprimer.</p>
 <h2>Ce qui est gardé</h2>
 <ul>
-  <li><strong>Ton compte</strong> : adresse e-mail, pseudo, mot de passe (jamais en clair, seulement une empreinte).</li>
+  <li><strong>Ton compte</strong> : adresse e-mail, pseudo, mot de passe (jamais en clair, seulement une empreinte) et ta langue (français ou anglais), pour t'écrire dans cette langue.</li>
   <li><strong>Tes PC</strong> : un code de 8 caractères calculé à partir de l'identifiant Windows (il ne dit rien de ton PC), le nom de l'ordinateur et la dernière connexion.</li>
   <li><strong>Tes paiements</strong> : formule, montant, date et adresse e-mail envoyés par Ko-fi.</li>
   <li><strong>Un historique</strong> des connexions et des changements du compte, pour la sécurité.</li>
@@ -129,7 +133,7 @@
 <h2>Tes droits</h2>
 <p>Tu peux supprimer ton compte toi-même dans <a href="compte.html">Mon compte</a>. Pour toute autre demande (accès, correction, effacement) : <a href="mailto:contact@tavernevoice.fr">contact@tavernevoice.fr</a>. Tu peux aussi saisir la CNIL.</p>
 <h2>Cookies</h2>
-<p>Le site n'utilise aucun cookie publicitaire ni cookie de mesure d'audience (la mesure décrite plus haut n'en a pas besoin). Il garde seulement ta connexion à ton compte dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
+<p>Le site n'utilise aucun cookie publicitaire ni cookie de mesure d'audience (la mesure décrite plus haut n'en a pas besoin). Il garde seulement ta connexion à ton compte et ton choix de langue dans ton navigateur. Le lecteur Twitch des partenaires ne se charge que si tu cliques dessus.</p>
 </article></div>
 
 </main>
@@ -140,6 +144,12 @@
   </div>
 </footer>
 
+<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
+});
+</script>
 <script>
 (function () {
   try {

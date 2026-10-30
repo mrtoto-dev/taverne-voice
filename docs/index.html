@@ -9,7 +9,19 @@
 <meta property="og:description" content="Change ta voix en direct sur Twitch et Discord : 33 voix, un soundboard, les points de chaîne Twitch, un overlay OBS et des plugins pour tous les Stream Deck.">
 <meta property="og:image" content="https://tavernevoice.fr/img/capture-voix.webp">
 <link rel="canonical" href="https://tavernevoice.fr/">
+<link rel="alternate" hreflang="fr" href="https://tavernevoice.fr/">
+<link rel="alternate" hreflang="en" href="https://tavernevoice.fr/en/">
+<link rel="alternate" hreflang="x-default" href="https://tavernevoice.fr/">
 
+<script>
+(function () {
+  try {
+    if (localStorage.getItem("taverne-langue")) return;
+    var l = (navigator.languages && navigator.languages.length ? navigator.languages : [navigator.language || ""]).join(",").toLowerCase();
+    if (l && !/(^|,)fr/.test(l)) location.replace("en/" + location.search + location.hash);
+  } catch (e) {}
+})();
+</script>
 <link rel="icon" href="img/icone.png">
 <link rel="stylesheet" href="site.css">
 </head>
@@ -98,7 +110,7 @@
 <header class="entete">
   <div class="enveloppe">
     <a class="marque" href="index.html"><img src="img/icone.png" alt=""><span>Taverne Voice</span></a>
-    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a></nav>
+    <nav class="nav" aria-label="Menu"><a href="index.html#fonctions">Fonctionnalités</a><a href="installation.html">Guide</a><a href="partenaires.html">Partenaires</a><a href="boutique.html">Tarifs</a><a class="bouton-compte" href="compte.html">Mon compte</a><a class="langue" href="en/" hreflang="en" lang="en" data-langue="en" title="English version">EN</a></nav>
     <a class="bouton petit" href="https://github.com/mrtoto-dev/taverne-voice/releases/latest/download/Taverne-Voice-Setup.exe">Télécharger</a>
   </div>
 </header>
@@ -297,6 +309,12 @@ document.addEventListener("click", (ev) => {
   f.allowFullscreen = true;
   f.title = "Live Twitch de " + b.dataset.chaine;
   b.parentElement.replaceChildren(f);
+});
+</script>
+<script>
+document.addEventListener("click", function (ev) {
+  var a = ev.target.closest && ev.target.closest("[data-langue]");
+  if (a) { try { localStorage.setItem("taverne-langue", a.getAttribute("data-langue")); } catch (e) {} }
 });
 </script>
 <script>
